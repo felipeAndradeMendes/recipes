@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { useContext, useState, useEffect } from 'react';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import headerContext from '../context/headerContext';
@@ -8,20 +8,50 @@ function Header() {
   const { pageName, setPageName } = useContext(headerContext);
 
   const [showSearch, setShowSearch] = useState(false);
+  const history = useHistory();
+  const pathName = history.location.pathname;
+
+  const [title, setTitle] = useState(null);
+
+  useEffect(() => {
+    switch (pathName) {
+    case '/meals':
+      setTitle('Meals');
+      break;
+    case '/drinks':
+      setTitle('Drinks');
+      break;
+    case '/profile':
+      setTitle('Profile');
+      break;
+    default: break;
+    }
+  }, [pathName]);
 
   return (
     <section>
-      <h1>RECIPES App</h1>
-      <button
-        type="button"
-        onClick={ () => setShowSearch(!showSearch) }
+      <h2
+        data-testid="page-title"
       >
-        <img
-          src={ searchIcon }
-          alt="Search Icon"
-          data-testid="search-top-btn"
-        />
-      </button>
+        { title }
+
+      </h2>
+      {
+        pathName === '/profile' || pathName === '/done-recipes'
+        || pathName === '/favorite-recipes'
+          ? null : (
+            <button
+              type="button"
+              onClick={ () => setShowSearch(!showSearch) }
+            >
+              <img
+                src={ searchIcon }
+                alt="Search Icon"
+                data-testid="search-top-btn"
+              />
+            </button>
+          )
+      }
 
       <Link
         to="/profile"
