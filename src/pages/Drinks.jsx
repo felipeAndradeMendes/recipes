@@ -1,9 +1,8 @@
-import React from 'react';
+import Footer from '../components/Footer';
 
 function Drinks() {
   return (
-    <h1>Drinks</h1>
-  );
-}
-
-export default Drinks;
+    <div>
+      <h1>Drinks</h1>
+      <Footer />
+    </div>export default Drinks;
