@@ -3,6 +3,9 @@ import './App.css';
 // import rockGlass from './images/rockGlass.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Switch, Route } from 'react-router-dom';
+import Drinks from './pages/Drinks';
+import Meals from './pages/Meals';
+import Profile from './pages/Profile';
 import Login from './pages/Login';
 
 function App() {
@@ -18,6 +21,9 @@ function App() {
     //   </object>
     // </div>
     <Switch>
+      <Route path="/profile" component={ Profile } />
+      <Route path="/meals" component={ Meals } />
+      <Route path="/drinks" component={ Drinks } />
       <Route exact path="/" component={ Login } />
     </Switch>
   );
