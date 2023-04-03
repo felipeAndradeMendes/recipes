@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 function Profile() {
@@ -6,5 +5,5 @@ function Profile() {
     <h1>Profile</h1>
   );
 }
-
+// Forçar o git atualizar
 export default Profile;
