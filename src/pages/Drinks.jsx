@@ -5,8 +5,4 @@ function Drinks() {
     <div>
       <h1>Drinks</h1>
       <Footer />
-    </div>
-  );
-}
-
-export default Drinks;
+    </div>export default Drinks;
