@@ -1,13 +1,40 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import useFetch from '../hooks/useFetch';
+import SearchBarContext from '../context/SearchBarContext';
 
 function SearchBar() {
+  const [makeFetch] = useFetch();
+
+  const { optionSearch, setOptionSearch,
+    nameSearch, setNameSearch } = useContext(SearchBarContext);
+
+  const goFetch = async () => {
+    await makeFetch(nameSearch, optionSearch.id);
+  };
+
+  const handleChange = ({ target: { value, id, type } }) => {
+    if (type === 'text') {
+      return setNameSearch(value);
+    }
+    return setOptionSearch(
+      { ...optionSearch,
+        option: value,
+        id,
+      },
+    );
+  };
+
+  const handleClick = async () => {
+    await goFetch();
+  };
+
   return (
     <div>
       <input
         type="text"
         data-testid="search-input"
-        name="searchInput"
-        value={ searchInput }
+        name="searchText"
+        value={ nameSearch }
         onChange={ handleChange }
       />
       <label htmlFor="ingredient">
@@ -15,7 +42,7 @@ function SearchBar() {
         <input
           type="radio"
           name="searchType"
-          id="ingredient"
+          id="i"
           data-testid="ingredient-search-radio"
           value="ingredient"
           onChange={ handleChange }
@@ -26,21 +53,21 @@ function SearchBar() {
         <input
           type="radio"
           name="searchType"
-          id="name"
+          id="s"
           data-testid="name-search-radio"
           value="name"
           onChange={ handleChange }
         />
       </label>
       <label htmlFor="first-letter">
-        First Letter
+        First letter
         <input
           type="radio"
           name="searchType"
-          id="first-letter"
+          id="f"
           data-testid="first-letter-search-radio"
           value="first-letter"
-          onChange={ handleChange }
+          onChange={ (target) => handleChange(target) }
         />
       </label>
       <button

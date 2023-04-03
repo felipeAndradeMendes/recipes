@@ -4,6 +4,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Switch, Route } from 'react-router-dom';
 import Login from './pages/Login';
+import SearchBarProvider from './context/SearchBarProvider';
 
 function App() {
   return (
@@ -17,9 +18,11 @@ function App() {
     //     Glass
     //   </object>
     // </div>
-    <Switch>
-      <Route exact path="/" component={ Login } />
-    </Switch>
+    <SearchBarProvider>
+      <Switch>
+        <Route exact path="/" component={ Login } />
+      </Switch>
+    </SearchBarProvider>
   );
 }
 
