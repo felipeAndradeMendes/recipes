@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 export default function Login() {
-
-
   const [user, setUser] = useState({
     email: '',
     password: '',
