@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 
@@ -15,7 +15,7 @@ import shareIcon from '../images/shareIcon.svg';
 // },
 // {
 //   id: 1,
-//   type: 'meal',
+//   type: 'drink',
 //   nationality: 'americana',
 //   category: 'beef',
 //   alcoholicOrNot: '',
@@ -30,6 +30,12 @@ const doneRecipesFromLocalStorage = JSON.parse(localStorage.getItem('doneRecipes
 // console.log(doneRecipesFromLocalStorage);
 
 function DoneRecipes() {
+  const [recipes, setRecipes] = useState([]);
+
+  useEffect(() => {
+    setRecipes(doneRecipesFromLocalStorage);
+  }, []);
+
   return (
     <>
       <Header />
@@ -58,15 +64,19 @@ function DoneRecipes() {
           Drinks
         </button>
       </form>
-      {doneRecipesFromLocalStorage.map((recipe, index) => (
-        <div key={ recipe.id }>
+      {recipes.map((recipe, index) => (
+        <div
+          key={ recipe.id }
+        >
           <img
             data-testid={ `${index}-horizontal-image` }
             src={ recipe.image }
             alt={ recipe.name }
           />
           <p data-testid={ `${index}-horizontal-top-text` }>
-            { recipe.category }
+            { recipe.type === 'meal'
+              ? (`${recipe.nationality} - ${recipe.category}`)
+              : (`${recipe.alcoholicOrNot} - ${recipe.category}`) }
           </p>
           <p data-testid={ `${index}-horizontal-name` }>
             { recipe.name }
@@ -85,7 +95,6 @@ function DoneRecipes() {
             </p>
           ))}
         </div>
-
       ))}
     </>
   );
