@@ -10,14 +10,14 @@ function RecipeDetails() {
   const [ingredients, setIngredients] = useState([]);
   const pathName = useHistory().location.pathname;
   const { id } = useParams();
-  const spliceMax = 6;
+  const sliceMax = 6;
 
   useEffect(() => {
     if (pathName.includes('meals')) {
       fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
         .then((response) => response.json())
         .then((data) => {
-          setDrinks(data.drinks.splice(0, spliceMax));
+          setDrinks(data.drinks.slice(0, sliceMax));
         });
       fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
         .then((response) => response.json())
@@ -28,7 +28,7 @@ function RecipeDetails() {
       fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
         .then((response) => response.json())
         .then((data) => {
-          setMeals(data.meals.splice(0, spliceMax));
+          setMeals(data.meals.slice(0, sliceMax));
         });
       fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
         .then((response) => response.json())
@@ -109,6 +109,7 @@ function RecipeDetails() {
       <h3>Recomendadas</h3>
       <Swiper
         slidesPerView={ 2 }
+        spaceBetween={ 30 }
       >
         {
           pathName.includes('meals') ? (
