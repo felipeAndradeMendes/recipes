@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory, Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
-// import Carousel from '../components/Carousel';
 import 'swiper/swiper-bundle.css';
 
 function RecipeDetails() {
@@ -108,9 +107,7 @@ function RecipeDetails() {
         </button>
       </Link>
       <h3>Recomendadas</h3>
-      {/* <Carousel sugestions={ pathName.includes('meals') ? drinks : meals } /> */}
       <Swiper
-        // spaceBetween={ 50 }
         slidesPerView={ 2 }
       >
         {

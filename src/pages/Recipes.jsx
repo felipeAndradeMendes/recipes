@@ -40,7 +40,8 @@ function Recipes() {
   }, [pathName, setDataApi, setIsLoading]);
 
   const handleChangeCategory = async (category) => {
-    if (category === selectedCategory || category === '') {
+    if (category === selectedCategory || category === 'all') {
+      setSelectedCategory('');
       const url = pathName === '/meals'
         ? 'https://www.themealdb.com/api/json/v1/1/search.php?s='
         : 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
@@ -54,13 +55,12 @@ function Recipes() {
       const response = await fetch(apiUrl);
       const data = await response.json();
       setDataApi(pathName === '/meals' ? { meals: data.meals } : { drinks: data.drinks });
+      setSelectedCategory(category);
     }
-    setSelectedCategory(category);
   };
-  console.log(dataApi[pathNameSplit]?.length);
-  const isGreaterThan12 = dataApi[pathNameSplit]?.length > maxLength
-    ? dataApi[pathNameSplit].splice(0, maxLength) : dataApi[pathNameSplit];
-
+  const newArr = [...dataApi[pathNameSplit] ? dataApi[pathNameSplit] : []];
+  const isGreaterThan12 = newArr?.length > maxLength
+    ? newArr.splice(0, maxLength) : newArr;
   return (
     <>
       <Header />
@@ -83,7 +83,7 @@ function Recipes() {
             <button
               type="button"
               data-testid="All-category-filter"
-              onClick={ () => handleChangeCategory('') }
+              onClick={ () => handleChangeCategory('all') }
             >
               All
             </button>
@@ -93,7 +93,6 @@ function Recipes() {
                   key={ recipe.idMeal || recipe.idDrink }
                   to={ `${pathName}/${recipe.idMeal || recipe.idDrink}` }
                 >
-                  {/* {console.log(pathName, recipe.idMeal, recipe.idDrink)} */}
                   <div
                     data-testid={ `${index}-recipe-card` }
                   >
