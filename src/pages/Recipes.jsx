@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import SearchBarContext from '../context/SearchBarContext';
+import Footer from '../components/Footer';
 
 function Recipes() {
   const { dataApi, isLoading } = useContext(SearchBarContext);
@@ -9,8 +10,6 @@ function Recipes() {
   const pathName = history.location.pathname;
   const pathNameSplit = pathName === '/meals' ? 'meals' : 'drinks';
   const maxLength = 12;
-
-  console.log(dataApi[pathNameSplit]);
 
   const isGreaterThan12 = dataApi[pathNameSplit]?.length > maxLength
     ? dataApi[pathNameSplit].splice(0, maxLength) : dataApi[pathNameSplit];
@@ -41,6 +40,7 @@ function Recipes() {
           </section>
         )
       }
+      <Footer />
     </>
   );
 }
