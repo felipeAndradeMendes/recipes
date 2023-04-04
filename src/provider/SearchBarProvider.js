@@ -5,6 +5,7 @@ import SearchBarContext from '../context/SearchBarContext';
 function SearchBarProvider({ children }) {
   const [optionSearch, setOptionSearch] = useState({});
   const [nameSearch, setNameSearch] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [dataApi, setDataApi] = useState({
     meals: [],
     drinks: [],
@@ -17,7 +18,9 @@ function SearchBarProvider({ children }) {
     setNameSearch,
     dataApi,
     setDataApi,
-  }), [optionSearch, nameSearch, dataApi]);
+    isLoading,
+    setIsLoading,
+  }), [optionSearch, nameSearch, dataApi, isLoading]);
 
   return (
     <SearchBarContext.Provider

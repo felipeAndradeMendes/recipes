@@ -3,9 +3,10 @@ import { useContext, useState, useEffect } from 'react';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import headerContext from '../context/headerContext';
+import SearchBar from './SearchBar';
 
 function Header() {
-  const { pageName, setPageName } = useContext(headerContext);
+  const { setPageName } = useContext(headerContext);
 
   const [showSearch, setShowSearch] = useState(false);
   const history = useHistory();
@@ -24,22 +25,24 @@ function Header() {
     case '/profile':
       setTitle('Profile');
       break;
+    case '/done-recipes':
+      setTitle('Done Recipes');
+      break;
+    case '/favorite-recipes':
+      setTitle('Favorite Recipes');
+      break;
     default: break;
     }
   }, [pathName]);
 
   return (
     <section>
-      <h2
-        data-testid="page-title"
-      >
+      <h2 data-testid="page-title">
         { title }
-
       </h2>
       {
-        pathName === '/profile' || pathName === '/done-recipes'
-        || pathName === '/favorite-recipes'
-          ? null : (
+        pathName === '/meals' || pathName === '/drinks'
+          ? (
             <button
               type="button"
               onClick={ () => setShowSearch(!showSearch) }
@@ -50,9 +53,8 @@ function Header() {
                 data-testid="search-top-btn"
               />
             </button>
-          )
+          ) : null
       }
-
       <Link
         to="/profile"
         onClick={ () => setPageName('Profile') }
@@ -63,9 +65,10 @@ function Header() {
           data-testid="profile-top-btn"
         />
       </Link>
-      <h2 data-testid="page-title">{pageName}</h2>
       {showSearch && (
-        <h3>BARRA DE BUSCA</h3>
+        <div>
+          <SearchBar />
+        </div>
       )}
     </section>
 

@@ -6,17 +6,20 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import RecipeProvider from './provider/RecipeProvider';
 import HeaderProvider from './provider/HeaderProvider';
+import SearchBarProvider from './provider/SearchBarProvider';
 
 ReactDOM
   .createRoot(document.getElementById('root'))
   .render(
-    <RecipeProvider>
-      <HeaderProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </HeaderProvider>
-    </RecipeProvider>,
+    <SearchBarProvider>
+      <RecipeProvider>
+        <HeaderProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </HeaderProvider>
+      </RecipeProvider>
+    </SearchBarProvider>,
 
   );
 

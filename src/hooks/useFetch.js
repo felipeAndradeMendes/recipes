@@ -1,10 +1,9 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import SearchBarContext from '../context/SearchBarContext';
 
 function useFetch() {
-  const { setDataApi } = useContext(SearchBarContext);
-  const [isLoading, setIsLoading] = useState(false);
+  const { setDataApi, setIsLoading } = useContext(SearchBarContext);
   const history = useHistory();
 
   const makeFetch = (value, type) => {
@@ -26,7 +25,10 @@ function useFetch() {
         setDataApi(result);
         setIsLoading(false);
 
-        if (result.meals === null || result.drinks === null) return;
+        if (result.meals === null || result.drinks === null) {
+          global.alert('Sorry, we haven\'t found any recipes for these filters.');
+          return;
+        }
 
         const keys = Object.keys(result)[0];
         const recipe = result[keys];
@@ -37,7 +39,7 @@ function useFetch() {
         }
       });
   };
-  return [isLoading, makeFetch];
+  return [makeFetch];
 }
 
 export default useFetch;
