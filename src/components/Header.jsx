@@ -44,6 +44,7 @@ function Header() {
         pathName === '/meals' || pathName === '/drinks'
           ? (
             <button
+              name="start-search"
               type="button"
               onClick={ () => setShowSearch(!showSearch) }
             >

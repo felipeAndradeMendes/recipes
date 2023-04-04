@@ -9,9 +9,10 @@ import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import RecipeDetails from './pages/RecipeDetails';
 import RecipeInProgress from './pages/RecipeInProgress';
-import SearchBarProvider from './provider/SearchBarProvider';
+
 import RecipeProvider from './provider/RecipeProvider';
 import HeaderProvider from './provider/HeaderProvider';
+import SearchBarProvider from './provider/SearchBarProvider';
 
 function App() {
   return (
