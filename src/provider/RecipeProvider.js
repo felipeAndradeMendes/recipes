@@ -8,7 +8,7 @@ function RecipeProvider({ children }) {
   // estado para armazenar o objeto retornado da api
   const [recipeInProgress, setRecipeInProgress] = useState([]);
   // estado para armazenar receita a ser mostrada em progresso
-  const [displayRecipeInProgress, setDisplayRecipeInProgress] = useState({
+  const [showRecipeInProgress, setShowRecipeInProgress] = useState({
     img: '',
     name: '',
     foodId: '',
@@ -22,7 +22,7 @@ function RecipeProvider({ children }) {
   const isDrink = (pathName.includes('/drinks'));
 
   // Pega os ingredientes do objeto e transforma em array
-  const getIngredients = (object) => {
+  const ingredientsArray = (object) => {
     const arrayOutput = [];
     const maxIngredientsDrinks = 15;
     const maxIngredientsMeals = 20;
@@ -53,24 +53,24 @@ function RecipeProvider({ children }) {
         foodId: isDrink ? arrayInputs[0].idDrink : arrayInputs[0].idMeal,
         category: arrayInputs[0].strCategory,
         instructions: arrayInputs[0].strInstructions,
-        ingredients: getIngredients(arrayInputs[0]),
+        ingredients: ingredientsArray(arrayInputs[0]),
       };
       setRecipeInProgress(arrayInputs);
-      setDisplayRecipeInProgress(object);
+      setShowRecipeInProgress(object);
     }
   };
 
   const memo = useMemo(() => ({
     recipeName,
     setRecipe,
-    displayRecipeInProgress,
-    setDisplayRecipeInProgress,
+    showRecipeInProgress,
+    setShowRecipeInProgress,
     recipeInProgress,
     setRecipeInProgress,
     makeRecipeInProgress,
     isDrink,
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), [recipeName, displayRecipeInProgress, recipeInProgress]);
+  }), [recipeName, showRecipeInProgress, recipeInProgress]);
 
   return (
     <RecipeContext.Provider value={ memo }>
