@@ -10,7 +10,7 @@ const favorite = 'favorite-recipes';
 const logout = '/';
 
 function Profile() {
-  const [user] = useState(JSON.parse(localStorage.getItem('user')));
+  const [user] = useState(JSON.parse(localStorage.getItem('user')) || 'User');
 
   const history = useHistory();
 
