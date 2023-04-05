@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import clipboardCopy from 'clipboard-copy';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 
+// OBJ DE TESTE PARA LOCAL STORAGE - SIMULA RECEITAS PRONTAS
 // const doneRecipesArray = [{
 //   id: 0,
 //   type: 'meal',
@@ -28,9 +30,21 @@ import shareIcon from '../images/shareIcon.svg';
 // localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesArray));
 const doneRecipesFromLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
 // console.log(doneRecipesFromLocalStorage);
+const copy = clipboardCopy;
+const twoSeconds = 2000;
 
 function DoneRecipes() {
   const [recipes, setRecipes] = useState([]);
+  const [showLinkCopied, setShowLinkCopied] = useState(false);
+
+  function handleShareClick(type, id) {
+    // Confirmar se o tipo de receita é salvo no plural ou singular (Drink ou Drinks)
+    copy(`http://localhost:3000/${type}s/${id}`);
+    setShowLinkCopied(true);
+    setTimeout(() => {
+      setShowLinkCopied(false);
+    }, twoSeconds);
+  }
 
   useEffect(() => {
     setRecipes(doneRecipesFromLocalStorage);
@@ -84,11 +98,17 @@ function DoneRecipes() {
           <p data-testid={ `${index}-horizontal-done-date` }>
             {recipe.doneDate}
           </p>
-          <img
-            data-testid={ `${index}-horizontal-share-btn` }
-            src={ shareIcon }
-            alt="share icon"
-          />
+          <button
+            type="button"
+            onClick={ () => handleShareClick(recipe.type, recipe.id) }
+          >
+            <img
+              data-testid={ `${index}-horizontal-share-btn` }
+              src={ shareIcon }
+              alt="share icon"
+            />
+          </button>
+          {showLinkCopied && <p>Link copied!</p>}
           {recipe.tags.map((tag, indexTag) => (
             <p key={ indexTag } data-testid={ `${index}-${tag}-horizontal-tag` }>
               { tag }
