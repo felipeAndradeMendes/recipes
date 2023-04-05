@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import clipboardCopy from 'clipboard-copy';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
-
 // OBJ DE TESTE PARA LOCAL STORAGE - SIMULA RECEITAS PRONTAS
 // const doneRecipesArray = [{
 //   id: 0,
@@ -34,6 +34,7 @@ const copy = clipboardCopy;
 const twoSeconds = 2000;
 
 function DoneRecipes() {
+  // const history = useHistory();
   const [recipes, setRecipes] = useState([]);
   const [showLinkCopied, setShowLinkCopied] = useState(false);
 
@@ -44,6 +45,16 @@ function DoneRecipes() {
     setTimeout(() => {
       setShowLinkCopied(false);
     }, twoSeconds);
+  }
+
+  // Filtra receitas de acordo como botão clicado;
+  function handleClickFilters(btn) {
+    if (btn === 'all') {
+      return setRecipes(doneRecipesFromLocalStorage);
+    }
+    const filteredRecipes = doneRecipesFromLocalStorage
+      .filter((recipe) => recipe.type === btn);
+    setRecipes(filteredRecipes);
   }
 
   useEffect(() => {
@@ -58,43 +69,56 @@ function DoneRecipes() {
           type="button"
           name="all"
           data-testid="filter-by-all-btn"
+          onClick={ (e) => handleClickFilters(e.target.name) }
         >
           All
         </button>
 
         <button
           type="button"
-          name="Meals"
+          name="meal"
           data-testid="filter-by-meal-btn"
+          onClick={ (e) => handleClickFilters(e.target.name) }
         >
           Meals
         </button>
 
         <button
           type="button"
-          name="Drinks"
+          name="drink"
           data-testid="filter-by-drink-btn"
+          onClick={ (e) => handleClickFilters(e.target.name) }
         >
           Drinks
         </button>
       </form>
+      {/* DONE RECIPES MAP */}
       {recipes.map((recipe, index) => (
         <div
           key={ recipe.id }
         >
-          <img
-            data-testid={ `${index}-horizontal-image` }
-            src={ recipe.image }
-            alt={ recipe.name }
-          />
+          <Link
+            to={ `/${recipe.type}s/${recipe.id}` }
+            type="button"
+
+          >
+            <img
+              data-testid={ `${index}-horizontal-image` }
+              style={ { width: '200px' } }
+              src={ recipe.image }
+              alt={ recipe.name }
+            />
+          </Link>
           <p data-testid={ `${index}-horizontal-top-text` }>
             { recipe.type === 'meal'
               ? (`${recipe.nationality} - ${recipe.category}`)
               : (`${recipe.alcoholicOrNot} - ${recipe.category}`) }
           </p>
-          <p data-testid={ `${index}-horizontal-name` }>
-            { recipe.name }
-          </p>
+          <Link to={ `/${recipe.type}s/${recipe.id}` }>
+            <p data-testid={ `${index}-horizontal-name` }>
+              { recipe.name }
+            </p>
+          </Link>
           <p data-testid={ `${index}-horizontal-done-date` }>
             {recipe.doneDate}
           </p>
@@ -114,6 +138,7 @@ function DoneRecipes() {
               { tag }
             </p>
           ))}
+          <hr />
         </div>
       ))}
     </>
