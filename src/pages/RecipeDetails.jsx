@@ -8,6 +8,8 @@ function RecipeDetails() {
   const [meals, setMeals] = useState([]);
   const [drinks, setDrinks] = useState([]);
   const [ingredients, setIngredients] = useState([]);
+  const [showStartBtn, setShowStartBtn] = useState(true);
+  const [doneBtn, setDoneBtn] = useState('');
   const pathName = useHistory().location.pathname;
   const { id } = useParams();
   const sliceMax = 6;
@@ -55,6 +57,31 @@ function RecipeDetails() {
     }
     setIngredients(ingredientsArray);
   }, [recipe]);
+
+  useEffect(() => {
+    const getRecipesDone = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (getRecipesDone) {
+      const recipeCompleted = getRecipesDone.find((recipeDone) => recipeDone.id === id);
+      if (recipeCompleted) {
+        setShowStartBtn(false);
+      }
+      setShowStartBtn(true);
+    }
+  }, [id]);
+
+  useEffect(
+    () => {
+      const getRecipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      if (getRecipesInProgress
+        && (getRecipesInProgress.meals === id || getRecipesInProgress.drinks === id)) {
+        setDoneBtn('Finalizar Receita');
+      } else {
+        setDoneBtn('Iniciar Receita');
+      }
+    },
+
+    [pathName, id],
+  );
   return (
     <section>
       <h1>Recipe Details</h1>
@@ -97,15 +124,19 @@ function RecipeDetails() {
           />
         ) : null
       }
-      <Link to={ `${pathName}/in-progress` }>
-        <button
-          data-testid="start-recipe-btn"
-          className="start-recipe-btn"
-          type="button"
-        >
-          Start Recipe
-        </button>
-      </Link>
+      {
+        showStartBtn ? (
+          <Link to={ `${pathName}/in-progress` }>
+            <button
+              data-testid="start-recipe-btn"
+              className="start-recipe-btn"
+              type="button"
+            >
+              {doneBtn}
+            </button>
+          </Link>
+        ) : null
+      }
       <h3>Recomendadas</h3>
       <Swiper
         slidesPerView={ 2 }
