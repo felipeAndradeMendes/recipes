@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory, Link } from 'react-router-dom';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/swiper-bundle.css';
+import clipboardCopy from 'clipboard-copy';
+import shareIcon from '../images/shareIcon.svg';
+import Carousel from '../components/Carousel';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function RecipeDetails() {
   const [recipe, setRecipe] = useState({});
@@ -10,10 +13,19 @@ function RecipeDetails() {
   const [ingredients, setIngredients] = useState([]);
   const [showStartBtn, setShowStartBtn] = useState(true);
   const [doneBtn, setDoneBtn] = useState('');
+  const [showCopy, setShowCopy] = useState(false);
+  const [intervalID, setIntervalID] = useState(null);
+  const [isFavorite, setIsFavorite] = useState(false);
   const pathName = useHistory().location.pathname;
   const { id } = useParams();
   const sliceMax = 6;
+  const copy = clipboardCopy;
 
+  useEffect(() => {
+    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    const isFavorites = favorites.some((favorite) => favorite.id === id);
+    if (isFavorites) setIsFavorite(true);
+  }, [id]);
   useEffect(() => {
     if (pathName.includes('meals')) {
       fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
@@ -39,7 +51,6 @@ function RecipeDetails() {
         });
     }
   }, [pathName, id]);
-
   useEffect(() => {
     const ingredientsArray = [];
     const lintChato = -1;
@@ -57,7 +68,6 @@ function RecipeDetails() {
     }
     setIngredients(ingredientsArray);
   }, [recipe]);
-
   useEffect(() => {
     const getRecipesDone = JSON.parse(localStorage.getItem('doneRecipes'));
     if (getRecipesDone) {
@@ -68,20 +78,73 @@ function RecipeDetails() {
       setShowStartBtn(true);
     }
   }, [id]);
+  useEffect(() => {
+    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
 
-  useEffect(
-    () => {
-      const getRecipesInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      if (getRecipesInProgress
-        && (getRecipesInProgress.meals === id || getRecipesInProgress.drinks === id)) {
-        setDoneBtn('Finalizar Receita');
-      } else {
-        setDoneBtn('Iniciar Receita');
+    if (inProgressRecipes) {
+      const recipeInProgress = inProgressRecipes[pathName
+        .includes('meals') ? 'meals' : 'drinks'][id];
+      if (recipeInProgress) {
+        setDoneBtn('Continue Recipe');
       }
-    },
-
-    [pathName, id],
-  );
+    }
+  }, [pathName, id]);
+  useEffect(() => {
+    const seconds = 2000;
+    if (showCopy) {
+      const intervalId = setInterval(() => {
+        setIntervalID(intervalId);
+        setShowCopy(false);
+      }, seconds);
+    }
+  }, [showCopy]);
+  const handleFavorite = (favorite) => {
+    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    const repeatedFavorite = favorites.some(
+      (favoriteRecipe) => favoriteRecipe.id === favorite.idMeal
+      || favoriteRecipe.id === favorite.idDrink,
+    );
+    if (repeatedFavorite) {
+      setIsFavorite(!isFavorite);
+      const removeIndex = favorites.findIndex(
+        (favoriteRecipe) => favoriteRecipe.id === favorite.idMeal
+        || favoriteRecipe.id === favorite.idDrink,
+      );
+      const remove = favorites.slice();
+      remove.splice(removeIndex, 1);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(remove));
+      return;
+    }
+    let newFavoriteRecipes = [];
+    if (pathName.includes('meals')) {
+      setIsFavorite(!isFavorite);
+      const { strMeal, strArea, strCategory, idMeal, strMealThumb } = favorite;
+      const newFavoriteMeal = {
+        id: idMeal,
+        type: 'meal',
+        nationality: strArea || null,
+        category: strCategory,
+        alcoholicOrNot: '',
+        name: strMeal,
+        image: strMealThumb,
+      };
+      newFavoriteRecipes = [...favorites, newFavoriteMeal];
+    } else if (pathName.includes('drinks')) {
+      setIsFavorite(!isFavorite);
+      const { strDrink, strCategory, idDrink, strDrinkThumb, strAlcoholic } = favorite;
+      const newFavoriteDrink = {
+        id: idDrink,
+        type: 'drink',
+        nationality: '',
+        category: strCategory,
+        alcoholicOrNot: strAlcoholic === 'Alcoholic' ? strAlcoholic : '',
+        name: strDrink,
+        image: strDrinkThumb,
+      };
+      newFavoriteRecipes = [...favorites, newFavoriteDrink];
+    }
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteRecipes));
+  };
   return (
     <section>
       <h1>Recipe Details</h1>
@@ -137,45 +200,39 @@ function RecipeDetails() {
           </Link>
         ) : null
       }
-      <h3>Recomendadas</h3>
-      <Swiper
-        slidesPerView={ 2 }
-        spaceBetween={ 30 }
+      <button
+        type="button"
+        data-testid="share-btn"
+        onClick={ () => {
+          clearInterval(intervalID);
+          copy(`http://localhost:3000${pathName}`);
+          setShowCopy(true);
+        } }
       >
-        {
-          pathName.includes('meals') ? (
-            drinks.map((drink, index) => (
-              <SwiperSlide key={ drink.idDrink }>
-                <div data-testid={ `${index}-recommendation-card` }>
-                  <img
-                    style={ { width: '300px' } }
-                    src={ drink.strDrinkThumb }
-                    alt={ drink.strDrink }
-                  />
-                  <p data-testid={ `${index}-recommendation-title` }>
-                    {drink.strDrink}
-                  </p>
-                </div>
-              </SwiperSlide>
-            ))
-          ) : (
-            meals.map((meal, index) => (
-              <SwiperSlide key={ meal.idMeal }>
-                <div data-testid={ `${index}-recommendation-card` }>
-                  <img
-                    style={ { width: '300px' } }
-                    src={ meal.strMealThumb }
-                    alt={ meal.strMeal }
-                  />
-                  <p data-testid={ `${index}-recommendation-title` }>
-                    {meal.strMeal}
-                  </p>
-                </div>
-              </SwiperSlide>
-            ))
-          )
-        }
-      </Swiper>
+        <img
+          src={ shareIcon }
+          alt={ recipe.strMeal || recipe.strDrink }
+        />
+      </button>
+      {
+        showCopy ? <span>Link copied!</span> : null
+      }
+      <button
+        type="button"
+        onClick={ () => handleFavorite(recipe) }
+      >
+        <img
+          data-testid="favorite-btn"
+          src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+          alt="favorite"
+        />
+      </button>
+      <h3>Recomendadas</h3>
+      <Carousel
+        pathName={ pathName }
+        meals={ meals }
+        drinks={ drinks }
+      />
     </section>
   );
 }
