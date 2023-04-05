@@ -60,6 +60,17 @@ function RecipeProvider({ children }) {
     }
   };
 
+  // Gravar no localStorage os itens setados
+  const setLocalStorage = (chave, object) => {
+    localStorage.setItem(chave, JSON.stringify(object));
+  };
+
+  // Busca no localStorage os itens setados
+  const getLocalStorage = (chave) => {
+    const contentLocalStorage = JSON.parse(localStorage.getItem(chave));
+    return contentLocalStorage;
+  };
+
   const memo = useMemo(() => ({
     recipeName,
     setRecipe,
@@ -69,6 +80,8 @@ function RecipeProvider({ children }) {
     setRecipeInProgress,
     makeRecipeInProgress,
     isDrink,
+    setLocalStorage,
+    getLocalStorage,
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }), [recipeName, showRecipeInProgress, recipeInProgress]);
 

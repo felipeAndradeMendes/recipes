@@ -6,13 +6,15 @@ import '../App.css';
 
 function RecipeInProgress() {
   const { showRecipeInProgress, makeRecipeInProgress,
-    isDrink } = useContext(RecipeContext);
+    isDrink, setLocalStorage, getLocalStorage } = useContext(RecipeContext);
 
   const { makeFetch } = useFetchRecipes();
   const { id } = useParams();
 
   // estado com os ingredientes checkados ou não
   const [checkedIngredients, setCheckedIngredients] = useState({});
+
+  const inProgressRecipes = 'inProgressRecipes';
 
   const getApiId = async () => {
     let endpoint = '';
@@ -23,7 +25,7 @@ function RecipeInProgress() {
       endpoint = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
     }
     const recipesResults = await makeFetch(endpoint);
-    console.log(recipesResults);
+    // console.log(recipesResults);
     makeRecipeInProgress(recipesResults);
   };
 
@@ -43,12 +45,22 @@ function RecipeInProgress() {
       ...checkedIngredients,
       [ingredientName]: isChecked,
     };
+    console.log(ingredients);
     setCheckedIngredients(ingredients);
+    setLocalStorage(inProgressRecipes, ingredients);
+  };
+
+  const getIngredientsLocalStorage = () => {
+    const ingredientsLocalStorage = getLocalStorage(inProgressRecipes);
+    if (ingredientsLocalStorage) {
+      setCheckedIngredients(ingredientsLocalStorage);
+    }
   };
 
   useEffect(() => {
     getApiId();
-    console.log(showRecipeInProgress);
+    // console.log(showRecipeInProgress);
+    getIngredientsLocalStorage();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
@@ -89,7 +101,7 @@ function RecipeInProgress() {
                   htmlFor="ingredient"
                   data-testid={ `${index}-ingredient-step` }
                   key={ index }
-                  className={ checkedIngredients[ingredient] ? 'checked' : '' }
+                  className={ checkedIngredients[ingredient] ? 'checked' : undefined }
                 >
                   { ingredient }
                   <input
