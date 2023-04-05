@@ -1,5 +1,5 @@
 const doneRecipesArray = [{
-  id: 0,
+  id: '0',
   type: 'meal',
   nationality: 'brasileira',
   category: 'chicken',
@@ -10,7 +10,7 @@ const doneRecipesArray = [{
   tags: ['frango', 'comida'],
 },
 {
-  id: 1,
+  id: '1',
   type: 'drink',
   nationality: 'americana',
   category: 'beef',

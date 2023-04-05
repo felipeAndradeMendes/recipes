@@ -4,17 +4,14 @@ import clipboardCopy from 'clipboard-copy';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
-
 // import doneRecipesArray from '../helpers/LocalStorageTest';
 
 // localStorage.setItem('favoriteRecipes', JSON.stringify(doneRecipesArray));
-const favoriteFromLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
-// console.log(doneRecipesFromLocalStorage);
+// const favoriteFromLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
 const copy = clipboardCopy;
 const twoSeconds = 2000;
 
 function FavoriteRecipes() {
-  // const history = useHistory();
   const [favorites, setFavorites] = useState([]);
   const [showLinkCopied, setShowLinkCopied] = useState(false);
 
@@ -29,6 +26,7 @@ function FavoriteRecipes() {
 
   // Filtra receitas de acordo como botão clicado;
   function handleClickFilters(btn) {
+    const favoriteFromLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (btn === 'all') {
       return setFavorites(favoriteFromLocalStorage);
     }
@@ -37,11 +35,27 @@ function FavoriteRecipes() {
     setFavorites(filteredFavorites);
   }
 
+  function handleFavoriteClick(recipeId) {
+    // console.log('cliquei');
+    // console.log(recipeId);
+    // console.log('FAVORITE FROM LOCAL STORAGE:', favoriteFromLocalStorage);
+
+    const newFavoritesArr = favorites
+      .filter((recipe) => Number(recipe.id) !== Number(recipeId));
+
+    console.log('NEW FAVORITE:', newFavoritesArr);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoritesArr));
+    // setFavorites(newFavoritesArr);
+    const favoriteFromLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    setFavorites(favoriteFromLocalStorage);
+  }
+
   useEffect(() => {
     const getLocalFavorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (getLocalFavorites) {
       return setFavorites(getLocalFavorites);
     }
+    setFavorites(getLocalFavorites);
   }, []);
   return (
     <>
@@ -120,11 +134,16 @@ function FavoriteRecipes() {
               { tag }
             </p>
           ))} */}
-          <button type="button" data-testid={ `${index}-horizontal-favorite-btn` }>
+          <button
+            type="button"
+            name={ recipe }
+            onClick={ (e) => handleFavoriteClick(e.target.id) }
+          >
             <img
               data-testid={ `${index}-horizontal-favorite-btn` }
               src={ blackHeartIcon }
               alt="blackHeartIcon"
+              id={ recipe.id }
             />
           </button>
           <hr />
