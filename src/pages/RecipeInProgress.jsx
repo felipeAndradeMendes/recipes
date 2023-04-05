@@ -6,7 +6,8 @@ import '../App.css';
 
 function RecipeInProgress() {
   const { showRecipeInProgress, makeRecipeInProgress,
-    isDrink, setLocalStorage, getLocalStorage } = useContext(RecipeContext);
+    isDrink, setLocalStorage, getLocalStorage,
+    handleFinishButton } = useContext(RecipeContext);
 
   const { makeFetch } = useFetchRecipes();
   const { id } = useParams();
@@ -35,9 +36,6 @@ function RecipeInProgress() {
   const handleGoFavorite = () => {
   };
 
-  const handleFinishButton = () => {
-  };
-
   const handleIngredientChange = (event) => {
     const ingredientName = event.target.name;
     const isChecked = event.target.checked;
@@ -50,10 +48,19 @@ function RecipeInProgress() {
     setLocalStorage(inProgressRecipes, ingredients);
   };
 
+  // função de pegar ingredientes ja marcado do local storage
   const getIngredientsLocalStorage = () => {
     const ingredientsLocalStorage = getLocalStorage(inProgressRecipes);
     if (ingredientsLocalStorage) {
       setCheckedIngredients(ingredientsLocalStorage);
+    }
+  };
+
+  // função de validação do botton de concluir receita
+  const isAllChecked = () => {
+    if (showRecipeInProgress) {
+      return showRecipeInProgress.ingredients
+        .every((ingredient) => checkedIngredients[ingredient]);
     }
   };
 
@@ -125,6 +132,7 @@ function RecipeInProgress() {
             data-testid="finish-recipe-btn"
             value="finalizar"
             onClick={ handleFinishButton }
+            disabled={ !isAllChecked() }
           >
             Finalizar
           </button>

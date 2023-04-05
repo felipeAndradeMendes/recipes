@@ -71,6 +71,17 @@ function RecipeProvider({ children }) {
     return contentLocalStorage;
   };
 
+  // Adiciona receita feita ao estado
+  const addNewDoneRecipe = () => {
+
+  };
+
+  // função para mudar a rota após concluir a receita
+  const handleFinishButton = () => {
+    addNewDoneRecipe(recipeInProgress[0]);
+    history.push('/done-recipes');
+  };
+
   const memo = useMemo(() => ({
     recipeName,
     setRecipe,
@@ -82,6 +93,7 @@ function RecipeProvider({ children }) {
     isDrink,
     setLocalStorage,
     getLocalStorage,
+    handleFinishButton,
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }), [recipeName, showRecipeInProgress, recipeInProgress]);
 
