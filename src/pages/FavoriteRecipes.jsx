@@ -55,7 +55,6 @@ function FavoriteRecipes() {
     if (getLocalFavorites) {
       return setFavorites(getLocalFavorites);
     }
-    setFavorites(getLocalFavorites);
   }, []);
   return (
     <>
