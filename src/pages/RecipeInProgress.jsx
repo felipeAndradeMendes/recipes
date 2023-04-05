@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import RecipeContext from '../context/RecipeContext';
 import useFetchRecipes from '../hooks/useFetchRecipes';
-
-// commit
+import '../App.css';
 
 function RecipeInProgress() {
   const { showRecipeInProgress, makeRecipeInProgress,
@@ -11,6 +10,9 @@ function RecipeInProgress() {
 
   const { makeFetch } = useFetchRecipes();
   const { id } = useParams();
+
+  // estado com os ingredientes checkados ou não
+  const [checkedIngredients, setCheckedIngredients] = useState({});
 
   const getApiId = async () => {
     let endpoint = '';
@@ -32,6 +34,16 @@ function RecipeInProgress() {
   };
 
   const handleFinishButton = () => {
+  };
+
+  const handleIngredientChange = (event) => {
+    const ingredientName = event.target.name;
+    const isChecked = event.target.checked;
+    const ingredients = {
+      ...checkedIngredients,
+      [ingredientName]: isChecked,
+    };
+    setCheckedIngredients(ingredients);
   };
 
   useEffect(() => {
@@ -77,11 +89,14 @@ function RecipeInProgress() {
                   htmlFor="ingredient"
                   data-testid={ `${index}-ingredient-step` }
                   key={ index }
+                  className={ checkedIngredients[ingredient] ? 'checked' : '' }
                 >
                   { ingredient }
                   <input
                     type="checkbox"
                     name={ ingredient }
+                    checked={ checkedIngredients[ingredient] || false }
+                    onChange={ handleIngredientChange }
                   />
                 </label>))}
           </fieldset>
