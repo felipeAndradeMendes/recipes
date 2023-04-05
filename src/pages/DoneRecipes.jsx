@@ -58,7 +58,10 @@ function DoneRecipes() {
   }
 
   useEffect(() => {
-    setRecipes(doneRecipesFromLocalStorage);
+    const getLocalRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (getLocalRecipes) {
+      return setRecipes(getLocalRecipes);
+    }
   }, []);
 
   return (
