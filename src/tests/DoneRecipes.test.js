@@ -44,13 +44,11 @@ describe('Testa a pagina de receitas feitas', () => {
     const btnAll = screen.getByRole('button', { name: /all/i });
     const btnMeals = screen.getByRole('button', { name: /meals/i });
     const btnDrinks = screen.getByRole('button', { name: /drinks/i });
-    const btnShare = screen.getByTestId('0-horizontal-share-btn');
+
     expect(screen.getByText(/Receitão Xablau/i)).toBeInTheDocument();
     expect(screen.getByText(/Receitão sinistro/i)).toBeInTheDocument();
 
-    userEvent.click(btnAll);
-    expect(screen.getByText(/Receitão Xablau/i)).toBeInTheDocument();
-    expect(screen.getByText(/Receitão sinistro/i)).toBeInTheDocument();
+    screen.logTestingPlaygroundURL();
 
     userEvent.click(btnMeals);
     expect(screen.getByText(/Receitão Xablau/i)).toBeInTheDocument();
@@ -60,12 +58,23 @@ describe('Testa a pagina de receitas feitas', () => {
     expect(screen.queryByText(/Receitão Xablau/i)).not.toBeInTheDocument();
     expect(screen.getByText(/Receitão sinistro/i)).toBeInTheDocument();
 
-    userEvent.click(btnShare);
-    expect(screen.getByText(/Link copied!/i)).toBeInTheDocument();
-
+    userEvent.click(btnAll);
+    expect(screen.getByText(/Receitão Xablau/i)).toBeInTheDocument();
+    expect(screen.getByText(/Receitão sinistro/i)).toBeInTheDocument();
   });
 
+  test('testa se botão de share mostra texto de link copiado', () => {
+    const { history } = renderRouter(<App />);
 
+    act(() => {
+      history.push(route);
+    });
+
+    const btnShare = screen.getByTestId('0-horizontal-share-btn');
+
+    userEvent.click(btnShare);
+    expect(screen.getByText(/Link copied!/i)).toBeInTheDocument();
+  });
 
   // test('Botões renderizam e filtram corretamente', async () => {
   //   const history = createMemoryHistory();
