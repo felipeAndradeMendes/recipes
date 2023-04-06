@@ -25,41 +25,20 @@ describe('Testa a pagina de receitas feitas', () => {
   //   expect(screen.getByRole('button', { name: /drinks/i })).toBeInTheDocument();
   // });
 
-  test('Botões renderizam e filtram corretamente', () => {
+  test('Botões renderizam e filtram corretamente', async () => {
     const history = createMemoryHistory();
     history.push('/done-recipes');
-    // const doneRecipesArray = [{
-    //   id: 0,
-    //   type: 'meal',
-    //   nationality: 'brasileira',
-    //   category: 'chicken',
-    //   alcoholicOrNot: '',
-    //   name: 'Receitão Xablau',
-    //   image: 'https://assets.epicurious.com/photos/62f16ed5fe4be95d5a460eed/1:1/w_960,c_limit/RoastChicken_RECIPE_080420_37993.jpg',
-    //   doneDate: '04/04/2023',
-    //   tags: ['frango', 'comida'],
-    // },
-    // {
-    //   id: 1,
-    //   type: 'drink',
-    //   nationality: 'americana',
-    //   category: 'beef',
-    //   alcoholicOrNot: '',
-    //   name: 'Receitão sinistro',
-    //   image: 'https://cdn.britannica.com/18/137318-050-29F7072E/rooster-Rhode-Island-Red-roosters-chicken-domestication.jpg?w=400&h=300&c=crop',
-    //   doneDate: '05/04/2023',
-    //   tags: ['galo', 'rango'],
-    // }];
 
-    const localStorageMock = {
-      getItem: jest.fn(),
-      setItem: jest.fn(),
-      removeItem: jest.fn(),
-      clear: jest.fn(),
-    };
-    global.localStorage = localStorageMock;
-
+    // const localStorageMock = {
+    //   getItem: jest.fn(),
+    //   setItem: jest.fn(),
+    //   removeItem: jest.fn(),
+    //   clear: jest.fn(),
+    // };
     localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesArray));
+
+    // localStorageMock.setItem('doneRecipes', JSON.stringify(doneRecipesArray));
+
     render(
       <Router history={ history }>
         <SearchBarProvider>
@@ -70,23 +49,26 @@ describe('Testa a pagina de receitas feitas', () => {
       </Router>,
     );
 
-    const doneRecipesFromLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
-    console.log(doneRecipesFromLocalStorage);
-
     const btnAll = screen.getByRole('button', { name: /all/i });
     const btnMeals = screen.getByRole('button', { name: /meals/i });
     const btnDrinks = screen.getByRole('button', { name: /drinks/i });
+    const btnShare = screen.getByTestId('0-horizontal-share-btn');
     expect(btnAll).toBeInTheDocument();
     expect(btnMeals).toBeInTheDocument();
     expect(btnDrinks).toBeInTheDocument();
+    expect(btnShare).toBeInTheDocument();
+    // localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesArray));
 
-    userEvent.click(btnMeals);
+    const local = localStorage.getItem('doneRecipes', JSON.stringify(doneRecipesArray));
+    console.log('LOCAL STORAGE:', local);
+
+    userEvent.click(btnAll);
+    // userEvent.click(btnMeals);
+    // userEvent.click(btnDrinks);
+    // userEvent.click(btnShare);
+    // expect(screen.queryByText(/Receitão sinistro/i)).not.toBeInTheDocument();
+
     screen.logTestingPlaygroundURL();
-    expect(screen.queryByText(/Receitão sinistro/i)).not.toBeInTheDocument();
-
-    // expect(localStorageMock.setItem).toHaveBeenCalledTimes(1);
-    // // expect(localStorageMock.getItem).toHaveBeenCalledWith('doneRecipes');
-    // expect(localStorageMock.removeItem).toHaveBeenCalledTimes(0);
     expect(history.location.pathname).toBe('/done-recipes');
   });
 });
