@@ -1,6 +1,6 @@
 import React from 'react';
-// import { Swiper, SwiperSlide } from 'swiper/react';
-// import 'swiper/swiper-bundle.css';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper-bundle.css';
 import PropTypes from 'prop-types';
 
 function Carousel({ pathName, meals, drinks }) {

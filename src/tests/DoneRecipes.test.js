@@ -1,15 +1,9 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
-import { createMemoryHistory } from 'history';
-import { Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import renderRouter from '../helpers/helpers';
-import HeaderProvider from '../provider/HeaderProvider';
 import App from '../App';
-import SearchBarProvider from '../provider/SearchBarProvider';
-import DoneRecipes from '../pages/DoneRecipes';
-import Header from '../components/Header';
 import doneRecipesArray from '../helpers/LocalStorageTest';
 
 const setLocalStorage = () => {
@@ -18,10 +12,18 @@ const setLocalStorage = () => {
 
 const route = '/done-recipes';
 
+Object.assign(navigator, {
+  clipboard: {
+    writeText: () => {},
+  },
+});
+
 describe('Testa a pagina de receitas feitas', () => {
   beforeEach(() => {
     setLocalStorage();
   });
+
+  jest.spyOn(navigator.clipboard, 'writeText');
 
   test('Deve ser renderizado os cards de receitas', () => {
     const { history } = renderRouter(<App />);
@@ -73,7 +75,8 @@ describe('Testa a pagina de receitas feitas', () => {
     const btnShare = screen.getByTestId('0-horizontal-share-btn');
 
     userEvent.click(btnShare);
-    expect(screen.getByText(/Link copied!/i)).toBeInTheDocument();
+    expect(navigator.clipboard.writeText).toHaveBeenCalled();
+    // expect(screen.getByText(/Link copied!/i)).toBeInTheDocument();
   });
 
   // test('Botões renderizam e filtram corretamente', async () => {

@@ -9,7 +9,6 @@ import shareIcon from '../images/shareIcon.svg';
 // const doneRecipesFromLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
 // console.log(doneRecipesFromLocalStorage);
 const copy = clipboardCopy;
-const twoSeconds = 2000;
 
 function DoneRecipes() {
   // const history = useHistory();
