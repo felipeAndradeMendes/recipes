@@ -40,7 +40,7 @@ function FavoriteRecipes() {
     const newFavoritesArr = favorites
       .filter((recipe) => Number(recipe.id) !== Number(recipeId));
 
-    console.log('NEW FAVORITE:', newFavoritesArr);
+    console.log('NEW FAVORITE:', newFavoristesArr);
     localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoritesArr));
     // setFavorites(newFavoritesArr);
     const favoriteFromLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));

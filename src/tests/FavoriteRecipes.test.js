@@ -2,6 +2,7 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
+import clipboardCopy from 'clipboard-copy';
 import renderRouter from '../helpers/helpers';
 import App from '../App';
 import doneRecipesArray from '../helpers/LocalStorageTest';
@@ -12,10 +13,20 @@ const setLocalStorage = () => {
   window.localStorage.setItem('favoriteRecipes', JSON.stringify(doneRecipesArray));
 };
 
+Object.assign(navigator, {
+  clipboard: {
+    writeText: () => {},
+  },
+});
+
 describe('Testa a tela de Receitas favoritas', () => {
   beforeEach(() => {
     setLocalStorage();
   });
+  jest.spyOn(navigator.clipboard, 'writeText');
+  // beforeAll(() => {
+  //   yourImplementationThatWouldInvokeClipboardWriteText();
+  // });
   test('Os elementos devem ser renderizados corretamente', () => {
     const { history } = renderRouter(<App />);
 
@@ -69,17 +80,39 @@ describe('Testa a tela de Receitas favoritas', () => {
 
     expect(screen.queryByText(/Receitão sinistro/i)).not.toBeInTheDocument();
   });
-  // test('Ao clicar no incone de compartilhar deve ser copiado a receita', () => {
-  //   const { history } = renderRouter(<App />);
 
-  //   act(() => {
-  //     history.push('/favorite-recipes');
-  //   });
+  test('Ao clicar no incone de compartilhar deve ser copiado a receita', async () => {
+    const { history } = renderRouter(<App />);
 
-  //   const shareButton = screen.getByTestId('1-horizontal-share-btn');
+    act(() => {
+      history.push('/favorite-recipes');
+    });
 
-  //   userEvent.click(shareButton);
+    const shareButton = screen.getByTestId('1-horizontal-share-btn');
 
-  //   expect(screen.getByText(/Link Copied!/i));
-  // });
+    userEvent.click(shareButton);
+    expect(navigator.clipboard.writeText).toHaveBeenCalled();
+    // expect(screen.getByText(/Link Copied!/i));
+  });
 });
+
+// test('Ao clicar no incone de compartilhar deve ser copiado a receita', async () => {
+//   jest.mock('clipboard-copy', () => ({
+//     clipboardCopy: jest.fn(),
+//   }));
+//   console.log(clipboardCopy.clipboardCopy);
+//   const mockClipboardCopy = clipboardCopy.clipboardCopy;
+//   mockClipboardCopy.mockImplementation(() => {
+//   });
+//   const { history } = renderRouter(<App />);
+
+//   act(() => {
+//     history.push('/favorite-recipes');
+//   });
+
+//   const shareButton = screen.getByTestId('1-horizontal-share-btn');
+
+//   userEvent.click(shareButton);
+
+//   expect(screen.getByText(/Link Copied!/i));
+// });
