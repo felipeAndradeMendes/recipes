@@ -19,3 +19,8 @@ body {
   position: fixed;
   z-index: 10;
 }
+
+.checked {
+  text-decoration: line-through solid;
+  text-decoration-color: black;
+}
