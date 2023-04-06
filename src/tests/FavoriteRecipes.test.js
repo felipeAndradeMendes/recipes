@@ -2,7 +2,6 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
-import clipboardCopy from 'clipboard-copy';
 import renderRouter from '../helpers/helpers';
 import App from '../App';
 import doneRecipesArray from '../helpers/LocalStorageTest';
