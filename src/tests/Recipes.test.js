@@ -6,6 +6,7 @@ import App from '../pages/Recipes';
 import SearchBarContext from '../context/SearchBarContext';
 import HeaderProvider from '../provider/HeaderProvider';
 import RecipeProvider from '../provider/RecipeProvider';
+import fetch from '../../cypress/mocks/fetch';
 
 const mockContext = {
   dataApi: {
@@ -39,7 +40,7 @@ const mockContext = {
 };
 
 describe('Recipes component', () => {
-  test('Testa se as categorias funcionam', async () => {
+  test('Testa se as categorias de drinks funcionam', async () => {
     const history = createMemoryHistory();
     const { getByRole } = render(
       <Router path="/drinks" history={ history }>
@@ -105,8 +106,9 @@ describe('Recipes component', () => {
 });
 test('Testa se as categorias de meals funcionam', () => {
   const history = createMemoryHistory();
+  history.push('/meals');
   render(
-    <Router path="/meals" history={ history }>
+    <Router history={ history }>
       <RecipeProvider>
         <HeaderProvider>
           <SearchBarContext.Provider value={ mockContext }>
@@ -116,9 +118,7 @@ test('Testa se as categorias de meals funcionam', () => {
       </RecipeProvider>
     </Router>,
   );
-  history.push('/meals');
   expect(history.location.pathname).toBe('/meals');
-  screen.logTestingPlaygroundURL();
 
   const all = screen.getByRole('button', {
     name: /all/i,
@@ -169,4 +169,93 @@ test('Testa se as categorias de meals funcionam', () => {
     const allMeal = screen.getByText('Corba');
     expect(allMeal).toBeInTheDocument();
   });
+});
+
+test('Testa se 12 bebidas são renderizadas', () => {
+  jest.spyOn(global, 'fetch');
+  global.fetch.mockImplementation(fetch);
+  const history = createMemoryHistory();
+  history.push('/drinks');
+  render(
+    <Router history={ history }>
+      <RecipeProvider>
+        <HeaderProvider>
+          <SearchBarContext.Provider value={ mockContext }>
+            <App />
+          </SearchBarContext.Provider>
+        </HeaderProvider>
+      </RecipeProvider>
+    </Router>,
+  );
+  expect(history.location.pathname).toBe('/drinks');
+
+  const drink = screen.getAllByTestId(`${0}-recipe-card`);
+  expect(drink[0]).toBeInTheDocument();
+});
+
+test('Testa se 12 comidas são renderizadas', () => {
+  const history = createMemoryHistory();
+  history.push('/meals');
+  jest.spyOn(global, 'fetch');
+  global.fetch.mockImplementation(fetch);
+  render(
+    <Router history={ history }>
+      <RecipeProvider>
+        <HeaderProvider>
+          <SearchBarContext.Provider value={ mockContext }>
+            <App />
+          </SearchBarContext.Provider>
+        </HeaderProvider>
+      </RecipeProvider>
+    </Router>,
+  );
+  expect(history.location.pathname).toBe('/meals');
+
+  const meal = screen.getAllByTestId(`${0}-recipe-card`);
+  expect(meal[0]).toBeInTheDocument();
+});
+
+test('Testa se o loading aparece', () => {
+  const history = createMemoryHistory();
+  history.push('/meals');
+  jest.spyOn(global, 'fetch');
+  global.fetch.mockImplementation(fetch);
+  render(
+    <Router history={ history }>
+      <RecipeProvider>
+        <HeaderProvider>
+          <SearchBarContext.Provider value={ mockContext }>
+            <App />
+          </SearchBarContext.Provider>
+        </HeaderProvider>
+      </RecipeProvider>
+    </Router>,
+  );
+  expect(history.location.pathname).toBe('/meals');
+
+  const loading = screen.getByText('Loading...');
+  expect(loading).toBeInTheDocument();
+});
+
+test('Testa se o card redireciona para URL in-progress', () => {
+  const history = createMemoryHistory();
+  history.push('/meals');
+  jest.spyOn(global, 'fetch');
+  global.fetch.mockImplementation(fetch);
+  render(
+    <Router history={ history }>
+      <RecipeProvider>
+        <HeaderProvider>
+          <SearchBarContext.Provider value={ mockContext }>
+            <App />
+          </SearchBarContext.Provider>
+        </HeaderProvider>
+      </RecipeProvider>
+    </Router>,
+  );
+  expect(history.location.pathname).toBe('/meals');
+
+  const meal = screen.getAllByTestId(`${0}-recipe-card`);
+  fireEvent.click(meal[0]);
+  expect(history.location.pathname).toBe('/comidas/52977/in-progress');
 });

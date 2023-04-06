@@ -12,7 +12,7 @@ function RecipeDetails() {
   const [drinks, setDrinks] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [showStartBtn, setShowStartBtn] = useState(true);
-  const [doneBtn, setDoneBtn] = useState('');
+  const [doneBtn, setDoneBtn] = useState('Start Recipe');
   const [showCopy, setShowCopy] = useState(false);
   const [intervalID, setIntervalID] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
