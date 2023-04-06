@@ -22,11 +22,10 @@ function Profile() {
     case favorite:
       history.push(favorite);
       break;
-    case logout:
+    default:
       history.push(logout);
       localStorage.clear();
       break;
-    default: break;
     }
   };
 
