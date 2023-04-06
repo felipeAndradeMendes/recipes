@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 
 // localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesArray));
-const doneRecipesFromLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+// const doneRecipesFromLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
 // console.log(doneRecipesFromLocalStorage);
 const copy = clipboardCopy;
 const twoSeconds = 2000;
@@ -26,6 +26,8 @@ function DoneRecipes() {
 
   // Filtra receitas de acordo como botão clicado;
   function handleClickFilters(btn) {
+    const doneRecipesFromLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+
     if (btn === 'all') {
       return setRecipes(doneRecipesFromLocalStorage);
     }

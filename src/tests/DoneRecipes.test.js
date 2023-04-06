@@ -12,63 +12,105 @@ import DoneRecipes from '../pages/DoneRecipes';
 import Header from '../components/Header';
 import doneRecipesArray from '../helpers/LocalStorageTest';
 
+const setLocalStorage = () => {
+  window.localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesArray));
+};
+
+const route = '/done-recipes';
+
 describe('Testa a pagina de receitas feitas', () => {
-  // test('Deve ser renderizado os cards de receitas', () => {
-  //   const { history } = renderRouter(<App />);
+  beforeEach(() => {
+    setLocalStorage();
+  });
 
-  //   act(() => {
-  //     history.push('/done-recipes');
-  //   });
+  test('Deve ser renderizado os cards de receitas', () => {
+    const { history } = renderRouter(<App />);
 
-  //   expect(screen.getByRole('button', { name: /all/i })).toBeInTheDocument();
-  //   expect(screen.getByRole('button', { name: /meals/i })).toBeInTheDocument();
-  //   expect(screen.getByRole('button', { name: /drinks/i })).toBeInTheDocument();
-  // });
+    act(() => {
+      history.push(route);
+    });
 
-  test('Botões renderizam e filtram corretamente', async () => {
-    const history = createMemoryHistory();
-    history.push('/done-recipes');
+    expect(screen.getByRole('button', { name: /all/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /meals/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /drinks/i })).toBeInTheDocument();
+  });
 
-    // const localStorageMock = {
-    //   getItem: jest.fn(),
-    //   setItem: jest.fn(),
-    //   removeItem: jest.fn(),
-    //   clear: jest.fn(),
-    // };
-    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesArray));
+  test('Botões renderizam e filtram corretamente', () => {
+    const { history } = renderRouter(<App />);
 
-    // localStorageMock.setItem('doneRecipes', JSON.stringify(doneRecipesArray));
-
-    render(
-      <Router history={ history }>
-        <SearchBarProvider>
-          <HeaderProvider>
-            <DoneRecipes />
-          </HeaderProvider>
-        </SearchBarProvider>
-      </Router>,
-    );
-
+    act(() => {
+      history.push(route);
+    });
     const btnAll = screen.getByRole('button', { name: /all/i });
     const btnMeals = screen.getByRole('button', { name: /meals/i });
     const btnDrinks = screen.getByRole('button', { name: /drinks/i });
     const btnShare = screen.getByTestId('0-horizontal-share-btn');
-    expect(btnAll).toBeInTheDocument();
-    expect(btnMeals).toBeInTheDocument();
-    expect(btnDrinks).toBeInTheDocument();
-    expect(btnShare).toBeInTheDocument();
-    // localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesArray));
-
-    const local = localStorage.getItem('doneRecipes', JSON.stringify(doneRecipesArray));
-    console.log('LOCAL STORAGE:', local);
+    expect(screen.getByText(/Receitão Xablau/i)).toBeInTheDocument();
+    expect(screen.getByText(/Receitão sinistro/i)).toBeInTheDocument();
 
     userEvent.click(btnAll);
-    // userEvent.click(btnMeals);
-    // userEvent.click(btnDrinks);
-    // userEvent.click(btnShare);
-    // expect(screen.queryByText(/Receitão sinistro/i)).not.toBeInTheDocument();
+    expect(screen.getByText(/Receitão Xablau/i)).toBeInTheDocument();
+    expect(screen.getByText(/Receitão sinistro/i)).toBeInTheDocument();
 
-    screen.logTestingPlaygroundURL();
-    expect(history.location.pathname).toBe('/done-recipes');
+    userEvent.click(btnMeals);
+    expect(screen.getByText(/Receitão Xablau/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Receitão sinistro/i)).not.toBeInTheDocument();
+
+    userEvent.click(btnDrinks);
+    expect(screen.queryByText(/Receitão Xablau/i)).not.toBeInTheDocument();
+    expect(screen.getByText(/Receitão sinistro/i)).toBeInTheDocument();
+
+    userEvent.click(btnShare);
+    expect(screen.getByText(/Link copied!/i)).toBeInTheDocument();
+
   });
+
+
+
+  // test('Botões renderizam e filtram corretamente', async () => {
+  //   const history = createMemoryHistory();
+  //   history.push(route);
+
+  //   // const localStorageMock = {
+  //   //   getItem: jest.fn(),
+  //   //   setItem: jest.fn(),
+  //   //   removeItem: jest.fn(),
+  //   //   clear: jest.fn(),
+  //   // };
+  //   localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesArray));
+
+  //   // localStorageMock.setItem('doneRecipes', JSON.stringify(doneRecipesArray));
+
+  //   render(
+  //     <Router history={ history }>
+  //       <SearchBarProvider>
+  //         <HeaderProvider>
+  //           <DoneRecipes />
+  //         </HeaderProvider>
+  //       </SearchBarProvider>
+  //     </Router>,
+  //   );
+
+  //   const btnAll = screen.getByRole('button', { name: /all/i });
+  //   const btnMeals = screen.getByRole('button', { name: /meals/i });
+  //   const btnDrinks = screen.getByRole('button', { name: /drinks/i });
+  //   const btnShare = screen.getByTestId('0-horizontal-share-btn');
+  //   expect(btnAll).toBeInTheDocument();
+  //   expect(btnMeals).toBeInTheDocument();
+  //   expect(btnDrinks).toBeInTheDocument();
+  //   expect(btnShare).toBeInTheDocument();
+  //   // localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesArray));
+
+  //   const local = localStorage.getItem('doneRecipes', JSON.stringify(doneRecipesArray));
+  //   console.log('LOCAL STORAGE:', local);
+
+  //   userEvent.click(btnAll);
+  //   // userEvent.click(btnMeals);
+  //   // userEvent.click(btnDrinks);
+  //   // userEvent.click(btnShare);
+  //   // expect(screen.queryByText(/Receitão sinistro/i)).not.toBeInTheDocument();
+
+  //   screen.logTestingPlaygroundURL();
+  //   expect(history.location.pathname).toBe('/done-recipes');
+  // });
 });
