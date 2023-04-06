@@ -6,8 +6,6 @@ import userEvent from '@testing-library/user-event';
 import HeaderProvider from '../provider/HeaderProvider';
 import App from '../App';
 import SearchBarProvider from '../provider/SearchBarProvider';
-import Profile from '../pages/DoneRecipes';
-import Header from '../components/Header';
 
 describe('Testes da página de Perfil', () => {
   test('Elementos renderizam corretamente', () => {

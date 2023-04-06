@@ -9,7 +9,7 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 // localStorage.setItem('favoriteRecipes', JSON.stringify(doneRecipesArray));
 // const favoriteFromLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
 const copy = clipboardCopy;
-const twoSeconds = 2000;
+console.log(copy);
 
 function FavoriteRecipes() {
   const [favorites, setFavorites] = useState([]);
@@ -19,9 +19,6 @@ function FavoriteRecipes() {
     // Confirmar se o tipo de receita é salvo no plural ou singular (Drink ou Drinks)
     copy(`http://localhost:3000/${type}s/${id}`);
     setShowLinkCopied(true);
-    setTimeout(() => {
-      setShowLinkCopied(false);
-    }, twoSeconds);
   }
 
   // Filtra receitas de acordo como botão clicado;
@@ -43,7 +40,7 @@ function FavoriteRecipes() {
     const newFavoritesArr = favorites
       .filter((recipe) => Number(recipe.id) !== Number(recipeId));
 
-    console.log('NEW FAVORITE:', newFavoritesArr);
+    console.log('NEW FAVORITE:', newFavoristesArr);
     localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoritesArr));
     // setFavorites(newFavoritesArr);
     const favoriteFromLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
