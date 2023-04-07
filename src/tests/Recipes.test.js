@@ -6,7 +6,6 @@ import App from '../pages/Recipes';
 import SearchBarContext from '../context/SearchBarContext';
 import HeaderProvider from '../provider/HeaderProvider';
 import RecipeProvider from '../provider/RecipeProvider';
-// push
 
 const mockContext = {
   dataApi: {
