@@ -5,8 +5,9 @@ import SearchBarContext from '../context/SearchBarContext';
 import Footer from '../components/Footer';
 
 function Recipes() {
-  const { dataApi, isLoading, setDataApi, setIsLoading } = useContext(SearchBarContext);
+  const { dataApi, setDataApi } = useContext(SearchBarContext);
   const [categories, setCategories] = useState([]);
+  const [Loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const history = useHistory();
   const pathName = history.location.pathname;
@@ -28,16 +29,16 @@ function Recipes() {
         const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
         const data = await response.json();
         setDataApi({ meals: data.meals });
-        setIsLoading(false);
+        setLoading(false);
       } else {
         const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
         const data = await response.json();
         setDataApi({ drinks: data.drinks });
-        setIsLoading(false);
+        setLoading(false);
       }
     };
     fetchApi();
-  }, [pathName, setDataApi, setIsLoading]);
+  }, [pathName, setDataApi, setLoading]);
 
   const handleChangeCategory = async (category) => {
     if (category === selectedCategory || category === 'all') {
@@ -45,17 +46,21 @@ function Recipes() {
       const url = pathName === '/meals'
         ? 'https://www.themealdb.com/api/json/v1/1/search.php?s='
         : 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+      setLoading(true);
       const response = await fetch(url);
       const data = await response.json();
       setDataApi({ meals: data.meals, drinks: data.drinks });
+      setLoading(false);
     } else {
       const apiUrl = pathName === '/meals'
         ? `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
         : `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
+      setLoading(true);
       const response = await fetch(apiUrl);
       const data = await response.json();
       setDataApi(pathName === '/meals' ? { meals: data.meals } : { drinks: data.drinks });
       setSelectedCategory(category);
+      setLoading(false);
     }
   };
   const newArr = [...dataApi[pathNameSplit] ? dataApi[pathNameSplit] : []];
@@ -65,7 +70,7 @@ function Recipes() {
     <>
       <Header />
       {
-        isLoading ? <p>Loading...</p> : (
+        Loading ? <p>Loading...</p> : (
           <section>
             {
               categories.map((category, index) => (
