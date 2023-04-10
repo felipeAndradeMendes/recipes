@@ -3,12 +3,12 @@ import clipboardCopy from 'clipboard-copy';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
+// import doneRecipesArray from '../helpers/LocalStorageTest';
 
 // localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesArray));
-const doneRecipesFromLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+// const doneRecipesFromLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
 // console.log(doneRecipesFromLocalStorage);
 const copy = clipboardCopy;
-const twoSeconds = 2000;
 
 function DoneRecipes() {
   // const history = useHistory();
@@ -19,13 +19,12 @@ function DoneRecipes() {
     // Confirmar se o tipo de receita é salvo no plural ou singular (Drink ou Drinks)
     copy(`http://localhost:3000/${type}s/${id}`);
     setShowLinkCopied(true);
-    setTimeout(() => {
-      setShowLinkCopied(false);
-    }, twoSeconds);
   }
 
   // Filtra receitas de acordo como botão clicado;
   function handleClickFilters(btn) {
+    const doneRecipesFromLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+
     if (btn === 'all') {
       return setRecipes(doneRecipesFromLocalStorage);
     }

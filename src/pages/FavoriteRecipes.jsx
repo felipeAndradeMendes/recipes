@@ -33,16 +33,10 @@ function FavoriteRecipes() {
   }
 
   function handleFavoriteClick(recipeId) {
-    // console.log('cliquei');
-    // console.log(recipeId);
-    // console.log('FAVORITE FROM LOCAL STORAGE:', favoriteFromLocalStorage);
-
     const newFavoritesArr = favorites
       .filter((recipe) => Number(recipe.id) !== Number(recipeId));
 
-    console.log('NEW FAVORITE:', newFavoristesArr);
     localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoritesArr));
-    // setFavorites(newFavoritesArr);
     const favoriteFromLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
     setFavorites(favoriteFromLocalStorage);
   }
