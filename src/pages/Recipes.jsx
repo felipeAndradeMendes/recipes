@@ -7,7 +7,7 @@ import Footer from '../components/Footer';
 function Recipes() {
   const { dataApi, setDataApi } = useContext(SearchBarContext);
   const [categories, setCategories] = useState([]);
-  const [Loading, setLoading] = useState(true);
+  const [Loading, setLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const history = useHistory();
   const pathName = history.location.pathname;
@@ -46,7 +46,7 @@ function Recipes() {
       const url = pathName === '/meals'
         ? 'https://www.themealdb.com/api/json/v1/1/search.php?s='
         : 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-      setLoading(true);
+      setLoading(false);
       const response = await fetch(url);
       const data = await response.json();
       setDataApi({ meals: data.meals, drinks: data.drinks });
@@ -55,7 +55,7 @@ function Recipes() {
       const apiUrl = pathName === '/meals'
         ? `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
         : `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
-      setLoading(true);
+      setLoading(false);
       const response = await fetch(apiUrl);
       const data = await response.json();
       setDataApi(pathName === '/meals' ? { meals: data.meals } : { drinks: data.drinks });
