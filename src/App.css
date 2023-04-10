@@ -20,10 +20,10 @@ body {
   position: fixed;
   width: 640px;
   z-index: 10;
-
 }
 
 .checked {
   text-decoration: line-through solid;
   text-decoration-color: black;
 }
+
