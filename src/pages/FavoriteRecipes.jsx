@@ -9,7 +9,7 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 // localStorage.setItem('favoriteRecipes', JSON.stringify(doneRecipesArray));
 // const favoriteFromLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
 const copy = clipboardCopy;
-console.log(copy);
+// console.log(copy);
 
 function FavoriteRecipes() {
   const [favorites, setFavorites] = useState([]);
