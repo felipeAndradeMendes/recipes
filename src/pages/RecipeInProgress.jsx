@@ -142,42 +142,55 @@ function RecipeInProgress() {
   }, [id]);
 
   return (
-    <div className="recipe-in-progress">
+    <div className="recipe-in-progress flex-auto items-center">
       { showRecipeInProgress && (
-        <>
-          <h1 data-testid="recipe-title">
+        <div className="">
+          <h1
+            data-testid="recipe-title"
+            className="font-epilogue font-extrabold text-3xl leading-10
+            tracking-wider text-center uppercase bg-green-600 text-gray-900"
+          >
             { showRecipeInProgress.name }
           </h1>
           <img
+            className="w-auto h-auto"
             src={ showRecipeInProgress.img }
             alt="recipe"
             data-testid="recipe-photo"
           />
-          <button
-            data-testid="share-btn"
-            onClick={ () => {
-              copy(`http://localhost:3000/${pathNameSlice}/${id}`);
-              setShowCopy(true);
-            } }
-          >
-            <img
-              src={ shareIcon }
-              alt={ showRecipeInProgress.name }
-            />
-          </button>
-          {
-            showCopy ? <span>Link copied!</span> : null
-          }
-          <button
-            // data-testid="favorite-btn"
-            onClick={ () => handleFavorite(getRecipe) }
-          >
-            <img
-              data-testid="favorite-btn"
-              src={ !favoriteProgress ? whiteHeartIcon : blackHeartIcon }
-              alt="favorite"
-            />
-          </button>
+          <div className="flex-auto justify-center gap-x-4">
+            <button
+              className="flex items-center justify-center bg-gray-200
+              hover:bg-gray-300 p-2 rounded"
+              data-testid="share-btn"
+              onClick={ () => {
+                copy(`http://localhost:3000/${pathNameSlice}/${id}`);
+                setShowCopy(true);
+              } }
+            >
+              <img
+                className="h-5 w-5"
+                src={ shareIcon }
+                alt={ showRecipeInProgress.name }
+              />
+            </button>
+            {
+              showCopy ? <span>Link copied!</span> : null
+            }
+            <button
+              // data-testid="favorite-btn"
+              className="flex items-center justify-center bg-gray-200
+              hover:bg-gray-300 p-2 rounded"
+              onClick={ () => handleFavorite(getRecipe) }
+            >
+              <img
+                className="h-5 w-5"
+                data-testid="favorite-btn"
+                src={ !favoriteProgress ? whiteHeartIcon : blackHeartIcon }
+                alt="favorite"
+              />
+            </button>
+          </div>
           <h4
             data-testid="recipe-category"
           >
@@ -220,7 +233,7 @@ function RecipeInProgress() {
           >
             Finalizar
           </button>
-        </>
+        </div>
       )}
     </div>
   );

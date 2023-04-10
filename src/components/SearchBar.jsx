@@ -30,54 +30,59 @@ function SearchBar() {
 
   return (
     <div
-      className="bg-green-600 rounded-md p-3 flex items-center justify-center"
+      className="bg-green-600 rounded-md p-3 flex flex-col
+      items-center justify-center w-[360px]"
     >
-      <input
-        className="box-border rounded-xl border-gray-900 border mr-10"
-        type="text"
-        data-testid="search-input"
-        name="searchText"
-        value={ nameSearch }
-        onChange={ handleChange }
-      />
-      <label htmlFor="ingredient" className=" block text-gray-900 mr-10">
-        Ingredient
+      <div className=" flex justify-center">
         <input
-          className="ml-1 px-4 py-2 border rounded-md w-full text-gray-700"
-          type="radio"
-          name="searchType"
-          id="i"
-          data-testid="ingredient-search-radio"
-          value="ingredient"
+          className="box-border rounded-xl border-gray-900 border"
+          type="text"
+          data-testid="search-input"
+          name="searchText"
+          value={ nameSearch }
           onChange={ handleChange }
         />
-      </label>
-      <label htmlFor="name" className=" block text-gray-900 mr-10">
-        Name
-        <input
-          className="ml-1 px-4 py-2 border rounded-md w-full text-gray-700"
-          type="radio"
-          name="searchType"
-          id="s"
-          data-testid="name-search-radio"
-          value="name"
-          onChange={ handleChange }
-        />
-      </label>
-      <label htmlFor="first-letter" className=" block text-gray-900 mr-10">
-        First letter
-        <input
-          className="ml-1 px-4 py-2 border rounded-md w-full text-gray-700"
-          type="radio"
-          name="searchType"
-          id="f"
-          data-testid="first-letter-search-radio"
-          value="first-letter"
-          onChange={ (target) => handleChange(target) }
-        />
-      </label>
+      </div>
+      <div className="flex gap-2">
+        <label htmlFor="ingredient" className=" flex text-gray-900">
+          Ingredient
+          <input
+            className="ml-1 px-4 py-2 border rounded-md w-full text-gray-700"
+            type="radio"
+            name="searchType"
+            id="i"
+            data-testid="ingredient-search-radio"
+            value="ingredient"
+            onChange={ handleChange }
+          />
+        </label>
+        <label htmlFor="name" className=" flex text-gray-900">
+          Name
+          <input
+            className="ml-1 px-4 py-2 border rounded-md w-full text-gray-700"
+            type="radio"
+            name="searchType"
+            id="s"
+            data-testid="name-search-radio"
+            value="name"
+            onChange={ handleChange }
+          />
+        </label>
+        <label htmlFor="first-letter" className=" flex text-gray-900">
+          First letter
+          <input
+            className="ml-1 px-4 py-2 border rounded-md text-gray-700"
+            type="radio"
+            name="searchType"
+            id="f"
+            data-testid="first-letter-search-radio"
+            value="first-letter"
+            onChange={ (target) => handleChange(target) }
+          />
+        </label>
+      </div>
       <button
-        className="text-gray-900 bg-gray-400 font-bold rounded-md w-64"
+        className="text-gray-900 bg-gray-400 hover:bg-gray-300 font-bold rounded-md w-64"
         type="button"
         data-testid="exec-search-btn"
         onClick={ () => handleClick() }
