@@ -1,10 +1,14 @@
+/* eslint-disable max-lines */
+/* eslint-disable react/jsx-max-depth */
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory, Link } from 'react-router-dom';
+import { AiOutlineShareAlt } from 'react-icons/ai';
+import { MdOutlineFavoriteBorder, MdFavorite } from 'react-icons/md';
 import clipboardCopy from 'clipboard-copy';
-import shareIcon from '../images/shareIcon.svg';
+// import shareIcon from '../images/shareIcon.svg';
 import Carousel from '../components/Carousel';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
+// import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+// import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function RecipeDetails() {
   const [recipe, setRecipe] = useState({});
@@ -147,35 +151,89 @@ function RecipeDetails() {
     localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteRecipes));
   };
   return (
-    <section>
-      <h1>Recipe Details</h1>
-      <h2 data-testid="recipe-title">{recipe.strMeal || recipe.strDrink}</h2>
+    <section
+      className="relative p-0 pb-[4.5rem]"
+    >
       <img
         src={ recipe.strMealThumb || recipe.strDrinkThumb }
         alt={ recipe.strMeal || recipe.strDrink }
         data-testid="recipe-photo"
+        className="absolute"
       />
-      <h2 data-testid="recipe-category">
-        {`${recipe.strCategory}
+      <div className="relative h-[40vh] bg-black opacity-40 ">
+        <div className="flex justify-between p-5">
+          <h2 data-testid="recipe-category" className="text-2xl text-white">
+            {`${recipe.strCategory}
        ${pathName.includes('meals') ? '' : recipe.strAlcoholic}`}
-
-      </h2>
-      <h3>Ingredients</h3>
-      <ul>
-        {
-          ingredients.map((ingredient, index) => (
-            <li
-              key={ index }
-              data-testid={ `${index}-ingredient-name-and-measure` }
+          </h2>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              data-testid="share-btn"
+              onClick={ () => {
+                clearInterval(intervalID);
+                copy(`http://localhost:3000${pathName}`);
+                setShowCopy(true);
+              } }
+              className="text-white"
             >
-              {`${ingredient.strMeasure === undefined ? '' : ingredient.strMeasure} 
+              {/* <img
+                src={ shareIcon }
+                alt={ recipe.strMeal || recipe.strDrink }
+              /> */}
+              <AiOutlineShareAlt
+                size={ 30 }
+              />
+            </button>
+            {
+              showCopy ? <span className="text-white">Link copied!</span> : null
+            }
+            <button
+              type="button"
+              onClick={ () => handleFavorite(recipe) }
+            >
+              {/* <img
+                data-testid="favorite-btn"
+                src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+                alt="favorite"
+              /> */}
+              {isFavorite ? <MdOutlineFavoriteBorder color="white" size={ 30 } />
+                : <MdFavorite color="white" size={ 30 } />}
+            </button>
+          </div>
+        </div>
+        <h2
+          className="text-white text-4xl text-center"
+          data-testid="recipe-title"
+        >
+          {recipe.strMeal || recipe.strDrink}
+        </h2>
+      </div>
+      <div className="px-4">
+        <h3 className="text-2xl font-bold pt-10">Ingredients</h3>
+        <ul className="border border-gray-400 rounded-md p-4">
+          {
+            ingredients.map((ingredient, index) => (
+              <li
+                key={ index }
+                data-testid={ `${index}-ingredient-name-and-measure` }
+              >
+                {`${ingredient.strMeasure === undefined ? '' : ingredient.strMeasure} 
                 ${ingredient.strIngredients}`}
-            </li>
-          ))
-        }
-      </ul>
-      <h3>Instructions</h3>
-      <p data-testid="instructions">{recipe.strInstructions}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div className="px-4 pb-10">
+        <h3 className="text-2xl font-bold pt-10">Instructions</h3>
+        <p
+          className="border border-gray-400 rounded-md p-4"
+          data-testid="instructions"
+        >
+          {recipe.strInstructions}
+        </p>
+      </div>
       {
         pathName.includes('meals') ? (
           <iframe
@@ -185,6 +243,7 @@ function RecipeDetails() {
             allow="accelerometer; clipboard-write;
              encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
+            className="w-full h-[30vh]"
           />
         ) : null
       }
@@ -201,34 +260,8 @@ function RecipeDetails() {
           </Link>
         ) : null
       }
-      <button
-        type="button"
-        data-testid="share-btn"
-        onClick={ () => {
-          clearInterval(intervalID);
-          copy(`http://localhost:3000${pathName}`);
-          setShowCopy(true);
-        } }
-      >
-        <img
-          src={ shareIcon }
-          alt={ recipe.strMeal || recipe.strDrink }
-        />
-      </button>
-      {
-        showCopy ? <span>Link copied!</span> : null
-      }
-      <button
-        type="button"
-        onClick={ () => handleFavorite(recipe) }
-      >
-        <img
-          data-testid="favorite-btn"
-          src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-          alt="favorite"
-        />
-      </button>
-      <h3>Recomendadas</h3>
+
+      <h3 className="text-2xl font-bold pt-10">Recomendation</h3>
       <Carousel
         pathName={ pathName }
         meals={ meals }
