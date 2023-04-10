@@ -117,8 +117,8 @@ function Recipes() {
       <Header />
       {
         Loading ? <p>Loading...</p> : (
-          <section className="pb-14">
-            <div className="flex justify-around gap-2 items-center pb-10">
+          <section className="pb-14 pt-5">
+            <div className="flex justify-around items-center pb-10">
               {
                 categories.map((category, index) => (
                   <div
