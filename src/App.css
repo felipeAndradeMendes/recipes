@@ -1,8 +1,8 @@
 body {
   font-family: sans-serif;
-  height: 100vh;
+  height: 640px;
   margin: auto;
-  width: 640px;
+  width: 360px;
 }
 
 .start-recipe-btn {
