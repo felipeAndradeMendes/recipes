@@ -1,8 +1,9 @@
 body {
   font-family: sans-serif;
-  height: 100vh;
+  height: 640px;
   margin: auto;
-  width: 640px;
+  width: 320px;
+  background-color: #F2F2F2;
 }
 
 .start-recipe-btn {
@@ -25,5 +26,9 @@ body {
 .checked {
   text-decoration: line-through solid;
   text-decoration-color: black;
+}
+
+p {
+  font-size: 1rem;
 }
 
