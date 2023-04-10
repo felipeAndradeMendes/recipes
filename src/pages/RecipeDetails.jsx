@@ -20,6 +20,7 @@ function RecipeDetails() {
   const { id } = useParams();
   const sliceMax = 6;
   const copy = clipboardCopy;
+  const pathNameSplit = pathName.includes('meals') ? 'meals' : 'drinks';
 
   useEffect(() => {
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
@@ -80,15 +81,15 @@ function RecipeDetails() {
   }, [id]);
   useEffect(() => {
     const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-
     if (inProgressRecipes) {
-      const recipeInProgress = inProgressRecipes[pathName
-        .includes('meals') ? 'meals' : 'drinks'][id];
-      if (recipeInProgress) {
-        setDoneBtn('Continue Recipe');
-      }
+      const chavesId = Object.keys(inProgressRecipes[pathNameSplit]);
+      chavesId.forEach((chave) => {
+        if (chave === id) {
+          setDoneBtn('Continue Recipe');
+        }
+      });
     }
-  }, [pathName, id]);
+  }, [pathName, id, pathNameSplit]);
   useEffect(() => {
     const seconds = 2000;
     if (showCopy) {

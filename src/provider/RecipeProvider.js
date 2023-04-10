@@ -71,14 +71,40 @@ function RecipeProvider({ children }) {
     return contentLocalStorage;
   };
 
-  // Adiciona receita feita ao estado
-  const addNewDoneRecipe = () => {
-
-  };
-
   // função para mudar a rota após concluir a receita
-  const handleFinishButton = () => {
-    addNewDoneRecipe(recipeInProgress[0]);
+  const handleFinishButton = (doneRecipe, path) => {
+    console.log(doneRecipe);
+    const LS = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    const newArray = LS;
+    if (path.includes('meals')) {
+      const recipe = {
+        id: doneRecipe.meals[0].idMeal,
+        nationality: doneRecipe.meals[0].strArea,
+        name: doneRecipe.meals[0].strMeal,
+        category: doneRecipe.meals[0].strCategory,
+        image: doneRecipe.meals[0].strMealThumb,
+        tags: doneRecipe.meals[0].strTags === null ? []
+          : doneRecipe.meals[0].strTags.split(','),
+        alcoholicOrNot: '',
+        type: 'meal',
+        doneDate: new Date().toISOString(),
+      };
+      localStorage.setItem('doneRecipes', JSON.stringify([...newArray, recipe]));
+    } else if (path.includes('drinks')) {
+      const recipe = {
+        id: doneRecipe.drinks[0].idDrink,
+        nationality: '',
+        name: doneRecipe.drinks[0].strDrink,
+        category: doneRecipe.drinks[0].strCategory,
+        image: doneRecipe.drinks[0].strDrinkThumb,
+        tags: doneRecipe.drinks[0].strTags === null ? [] : doneRecipe.drinks[0].strTags,
+        alcoholicOrNot: doneRecipe.drinks[0].strAlcoholic
+          ? doneRecipe.drinks[0].strAlcoholic : '',
+        type: 'drink',
+        doneDate: new Date().toISOString(),
+      };
+      localStorage.setItem('doneRecipes', JSON.stringify([...newArray, recipe]));
+    }
     history.push('/done-recipes');
   };
 

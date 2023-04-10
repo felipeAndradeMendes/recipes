@@ -1,58 +1,129 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
+import clipboardCopy from 'clipboard-copy';
 import RecipeContext from '../context/RecipeContext';
 import useFetchRecipes from '../hooks/useFetchRecipes';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
 import '../App.css';
 
 function RecipeInProgress() {
   const { showRecipeInProgress, makeRecipeInProgress,
-    isDrink, setLocalStorage, getLocalStorage,
+    getLocalStorage,
     handleFinishButton } = useContext(RecipeContext);
 
   const { makeFetch } = useFetchRecipes();
   const { id } = useParams();
+  const pathName = useHistory().location.pathname;
+  const pathNameSlice = pathName.includes('meals') ? 'meals' : 'drinks';
+  const copy = clipboardCopy;
 
   // estado com os ingredientes checkados ou não
   const [checkedIngredients, setCheckedIngredients] = useState({});
+  const [showCopy, setShowCopy] = useState(false);
+  const [getRecipe, setRecipe] = useState({});
+  const [favoriteProgress, setFavorite] = useState(false);
 
   const inProgressRecipes = 'inProgressRecipes';
-
+  useEffect(() => {
+    console.log('entrou');
+    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    const isFavorites = favorites.some((favorite) => favorite.id === id);
+    if (isFavorites) {
+      setFavorite(true);
+    }
+  }, [id]);
   const getApiId = async () => {
     let endpoint = '';
 
-    if (isDrink) {
+    if (pathName.includes('drinks')) {
       endpoint = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
     } else {
       endpoint = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
     }
     const recipesResults = await makeFetch(endpoint);
-    // console.log(recipesResults);
+    setRecipe(recipesResults);
     makeRecipeInProgress(recipesResults);
   };
 
-  const handleShareButton = () => {
-  };
-
-  const handleGoFavorite = () => {
+  const handleFavorite = (favorite) => {
+    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    const idRecipe = pathNameSlice === 'meals' ? 'idMeal'
+      : 'idDrink';
+    const repeatedFavorite = favorites.some(
+      (favoriteRecipe) => favoriteRecipe.id
+      === favorite[pathNameSlice][0][idRecipe],
+    );
+    console.log(repeatedFavorite);
+    if (repeatedFavorite) {
+      console.log('repetido');
+      setFavorite(!favoriteProgress);
+      const removeIndex = favorites.findIndex(
+        (favoriteRecipe) => favoriteRecipe.id === favorite.idMeal
+        || favoriteRecipe.id === favorite.idDrink,
+      );
+      const remove = favorites.slice();
+      remove.splice(removeIndex, 1);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(remove));
+      return;
+    }
+    let newFavoriteRecipes = [];
+    if (pathName.includes('meals')) {
+      const { strMeal, strArea, strCategory, idMeal, strMealThumb } = favorite.meals[0];
+      const newFavoriteMeal = {
+        id: idMeal,
+        type: 'meal',
+        nationality: strArea || null,
+        category: strCategory,
+        alcoholicOrNot: '',
+        name: strMeal,
+        image: strMealThumb,
+      };
+      newFavoriteRecipes = [...favorites, newFavoriteMeal];
+    } else if (pathName.includes('drinks')) {
+      const { strDrink, strCategory,
+        idDrink, strDrinkThumb, strAlcoholic } = favorite.drinks[0];
+      const newFavoriteDrink = {
+        id: idDrink,
+        type: 'drink',
+        nationality: '',
+        category: strCategory,
+        alcoholicOrNot: strAlcoholic === 'Alcoholic' ? strAlcoholic : '',
+        name: strDrink,
+        image: strDrinkThumb,
+      };
+      newFavoriteRecipes = [...favorites, newFavoriteDrink];
+    }
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteRecipes));
+    setFavorite(!favoriteProgress);
   };
 
   const handleIngredientChange = (event) => {
     const ingredientName = event.target.name;
     const isChecked = event.target.checked;
-    const ingredients = {
-      ...checkedIngredients,
-      [ingredientName]: isChecked,
-    };
-    console.log(ingredients);
-    setCheckedIngredients(ingredients);
-    setLocalStorage(inProgressRecipes, ingredients);
+    setCheckedIngredients({ ...checkedIngredients, [ingredientName]: isChecked });
+
+    const getLocalData = localStorage.getItem(inProgressRecipes);
+    const data = getLocalData ? JSON.parse(getLocalData) : { drinks: {}, meals: {} };
+
+    if (pathName.includes('drinks')) {
+      data.drinks[id] = { ...data.drinks[id], [ingredientName]: isChecked };
+    } else if (pathName.includes('meals')) {
+      data.meals[id] = { ...data.meals[id], [ingredientName]: isChecked };
+    }
+    localStorage.setItem(inProgressRecipes, JSON.stringify(data));
   };
 
   // função de pegar ingredientes ja marcado do local storage
   const getIngredientsLocalStorage = () => {
     const ingredientsLocalStorage = getLocalStorage(inProgressRecipes);
     if (ingredientsLocalStorage) {
-      setCheckedIngredients(ingredientsLocalStorage);
+      if (pathName.includes('drinks')) {
+        setCheckedIngredients(ingredientsLocalStorage.drinks[id] || {});
+      } else if (pathName.includes('meals')) {
+        setCheckedIngredients(ingredientsLocalStorage.meals[id] || {});
+      }
     }
   };
 
@@ -66,7 +137,6 @@ function RecipeInProgress() {
 
   useEffect(() => {
     getApiId();
-    // console.log(showRecipeInProgress);
     getIngredientsLocalStorage();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -85,15 +155,28 @@ function RecipeInProgress() {
           />
           <button
             data-testid="share-btn"
-            onClick={ handleShareButton }
+            onClick={ () => {
+              copy(`http://localhost:3000/${pathNameSlice}/${id}`);
+              setShowCopy(true);
+            } }
           >
-            Compartilhar
+            <img
+              src={ shareIcon }
+              alt={ showRecipeInProgress.name }
+            />
           </button>
+          {
+            showCopy ? <span>Link copied!</span> : null
+          }
           <button
-            data-testid="favorite-btn"
-            onClick={ handleGoFavorite }
+            // data-testid="favorite-btn"
+            onClick={ () => handleFavorite(getRecipe) }
           >
-            Favoritos
+            <img
+              data-testid="favorite-btn"
+              src={ !favoriteProgress ? whiteHeartIcon : blackHeartIcon }
+              alt="favorite"
+            />
           </button>
           <h4
             data-testid="recipe-category"
@@ -117,7 +200,8 @@ function RecipeInProgress() {
                     checked={ checkedIngredients[ingredient] || false }
                     onChange={ handleIngredientChange }
                   />
-                </label>))}
+                </label>
+              ))}
           </fieldset>
           <h3>Instruções</h3>
           <div
@@ -131,7 +215,7 @@ function RecipeInProgress() {
             type="button"
             data-testid="finish-recipe-btn"
             value="finalizar"
-            onClick={ handleFinishButton }
+            onClick={ () => handleFinishButton(getRecipe, pathName) }
             disabled={ !isAllChecked() }
           >
             Finalizar

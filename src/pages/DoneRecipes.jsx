@@ -41,6 +41,8 @@ function DoneRecipes() {
     }
   }, []);
 
+  recipes.map((recipe) => console.log(recipe));
+
   return (
     <>
       <Header />
@@ -113,11 +115,14 @@ function DoneRecipes() {
             />
           </button>
           {showLinkCopied && <p>Link copied!</p>}
-          {recipe.tags.map((tag, indexTag) => (
-            <p key={ indexTag } data-testid={ `${index}-${tag}-horizontal-tag` }>
-              { tag }
-            </p>
-          ))}
+          {recipe.tags?.map((tag, indexTag) => {
+            console.log(recipe.tags);
+            return (
+              <p key={ indexTag } data-testid={ `${index}-${tag}-horizontal-tag` }>
+                { tag }
+              </p>
+            );
+          })}
           <hr />
         </div>
       ))}
