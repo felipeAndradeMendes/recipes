@@ -30,7 +30,7 @@ function SearchBar() {
 
   return (
     <div
-      className="bg-green-600 rounded-md"
+      className="bg-green-600 rounded-md p-3 flex items-center justify-center"
     >
       <input
         className="box-border rounded-xl border-gray-900 border mr-10"
@@ -40,10 +40,10 @@ function SearchBar() {
         value={ nameSearch }
         onChange={ handleChange }
       />
-      <label htmlFor="ingredient" className="container text-gray-900 mr-10">
+      <label htmlFor="ingredient" className=" block text-gray-900 mr-10">
         Ingredient
         <input
-          className="ml-1"
+          className="ml-1 px-4 py-2 border rounded-md w-full text-gray-700"
           type="radio"
           name="searchType"
           id="i"
@@ -52,10 +52,10 @@ function SearchBar() {
           onChange={ handleChange }
         />
       </label>
-      <label htmlFor="name" className="container text-gray-900 mr-10">
+      <label htmlFor="name" className=" block text-gray-900 mr-10">
         Name
         <input
-          className="ml-1"
+          className="ml-1 px-4 py-2 border rounded-md w-full text-gray-700"
           type="radio"
           name="searchType"
           id="s"
@@ -64,10 +64,10 @@ function SearchBar() {
           onChange={ handleChange }
         />
       </label>
-      <label htmlFor="first-letter" className="container text-gray-900 mr-10">
+      <label htmlFor="first-letter" className=" block text-gray-900 mr-10">
         First letter
         <input
-          className="ml-1"
+          className="ml-1 px-4 py-2 border rounded-md w-full text-gray-700"
           type="radio"
           name="searchType"
           id="f"
@@ -77,8 +77,7 @@ function SearchBar() {
         />
       </label>
       <button
-        className="text-gray-900 container bg-gray-400 font-bold
-        w-207.54 h-25 left-73.67 top-243 rounded-md "
+        className="text-gray-900 bg-gray-400 font-bold rounded-md w-64"
         type="button"
         data-testid="exec-search-btn"
         onClick={ () => handleClick() }
