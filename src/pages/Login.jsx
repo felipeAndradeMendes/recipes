@@ -21,7 +21,7 @@ export default function Login() {
   return (
     <div>
       <form
-        className=""
+        className="flex justify-center items-center flex-col"
         onSubmit={ (e) => {
           e.preventDefault();
           const LSEmail = {
