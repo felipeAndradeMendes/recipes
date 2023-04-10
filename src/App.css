@@ -1,8 +1,8 @@
 body {
   font-family: sans-serif;
-  height: 100vh;
+  height: 640px;
   margin: auto;
-  width: 640px;
+  width: 360px;
 }
 
 .start-recipe-btn {
@@ -26,4 +26,6 @@ body {
   text-decoration: line-through solid;
   text-decoration-color: black;
 }
+
+/* stylelint-disable-next-line selector-max-specificity */
 

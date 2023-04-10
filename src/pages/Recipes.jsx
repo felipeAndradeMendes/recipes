@@ -1,5 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
+import { TbMeat, TbIceCream } from 'react-icons/tb';
+import { GiToaster, GiChickenOven, GiGoat, GiDrinkMe,
+  GiChocolateBar } from 'react-icons/gi';
+import { BiBorderAll } from 'react-icons/bi';
+import { FaCocktail } from 'react-icons/fa';
+import { GrStatusUnknown } from 'react-icons/gr';
 import Header from '../components/Header';
 import SearchBarContext from '../context/SearchBarContext';
 import Footer from '../components/Footer';
@@ -16,10 +22,49 @@ function Recipes() {
 
   useEffect(() => {
     if (pathName === '/meals') {
-      setCategories(['Beef', 'Breakfast', 'Chicken', 'Dessert', 'Goat']);
+      const mealIcons = [
+        { name: 'Beef',
+          icon: <TbMeat
+            tyle={ { width: '24px', height: '24px' } }
+          /> },
+        { name: 'Breakfast',
+          icon: <GiToaster
+            style={ { width: '24px', height: '24px' } }
+          /> },
+        { name: 'Chicken',
+          icon: <GiChickenOven
+            style={ { width: '24px', height: '24px' } }
+          /> },
+        { name: 'Dessert',
+          icon: <TbIceCream
+            style={ { width: '24px', height: '24px' } }
+          /> },
+        { name: 'Goat',
+          icon: <GiGoat
+            style={ { width: '24px', height: '24px' } }
+          /> },
+      ];
+      setCategories(mealIcons);
     } else {
-      setCategories(['Ordinary Drink', 'Cocktail',
-        'Shake', 'Other/Unknown', 'Cocoa']);
+      const drinkIcon = [
+        { name: 'Cocoa',
+          icon: <GiChocolateBar
+            style={ { width: '24px', height: '24px' } }
+          /> },
+        { name: 'Cocktail',
+          icon: <FaCocktail
+            style={ { width: '24px', height: '24px' } }
+          /> },
+        { name: 'Other',
+          icon: <GrStatusUnknown
+            style={ { width: '24px', height: '24px' } }
+          /> },
+        { name: 'Shake',
+          icon: <GiDrinkMe
+            style={ { width: '24px', height: '24px' } }
+          /> },
+      ];
+      setCategories(drinkIcon);
     }
   }, [pathName]);
 
@@ -41,6 +86,7 @@ function Recipes() {
   }, [pathName, setDataApi, setLoading]);
 
   const handleChangeCategory = async (category) => {
+    console.log(category);
     if (category === selectedCategory || category === 'all') {
       setSelectedCategory('');
       const url = pathName === '/meals'
@@ -71,52 +117,83 @@ function Recipes() {
       <Header />
       {
         Loading ? <p>Loading...</p> : (
-          <section>
-            {
-              categories.map((category, index) => (
-                <div key={ index }>
-                  <button
-                    type="button"
-                    data-testid={ `${category}-category-filter` }
-                    onClick={ () => handleChangeCategory(category) }
-                  >
-                    {category}
-                  </button>
-                </div>
-              ))
-            }
-            <button
-              type="button"
-              data-testid="All-category-filter"
-              onClick={ () => handleChangeCategory('all') }
-            >
-              All
-            </button>
-            {
-              isGreaterThan12?.map((recipe, index) => (
-                <Link
-                  key={ recipe.idMeal || recipe.idDrink }
-                  to={ `${pathName}/${recipe.idMeal || recipe.idDrink}` }
-                >
+          <section className="pb-14">
+            <div className="flex justify-around gap-2 items-center pb-10">
+              {
+                categories.map((category, index) => (
                   <div
-                    data-testid={ `${index}-recipe-card` }
+                    key={ category.name + index }
+                    className="flex flex-col justify-center items-center"
                   >
-                    <img
-                      src={ recipe.strMealThumb || recipe.strDrinkThumb }
-                      alt={ recipe.strMeal || recipe.strDrink }
-                      data-testid={ `${index}-card-img` }
-                      style={ { width: '200px' } }
-                    />
-                    <p data-testid={ `${index}-horizontal-top-text` }>
-                      { recipe.strAlcoholic || recipe.strCategory }
-                    </p>
-                    <p data-testid={ `${index}-card-name` }>
-                      { recipe.strMeal || recipe.strDrink }
-                    </p>
+                    <button
+                      className="w-14 h-14 flex justify-center flex-col
+                     items-center border-2 border-[#0a9b61] rounded-full
+                      hover:bg-[#0a9b61] hover:text-white"
+                      type="button"
+                      data-testid={ `${category.name}-category-filter` }
+                      onClick={ () => handleChangeCategory(category.name) }
+                    >
+                      {category.icon}
+                    </button>
+                    <p>{category.name}</p>
                   </div>
-                </Link>
-              ))
-            }
+                ))
+              }
+              <div className="flex flex-col items-center">
+                <button
+                  type="button"
+                  data-testid="All-category-filter"
+                  onClick={ () => handleChangeCategory('all') }
+                  className="w-14 h-14 flex justify-center flex-col
+                     items-center border-2 border-[#0a9b61] rounded-full
+                      hover:bg-[#0a9b61] hover:text-white"
+                >
+                  <BiBorderAll
+                    style={ { width: '24px', height: '24px' } }
+                  />
+                </button>
+                <p>All</p>
+              </div>
+            </div>
+            <div className="flex flex-wrap justify-around gap-2">
+              {
+                isGreaterThan12?.map((recipe, index) => (
+                  <Link
+                    key={ recipe.idMeal || recipe.idDrink }
+                    to={ `${pathName}/${recipe.idMeal || recipe.idDrink}` }
+                    className="flex flex-col justify-center items-center w-[47%]"
+                  >
+                    <div
+                      data-testid={ `${index}-recipe-card` }
+                      className="border border-black rounded-md"
+                    >
+                      <img
+                        src={ recipe.strMealThumb || recipe.strDrinkThumb }
+                        alt={ recipe.strMeal || recipe.strDrink }
+                        data-testid={ `${index}-card-img` }
+                        className="rounded-md w-40 h-40 object-cover object-center"
+                      />
+                      <div className="p-1">
+                        <p
+                          data-testid={ `${index}-horizontal-top-text` }
+                          className="pl-2 text-xs"
+                        >
+                          <span className="italic text-xs">Category: </span>
+                          { recipe.strAlcoholic || recipe.strCategory }
+                        </p>
+                        <p
+                          data-testid={ `${index}-card-name` }
+                          className="pl-2 text-xs"
+                        >
+                          <span className="italic text-xs">Name: </span>
+                          { recipe.strMeal || recipe.strDrink }
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                ))
+              }
+            </div>
           </section>
         )
       }
