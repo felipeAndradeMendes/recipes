@@ -2,8 +2,8 @@ body {
   font-family: sans-serif;
   height: 640px;
   margin: auto;
-  width: 320px;
   background-color: #F2F2F2;
+  width: 360px;
 }
 
 .start-recipe-btn {
@@ -27,7 +27,6 @@ body {
   text-decoration: line-through solid;
   text-decoration-color: black;
 }
-
 p {
   font-size: 1rem;
 }
