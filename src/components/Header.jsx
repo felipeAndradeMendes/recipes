@@ -111,7 +111,7 @@ function Header() {
       <div>
         { /* SEARCHBAR */ }
         {showSearch && (
-          <div className="border-2 border-black">
+          <div>
             <SearchBar />
           </div>
         )}

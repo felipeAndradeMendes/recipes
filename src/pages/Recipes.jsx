@@ -117,7 +117,7 @@ function Recipes() {
       <Header />
       {
         Loading ? <p>Loading...</p> : (
-          <section className="pb-14 pt-5">
+          <section className="pb-[4.5rem] pt-5">
             <div className="flex justify-around items-center pb-10">
               {
                 categories.map((category, index) => (
@@ -135,7 +135,7 @@ function Recipes() {
                     >
                       {category.icon}
                     </button>
-                    <p>{category.name}</p>
+                    <p className="text-xs">{category.name}</p>
                   </div>
                 ))
               }
@@ -152,7 +152,7 @@ function Recipes() {
                     style={ { width: '24px', height: '24px' } }
                   />
                 </button>
-                <p>All</p>
+                <p className="text-xs">All</p>
               </div>
             </div>
             <div className="flex flex-wrap justify-around gap-2">

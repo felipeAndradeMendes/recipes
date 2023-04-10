@@ -13,11 +13,16 @@ function Carousel({ pathName, meals, drinks }) {
         pathName.includes('meals') ? (
           drinks.map((drink, index) => (
             <SwiperSlide key={ drink.idDrink }>
-              <div data-testid={ `${index}-recommendation-card` }>
+              <div
+                data-testid={ `${index}-recommendation-card` }
+                className="flex flex-col justify-center
+                 items-center border border-gray-300 rounded-md"
+              >
                 <img
                   style={ { width: '300px' } }
                   src={ drink.strDrinkThumb }
                   alt={ drink.strDrink }
+                  className="rounded-md"
                 />
                 <p data-testid={ `${index}-recommendation-title` }>
                   {drink.strDrink}
@@ -28,13 +33,21 @@ function Carousel({ pathName, meals, drinks }) {
         ) : (
           meals.map((meal, index) => (
             <SwiperSlide key={ meal.idMeal }>
-              <div data-testid={ `${index}-recommendation-card` }>
+              <div
+                data-testid={ `${index}-recommendation-card` }
+                className="flex flex-col justify-center
+                 items-center border border-gray-300 rounded-md"
+              >
                 <img
                   style={ { width: '300px' } }
                   src={ meal.strMealThumb }
                   alt={ meal.strMeal }
+                  className="rounded-md"
                 />
-                <p data-testid={ `${index}-recommendation-title` }>
+                <p
+                  className="text-center"
+                  data-testid={ `${index}-recommendation-title` }
+                >
                   {meal.strMeal}
                 </p>
               </div>
