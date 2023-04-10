@@ -27,3 +27,5 @@ body {
   text-decoration-color: black;
 }
 
+/* stylelint-disable-next-line selector-max-specificity */
+
