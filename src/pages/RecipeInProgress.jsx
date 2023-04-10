@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import clipboardCopy from 'clipboard-copy';
@@ -142,23 +143,24 @@ function RecipeInProgress() {
   }, [id]);
 
   return (
-    <div className="recipe-in-progress flex-auto items-center">
+    <div className="recipe-in-progress flex-auto items-center w-[360px]">
       { showRecipeInProgress && (
-        <div className="">
+        <div className="justify-center">
           <h1
             data-testid="recipe-title"
             className="font-epilogue font-extrabold text-3xl leading-10
-            tracking-wider text-center uppercase bg-green-600 text-gray-900"
+            tracking-wider text-center uppercase bg-green-600 text-gray-900
+            flex justify-center"
           >
             { showRecipeInProgress.name }
           </h1>
           <img
-            className="w-auto h-auto"
+            className="w-auto h-auto flex justify-center"
             src={ showRecipeInProgress.img }
             alt="recipe"
             data-testid="recipe-photo"
           />
-          <div className="flex-auto justify-center gap-x-4">
+          <div className="flex justify-center gap-10 bg-green-600 ">
             <button
               className="flex items-center justify-center bg-gray-200
               hover:bg-gray-300 p-2 rounded"
@@ -192,51 +194,82 @@ function RecipeInProgress() {
             </button>
           </div>
           <h4
+            className=" flex items-center justify-center bg-green-600"
             data-testid="recipe-category"
           >
             { showRecipeInProgress.category }
           </h4>
-          <h3>Ingredientes</h3>
-          <fieldset>
-            { showRecipeInProgress.ingredients
-              .map((ingredient, index) => (
-                <label
-                  htmlFor="ingredient"
-                  data-testid={ `${index}-ingredient-step` }
-                  key={ index }
-                  className={ checkedIngredients[ingredient] ? 'checked' : undefined }
-                >
-                  { ingredient }
-                  <input
-                    type="checkbox"
-                    name={ ingredient }
-                    checked={ checkedIngredients[ingredient] || false }
-                    onChange={ handleIngredientChange }
-                  />
-                </label>
-              ))}
+          <h3
+            className="font-sans font-bold text-xl leading-6 text-gray-800"
+          >
+            Ingredientes
+          </h3>
+          <fieldset
+            className="box-border border-gray-400 border-dotted border-2
+            rounded-lg"
+          >
+            <div
+              className="gap-4"
+            >
+              { showRecipeInProgress.ingredients
+                .map((ingredient, index) => (
+                  <div
+                    key={ index }
+                    className=" ml-2 flex items-center"
+                  >
+                    <label
+                      htmlFor="ingredient"
+                      data-testid={ `${index}-ingredient-step` }
+                      key={ index }
+                      className={ checkedIngredients[ingredient] ? 'checked' : undefined }
+                    >
+                      { ingredient }
+                      <input
+                        className="ml-1"
+                        type="checkbox"
+                        name={ ingredient }
+                        checked={ checkedIngredients[ingredient] || false }
+                        onChange={ handleIngredientChange }
+                      />
+                    </label>
+                  </div>
+                ))}
+            </div>
           </fieldset>
-          <h3>Instruções</h3>
+          <h3
+            className="font-sans font-bold text-xl leading-6 text-gray-800"
+          >
+            Instruções
+          </h3>
           <div
-            className="instructions"
-            data-testid="instructions"
+            className="box-border border-gray-400 border-dotted border-2
+            rounded-lg"
           >
-            { showRecipeInProgress.instructions }
+            <div
+              className="instructions"
+              data-testid="instructions"
+            >
+              { showRecipeInProgress.instructions }
+            </div>
           </div>
-          <button
-            className="finish-recipe-btn"
-            type="button"
-            data-testid="finish-recipe-btn"
-            value="finalizar"
-            onClick={ () => handleFinishButton(getRecipe, pathName) }
-            disabled={ !isAllChecked() }
+          <div
+            className="flex items-center justify-center bg-gray-200
+            hover:bg-gray-300 p-2 rounded"
           >
-            Finalizar
-          </button>
+            <button
+              className="finish-recipe-btn"
+              type="button"
+              data-testid="finish-recipe-btn"
+              value="finalizar"
+              onClick={ () => handleFinishButton(getRecipe, pathName) }
+              disabled={ !isAllChecked() }
+            >
+              Finalizar
+            </button>
+          </div>
         </div>
       )}
     </div>
   );
 }
-
 export default RecipeInProgress;
