@@ -29,17 +29,21 @@ function SearchBar() {
   };
 
   return (
-    <div>
+    <div
+      className="bg-green-600 rounded-md"
+    >
       <input
+        className="box-border rounded-xl border-gray-900 border mr-10"
         type="text"
         data-testid="search-input"
         name="searchText"
         value={ nameSearch }
         onChange={ handleChange }
       />
-      <label htmlFor="ingredient">
+      <label htmlFor="ingredient" className="container text-gray-900 mr-10">
         Ingredient
         <input
+          className="ml-1"
           type="radio"
           name="searchType"
           id="i"
@@ -48,9 +52,10 @@ function SearchBar() {
           onChange={ handleChange }
         />
       </label>
-      <label htmlFor="name">
+      <label htmlFor="name" className="container text-gray-900 mr-10">
         Name
         <input
+          className="ml-1"
           type="radio"
           name="searchType"
           id="s"
@@ -59,9 +64,10 @@ function SearchBar() {
           onChange={ handleChange }
         />
       </label>
-      <label htmlFor="first-letter">
+      <label htmlFor="first-letter" className="container text-gray-900 mr-10">
         First letter
         <input
+          className="ml-1"
           type="radio"
           name="searchType"
           id="f"
@@ -71,6 +77,8 @@ function SearchBar() {
         />
       </label>
       <button
+        className="text-gray-900 container bg-gray-400 font-bold
+        w-207.54 h-25 left-73.67 top-243 rounded-md "
         type="button"
         data-testid="exec-search-btn"
         onClick={ () => handleClick() }
