@@ -1,8 +1,12 @@
+/* eslint-disable react/jsx-max-depth */
 import React, { useEffect, useState } from 'react';
 import clipboardCopy from 'clipboard-copy';
+import { BiBorderAll, BiDrink } from 'react-icons/bi';
+import { IoRestaurantOutline } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
+import { RxShare2 } from 'react-icons/rx';
 import Header from '../components/Header';
-import shareIcon from '../images/shareIcon.svg';
+// import shareIcon from '../images/shareIcon.svg';
 // import doneRecipesArray from '../helpers/LocalStorageTest';
 
 // localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesArray));
@@ -42,14 +46,19 @@ function DoneRecipes() {
   return (
     <>
       <Header />
-      <form>
+      <form className="flex max-w-[200px] m-auto justify-between pt-4 pb-4">
         <button
           type="button"
           name="all"
           data-testid="filter-by-all-btn"
           onClick={ (e) => handleClickFilters(e.target.name) }
+          className="w-14 h-14 flex justify-center flex-col
+            items-center border-2 border-[#0a9b61] rounded-full
+           hover:bg-[#0a9b61] hover:text-white"
         >
-          All
+          <BiBorderAll
+            style={ { width: '24px', height: '24px' } }
+          />
         </button>
 
         <button
@@ -57,8 +66,13 @@ function DoneRecipes() {
           name="meal"
           data-testid="filter-by-meal-btn"
           onClick={ (e) => handleClickFilters(e.target.name) }
+          className="w-14 h-14 flex justify-center flex-col
+            items-center border-2 border-[#0a9b61] rounded-full
+           hover:bg-[#0a9b61] hover:text-white"
         >
-          Meals
+          <IoRestaurantOutline
+            style={ { width: '24px', height: '24px' } }
+          />
         </button>
 
         <button
@@ -66,13 +80,20 @@ function DoneRecipes() {
           name="drink"
           data-testid="filter-by-drink-btn"
           onClick={ (e) => handleClickFilters(e.target.name) }
+          className="w-14 h-14 flex justify-center flex-col
+            items-center border-2 border-[#0a9b61] rounded-full
+           hover:bg-[#0a9b61] hover:text-white"
         >
-          Drinks
+          <BiDrink
+            style={ { width: '24px', height: '24px' } }
+          />
         </button>
       </form>
       {/* DONE RECIPES MAP */}
       {recipes.map((recipe, index) => (
         <div
+          className="flex shadow-[0_2px_4px_1.5px_rgb(0,0,0,0.1)]
+        max-w-[320px] m-auto items-center rounded-[10px] mb-4 gap-2"
           key={ recipe.id }
         >
           <Link
@@ -82,41 +103,74 @@ function DoneRecipes() {
           >
             <img
               data-testid={ `${index}-horizontal-image` }
-              style={ { width: '200px' } }
+              style={ { width: '140px' } }
+              className="rounded-l-[10px]"
               src={ recipe.image }
               alt={ recipe.name }
             />
           </Link>
-          <p data-testid={ `${index}-horizontal-top-text` }>
-            { recipe.type === 'meal'
-              ? (`${recipe.nationality} - ${recipe.category}`)
-              : (`${recipe.alcoholicOrNot} - ${recipe.category}`) }
-          </p>
-          <Link to={ `/${recipe.type}s/${recipe.id}` }>
-            <p data-testid={ `${index}-horizontal-name` }>
-              { recipe.name }
-            </p>
-          </Link>
-          <p data-testid={ `${index}-horizontal-done-date` }>
-            {recipe.doneDate}
-          </p>
-          <button
-            type="button"
-            onClick={ () => handleShareClick(recipe.type, recipe.id) }
+          <div
+            className="flex flex-col pr-3"
           >
-            <img
-              data-testid={ `${index}-horizontal-share-btn` }
-              src={ shareIcon }
-              alt="share icon"
-            />
-          </button>
-          {showLinkCopied && <p>Link copied!</p>}
-          {recipe.tags?.map((tag, indexTag) => (
-            <p key={ indexTag } data-testid={ `${index}-${tag}-horizontal-tag` }>
-              { tag }
+            <div className="flex justify-between items-center">
+              <Link to={ `/${recipe.type}s/${recipe.id}` }>
+                <p
+                  className="text-md "
+                  data-testid={ `${index}-horizontal-name` }
+                >
+                  { recipe.name }
+                </p>
+              </Link>
+              <button
+                type="button"
+                onClick={ () => handleShareClick(recipe.type, recipe.id) }
+              >
+                {/* <img
+                  data-testid={ `${index}-horizontal-share-btn` }
+                  src={ shareIcon }
+                  alt="share icon"
+                /> */}
+                <div
+                  className="mb-2 border-2 bg-white rounded-full
+                  w-10 h-10 items-center flex justify-center
+                  hover:border-[#0a9b61] delay-75"
+                >
+                  <RxShare2
+                    style={ { width: '24px', height: '24px', color: '#80E78B' } }
+                  />
+                </div>
+              </button>
+              {showLinkCopied && <p>Link copied!</p>}
+            </div>
+            <p
+              className="text-md "
+              data-testid={ `${index}-horizontal-top-text` }
+            >
+              { recipe.type === 'meal'
+                ? (`${recipe.nationality} - ${recipe.category}`)
+                : (`${recipe.alcoholicOrNot} - ${recipe.category}`) }
             </p>
-          ))}
-          <hr />
+            <p
+              className="text-md "
+              data-testid={ `${index}-horizontal-done-date` }
+            >
+              Done when:
+              {
+                new Date(recipe.doneDate).toLocaleDateString('pt-BR', {
+                  day: 'numeric',
+                  month: 'numeric',
+                  year: 'numeric',
+                })
+              }
+            </p>
+
+            {recipe.tags?.map((tag, indexTag) => (
+              <p key={ indexTag } data-testid={ `${index}-${tag}-horizontal-tag` }>
+                { tag }
+              </p>
+            ))}
+            <hr />
+          </div>
         </div>
       ))}
     </>
