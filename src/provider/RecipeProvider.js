@@ -73,7 +73,6 @@ function RecipeProvider({ children }) {
 
   // função para mudar a rota após concluir a receita
   const handleFinishButton = (doneRecipe, path) => {
-    console.log(doneRecipe);
     const LS = JSON.parse(localStorage.getItem('doneRecipes')) || [];
     const newArray = LS;
     if (path.includes('meals')) {

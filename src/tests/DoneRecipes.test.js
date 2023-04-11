@@ -114,7 +114,6 @@ describe('Testa a pagina de receitas feitas', () => {
   //   // localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesArray));
 
   //   const local = localStorage.getItem('doneRecipes', JSON.stringify(doneRecipesArray));
-  //   console.log('LOCAL STORAGE:', local);
 
   //   userEvent.click(btnAll);
   //   // userEvent.click(btnMeals);

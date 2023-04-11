@@ -34,7 +34,6 @@ function FavoriteRecipes() {
   }
 
   function handleFavoriteClick(recipeId) {
-    console.log(recipeId);
     const newFavoritesArr = favorites
       .filter((recipe) => Number(recipe.id) !== Number(recipeId));
 
