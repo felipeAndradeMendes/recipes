@@ -1,12 +1,15 @@
+/* eslint-disable react/jsx-max-depth */
 /* eslint-disable max-lines */
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import clipboardCopy from 'clipboard-copy';
+import { AiOutlineShareAlt } from 'react-icons/ai';
+import { MdOutlineFavoriteBorder, MdFavorite } from 'react-icons/md';
 import RecipeContext from '../context/RecipeContext';
 import useFetchRecipes from '../hooks/useFetchRecipes';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
-import shareIcon from '../images/shareIcon.svg';
+// import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+// import blackHeartIcon from '../images/blackHeartIcon.svg';
+// import shareIcon from '../images/shareIcon.svg';
 import '../App.css';
 
 function RecipeInProgress() {
@@ -140,113 +143,120 @@ function RecipeInProgress() {
   }, [id]);
 
   return (
-    <div className="recipe-in-progress flex-auto items-center w-[360px]">
+    <section className="recipe-in-progress relative p-0 pb-[4.5rem] w-[360px]">
       { showRecipeInProgress && (
-        <div className="justify-center">
-          <h1
-            data-testid="recipe-title"
-            className="font-epilogue font-extrabold text-3xl leading-10
-            tracking-wider text-center uppercase bg-green-600 text-gray-900
-            flex justify-center"
-          >
-            { showRecipeInProgress.name }
-          </h1>
+        <div>
           <img
-            className="w-auto h-auto flex justify-center"
+            className="absolute"
             src={ showRecipeInProgress.img }
             alt="recipe"
             data-testid="recipe-photo"
           />
-          <div className="flex justify-center gap-10 bg-green-600 ">
-            <button
-              className="flex items-center justify-center bg-gray-200
-              hover:bg-gray-300 p-2 rounded"
-              data-testid="share-btn"
-              onClick={ () => {
-                copy(`http://localhost:3000/${pathNameSlice}/${id}`);
-                setShowCopy(true);
-              } }
-            >
-              <img
-                className="h-5 w-5"
-                src={ shareIcon }
-                alt={ showRecipeInProgress.name }
-              />
-            </button>
-            {
-              showCopy ? <span>Link copied!</span> : null
-            }
-            <button
-              // data-testid="favorite-btn"
-              className="flex items-center justify-center bg-gray-200
-              hover:bg-gray-300 p-2 rounded"
-              onClick={ () => handleFavorite(getRecipe) }
-            >
-              <img
-                className="h-5 w-5"
-                data-testid="favorite-btn"
-                src={ !favoriteProgress ? whiteHeartIcon : blackHeartIcon }
-                alt="favorite"
-              />
-            </button>
-          </div>
-          <h4
-            className=" flex items-center justify-center bg-green-600"
-            data-testid="recipe-category"
-          >
-            { showRecipeInProgress.category }
-          </h4>
-          <h3
-            className="font-sans font-bold text-xl leading-6 text-gray-800"
-          >
-            Ingredientes
-          </h3>
-          <fieldset
-            className="box-border border-gray-400 border-dotted border-2
-            rounded-lg"
-          >
-            <div
-              className="gap-4"
-            >
-              { showRecipeInProgress.ingredients
-                .map((ingredient, index) => (
-                  <div
-                    key={ index }
-                    className=" ml-2 flex items-center"
-                  >
-                    <label
-                      htmlFor="ingredient"
-                      data-testid={ `${index}-ingredient-step` }
-                      key={ index }
-                      className={ checkedIngredients[ingredient] ? 'checked' : undefined }
-                    >
-                      { ingredient }
-                      <input
-                        className="ml-1"
-                        type="checkbox"
-                        name={ ingredient }
-                        checked={ checkedIngredients[ingredient] || false }
-                        onChange={ handleIngredientChange }
-                      />
-                    </label>
-                  </div>
-                ))}
+          <div className="relative h-[42vh] bg-black opacity-40 ">
+            <div className="flex justify-between p-5">
+              <h4
+                className="text-2xl text-white"
+                data-testid="recipe-category"
+              >
+                { showRecipeInProgress.category }
+              </h4>
+              <div className="flex gap-2">
+                <button
+                  className="text-white"
+                  data-testid="share-btn"
+                  onClick={ () => {
+                    copy(`http://localhost:3000/${pathNameSlice}/${id}`);
+                    setShowCopy(true);
+                  } }
+                >
+                  {/* <img
+                    className="h-5 w-5"
+                    src={ shareIcon }
+                    alt={ showRecipeInProgress.name }
+                  /> */}
+                  <AiOutlineShareAlt
+                    size={ 30 }
+                  />
+                </button>
+                {
+                  showCopy ? <span className="text-white">Link copied!</span> : null
+                }
+                <button
+                  // data-testid="favorite-btn"
+                  type="button"
+                  onClick={ () => handleFavorite(getRecipe) }
+                >
+                  {/* <img
+                    className="h-5 w-5"
+                    data-testid="favorite-btn"
+                    src={ !favoriteProgress ? whiteHeartIcon : blackHeartIcon }
+                    alt="favorite"
+                  /> */}
+                  {favoriteProgress
+                    ? <MdOutlineFavoriteBorder color="white" size={ 30 } />
+                    : <MdFavorite color="white" size={ 30 } />}
+                </button>
+              </div>
             </div>
-          </fieldset>
-          <h3
-            className="font-sans font-bold text-xl leading-6 text-gray-800"
-          >
-            Instruções
-          </h3>
-          <div
-            className="box-border border-gray-400 border-dotted border-2
-            rounded-lg"
-          >
-            <div
-              className="instructions"
-              data-testid="instructions"
+            <h1
+              data-testid="recipe-title"
+              className="text-white text-4xl text-center"
             >
-              { showRecipeInProgress.instructions }
+              { showRecipeInProgress.name }
+            </h1>
+          </div>
+          <div className="px-4">
+            <h3
+              className="text-2xl font-bold pt-10"
+            >
+              Ingredientes
+            </h3>
+            <fieldset
+              className="border border-gray-400 rounded-md p-4"
+            >
+              <div>
+                { showRecipeInProgress.ingredients
+                  .map((ingredient, index) => (
+                    <div
+                      key={ index }
+                      className=" ml-2 flex items-center"
+                    >
+                      <label
+                        htmlFor="ingredient"
+                        data-testid={ `${index}-ingredient-step` }
+                        key={ index }
+                        className={ checkedIngredients[ingredient]
+                          ? 'checked' : undefined }
+                      >
+                        { ingredient }
+                        <input
+                          className="ml-1"
+                          type="checkbox"
+                          name={ ingredient }
+                          checked={ checkedIngredients[ingredient] || false }
+                          onChange={ handleIngredientChange }
+                        />
+                      </label>
+                    </div>
+                  ))}
+              </div>
+            </fieldset>
+          </div>
+          <div className="px-4 pb-10">
+            <h3
+              className="text-2xl font-bold pt-10"
+            >
+              Instruções
+            </h3>
+            <div
+              className="border border-gray-400 rounded-md p-4"
+            >
+              <div
+                className="instructions"
+                data-testid="instructions"
+              >
+                { showRecipeInProgress.instructions }
+              </div>
             </div>
           </div>
           <div
@@ -266,7 +276,7 @@ function RecipeInProgress() {
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 }
 export default RecipeInProgress;
