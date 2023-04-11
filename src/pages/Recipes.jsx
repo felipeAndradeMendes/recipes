@@ -111,7 +111,6 @@ function Recipes() {
   const newArr = [...dataApi[pathNameSplit] ? dataApi[pathNameSplit] : []];
   const isGreaterThan12 = newArr?.length > maxLength
     ? newArr.splice(0, maxLength) : newArr;
-  console.log(isGreaterThan12);
   return (
     <>
       <Header />
