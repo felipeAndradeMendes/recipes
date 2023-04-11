@@ -14,12 +14,12 @@ const copy = clipboardCopy;
 
 function FavoriteRecipes() {
   const [favorites, setFavorites] = useState([]);
-  const [showLinkCopied, setShowLinkCopied] = useState(false);
+  // const [showLinkCopied, setShowLinkCopied] = useState(false);
 
   function handleShareClick(type, id) {
     // Confirmar se o tipo de receita é salvo no plural ou singular (Drink ou Drinks)
     copy(`http://localhost:3000/${type}s/${id}`);
-    setShowLinkCopied(true);
+    // setShowLinkCopied(true);
   }
 
   // Filtra receitas de acordo como botão clicado;
@@ -179,6 +179,7 @@ function FavoriteRecipes() {
                   w-10 h-10 items-center flex justify-center"
                 >
                   <IoMdHeart
+                    id={ recipe.id }
                     style={ { width: '24px', height: '24px', color: 'red' } }
                   />
                 </div>
