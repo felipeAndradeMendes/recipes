@@ -160,8 +160,9 @@ function RecipeDetails() {
         data-testid="recipe-photo"
         className="absolute"
       />
-      <div className="relative h-[42vh] bg-black opacity-40 ">
-        <div className="flex justify-between p-5">
+      <div className="relative h-[45vh] bg-black opacity-40 " />
+      <div className="absolute w-full">
+        <div className="flex justify-between p-5 w-full">
           <h2 data-testid="recipe-category" className="text-2xl text-white">
             {`${recipe.strCategory}
        ${pathName.includes('meals') ? '' : recipe.strAlcoholic}`}
@@ -203,7 +204,7 @@ function RecipeDetails() {
           </div>
         </div>
         <h2
-          className="text-white text-4xl text-center"
+          className="text-white text-4xl text-center pt-10"
           data-testid="recipe-title"
         >
           {recipe.strMeal || recipe.strDrink}
@@ -249,7 +250,10 @@ function RecipeDetails() {
       }
       {
         showStartBtn ? (
-          <Link to={ `${pathName}/in-progress` }>
+          <Link
+            to={ `${pathName}/in-progress` }
+            className="flex justify-center items-center"
+          >
             <button
               data-testid="start-recipe-btn"
               className="start-recipe-btn"
