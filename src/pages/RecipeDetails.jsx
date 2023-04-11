@@ -161,7 +161,7 @@ function RecipeDetails() {
         className="absolute"
       />
       <div className="relative h-[45vh] bg-black opacity-40 " />
-      <div className="absolute w-full">
+      <div className="absolute w-full top-0">
         <div className="flex justify-between p-5 w-full">
           <h2 data-testid="recipe-category" className="text-2xl text-white">
             {`${recipe.strCategory}
@@ -265,7 +265,7 @@ function RecipeDetails() {
         ) : null
       }
 
-      <h3 className="text-2xl font-bold pt-10">Recomendation</h3>
+      <h3 className="text-2xl font-bold pt-10 pl-4 pb-2">Recomendation</h3>
       <Carousel
         pathName={ pathName }
         meals={ meals }
