@@ -33,7 +33,7 @@ function Profile() {
   };
 
   return (
-    <div className="h-[640px]">
+    <div className="h-[640px] bg-[#efefef]">
       <Header />
       <div>
         <div className="mb-10">
@@ -50,7 +50,8 @@ function Profile() {
             className="
             flex justify-start items-center
             shadow-[0px_1px_2px_0px_rgba(0,0,0,0.1)]
-            hover:shadow-xl
+            hover:shadow-lg
+            transition-shadow
             w-full
             h-16
             text-2xl
@@ -69,7 +70,8 @@ function Profile() {
             className="
             flex justify-start items-center
             shadow-[0px_1px_2px_0px_rgba(0,0,0,0.1)]
-            hover:shadow-xl
+            hover:shadow-lg
+            transition-shadow
             w-full
             h-16
             text-2xl
@@ -87,7 +89,8 @@ function Profile() {
             className="
               flex justify-start items-center
               shadow-[0px_1px_2px_0px_rgba(0,0,0,0.1)]
-              hover:shadow-xl
+              hover:shadow-lg
+              transition-shadow
               w-full
               h-16
               text-2xl
