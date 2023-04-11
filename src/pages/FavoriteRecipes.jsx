@@ -34,6 +34,7 @@ function FavoriteRecipes() {
   }
 
   function handleFavoriteClick(recipeId) {
+    console.log(recipeId);
     const newFavoritesArr = favorites
       .filter((recipe) => Number(recipe.id) !== Number(recipeId));
 
@@ -165,7 +166,7 @@ function FavoriteRecipes() {
               <button
                 type="button"
                 name={ recipe }
-                onClick={ (e) => handleFavoriteClick(e.target.id) }
+                onClick={ () => handleFavoriteClick(recipe.id) }
               >
                 {/* <img
                   data-testid={ `${index}-horizontal-favorite-btn` }
