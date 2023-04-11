@@ -4,6 +4,7 @@ body {
   height: 640px;
   margin: auto;
   width: 360px;
+  font-family: 'Roboto', sans-serif;
 }
 
 .start-recipe-btn {
