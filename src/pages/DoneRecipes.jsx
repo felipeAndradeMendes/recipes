@@ -7,7 +7,6 @@ import shareIcon from '../images/shareIcon.svg';
 
 // localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesArray));
 // const doneRecipesFromLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
-// console.log(doneRecipesFromLocalStorage);
 const copy = clipboardCopy;
 
 function DoneRecipes() {
@@ -39,8 +38,6 @@ function DoneRecipes() {
       return setRecipes(getLocalRecipes);
     }
   }, []);
-
-  recipes.map((recipe) => console.log(recipe));
 
   return (
     <>
@@ -114,14 +111,11 @@ function DoneRecipes() {
             />
           </button>
           {showLinkCopied && <p>Link copied!</p>}
-          {recipe.tags?.map((tag, indexTag) => {
-            console.log(recipe.tags);
-            return (
-              <p key={ indexTag } data-testid={ `${index}-${tag}-horizontal-tag` }>
-                { tag }
-              </p>
-            );
-          })}
+          {recipe.tags?.map((tag, indexTag) => (
+            <p key={ indexTag } data-testid={ `${index}-${tag}-horizontal-tag` }>
+              { tag }
+            </p>
+          ))}
           <hr />
         </div>
       ))}

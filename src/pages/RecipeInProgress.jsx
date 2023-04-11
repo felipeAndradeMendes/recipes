@@ -28,7 +28,6 @@ function RecipeInProgress() {
 
   const inProgressRecipes = 'inProgressRecipes';
   useEffect(() => {
-    console.log('entrou');
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     const isFavorites = favorites.some((favorite) => favorite.id === id);
     if (isFavorites) {
@@ -56,9 +55,7 @@ function RecipeInProgress() {
       (favoriteRecipe) => favoriteRecipe.id
       === favorite[pathNameSlice][0][idRecipe],
     );
-    console.log(repeatedFavorite);
     if (repeatedFavorite) {
-      console.log('repetido');
       setFavorite(!favoriteProgress);
       const removeIndex = favorites.findIndex(
         (favoriteRecipe) => favoriteRecipe.id === favorite.idMeal

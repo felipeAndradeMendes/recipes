@@ -99,7 +99,6 @@ describe('Testa a tela de Receitas favoritas', () => {
 //   jest.mock('clipboard-copy', () => ({
 //     clipboardCopy: jest.fn(),
 //   }));
-//   console.log(clipboardCopy.clipboardCopy);
 //   const mockClipboardCopy = clipboardCopy.clipboardCopy;
 //   mockClipboardCopy.mockImplementation(() => {
 //   });

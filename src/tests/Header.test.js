@@ -22,7 +22,6 @@ describe('Testes do Componente Header', () => {
         </SearchBarProvider>
       </Router>,
     );
-    // console.log(history.location.pathname);
 
     // act(() => {
     //   history.push('/meals');

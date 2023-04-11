@@ -160,7 +160,7 @@ function RecipeDetails() {
         data-testid="recipe-photo"
         className="absolute"
       />
-      <div className="relative h-[45vh] bg-black opacity-40 " />
+      <div className="relative h-[361px] bg-black opacity-40 " />
       <div className="absolute w-full top-0">
         <div className="flex justify-between p-5 w-full">
           <h2 data-testid="recipe-category" className="text-2xl text-white">

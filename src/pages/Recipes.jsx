@@ -86,7 +86,6 @@ function Recipes() {
   }, [pathName, setDataApi, setLoading]);
 
   const handleChangeCategory = async (category) => {
-    console.log(category);
     if (category === selectedCategory || category === 'all') {
       setSelectedCategory('');
       const url = pathName === '/meals'
@@ -100,7 +99,7 @@ function Recipes() {
     } else {
       const apiUrl = pathName === '/meals'
         ? `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
-        : `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
+        : `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category === 'Other' ? 'Other / Unknown' : category}`;
       setLoading(false);
       const response = await fetch(apiUrl);
       const data = await response.json();
@@ -112,6 +111,7 @@ function Recipes() {
   const newArr = [...dataApi[pathNameSplit] ? dataApi[pathNameSplit] : []];
   const isGreaterThan12 = newArr?.length > maxLength
     ? newArr.splice(0, maxLength) : newArr;
+  console.log(isGreaterThan12);
   return (
     <>
       <Header />
@@ -179,7 +179,8 @@ function Recipes() {
                           className="pl-2 text-xs"
                         >
                           <span className="italic text-xs">Category: </span>
-                          { recipe.strAlcoholic || recipe.strCategory }
+                          { selectedCategory || recipe.strCategory
+                          || recipe.strAlcoholic }
                         </p>
                         <p
                           data-testid={ `${index}-card-name` }
