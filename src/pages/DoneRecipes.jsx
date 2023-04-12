@@ -16,12 +16,15 @@ const copy = clipboardCopy;
 function DoneRecipes() {
   // const history = useHistory();
   const [recipes, setRecipes] = useState([]);
-  const [showLinkCopied, setShowLinkCopied] = useState(false);
+  const [showLinkCopied, setShowLinkCopied] = useState({});
 
   function handleShareClick(type, id) {
     // Confirmar se o tipo de receita é salvo no plural ou singular (Drink ou Drinks)
     copy(`http://localhost:3000/${type}s/${id}`);
-    setShowLinkCopied(true);
+    setShowLinkCopied({
+      ...showLinkCopied,
+      [id]: true,
+    });
   }
 
   // Filtra receitas de acordo como botão clicado;
@@ -60,7 +63,6 @@ function DoneRecipes() {
             style={ { width: '24px', height: '24px' } }
           />
         </button>
-
         <button
           type="button"
           name="meal"
@@ -74,7 +76,6 @@ function DoneRecipes() {
             style={ { width: '24px', height: '24px' } }
           />
         </button>
-
         <button
           type="button"
           name="drink"
@@ -140,7 +141,7 @@ function DoneRecipes() {
                   />
                 </div>
               </button>
-              {showLinkCopied && <p>Link copied!</p>}
+              {showLinkCopied[recipe.id] && <span className="text-xs">Link copied!</span>}
             </div>
             <p
               className="text-md "

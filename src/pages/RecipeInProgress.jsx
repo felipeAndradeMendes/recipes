@@ -152,7 +152,7 @@ function RecipeInProgress() {
             alt="recipe"
             data-testid="recipe-photo"
           />
-          <div className="relative h-[42vh] bg-black opacity-40 ">
+          <div className="relative h-[56vh] bg-black opacity-40 ">
             <div className="flex justify-between p-5">
               <h4
                 className="text-2xl text-white"
