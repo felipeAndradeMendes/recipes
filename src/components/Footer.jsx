@@ -17,7 +17,7 @@ function Footer() {
     <div
       data-testid="footer"
       className="shadow-[0px_0px_15px_-10px_rgba(0,0,0,0.5)]
-       h-[60px] flex justify-center fixed bottom-0 left-0 bg-white w-[100%]"
+       h-[60px] flex justify-center fixed bottom-0 left-0 bg-white w-full items-center"
     >
       <div className="w-[160px] flex justify-between">
         <button

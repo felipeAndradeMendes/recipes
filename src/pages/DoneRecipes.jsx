@@ -141,7 +141,7 @@ function DoneRecipes() {
                   />
                 </div>
               </button>
-              {showLinkCopied[recipe.id] && <p className="text-xs">Link copied!</p>}
+              {showLinkCopied[recipe.id] && <span className="text-xs">Link copied!</span>}
             </div>
             <p
               className="text-md "
