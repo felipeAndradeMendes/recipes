@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { BiSearch } from 'react-icons/bi';
 import useFetch from '../hooks/useFetch';
 import SearchBarContext from '../context/SearchBarContext';
 
@@ -30,20 +31,32 @@ function SearchBar() {
 
   return (
     <div
-      className="bg-green-600 rounded-md p-3 flex flex-col
+      className="bg-white p-3 flex flex-col
       items-center justify-center w-[360px]"
     >
+      <p className="w-[300px] text-[#0DC41F] font-bold ">Hello,</p>
+      <p className="w-[300px] mb-1 text-[#888888]">What you want to cook today?</p>
       <div className=" flex justify-center">
         <input
-          className="box-border rounded-xl border-gray-900 border"
+          placeholder="Search Recipes"
+          className="rounded-l-[6px] bg-[#F2F2F2] p-2 pl-2 pr-12
+           placeholder-[#bdbdbd] mb-1 mt-2"
           type="text"
           data-testid="search-input"
           name="searchText"
           value={ nameSearch }
           onChange={ handleChange }
         />
+        <button
+          className="bg-[#80E78B] box-border rounded-r-[6px] p-2 pr-3 pl-3 mb-1 mt-2"
+          type="button"
+          data-testid="exec-search-btn"
+          onClick={ () => handleClick() }
+        >
+          <BiSearch />
+        </button>
       </div>
-      <div className="flex gap-2">
+      <div className="flex justify-between w-[290px] mt-2">
         <label htmlFor="ingredient" className=" flex text-gray-900">
           Ingredient
           <input
@@ -81,14 +94,6 @@ function SearchBar() {
           />
         </label>
       </div>
-      <button
-        className="text-gray-900 bg-gray-400 hover:bg-gray-300 font-bold rounded-md w-64"
-        type="button"
-        data-testid="exec-search-btn"
-        onClick={ () => handleClick() }
-      >
-        Search
-      </button>
     </div>
   );
 }

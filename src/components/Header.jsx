@@ -40,20 +40,21 @@ function Header() {
   return (
     <section
       className="
-        flex flex-wrap
-        shadow-[0px_0px_15px_-10px_rgba(0,0,0,0.5)]"
+        flex flex-wrap"
     >
       <div
         className="
+          drop-shadow-[0px_0px_2px_rgba(0,0,0,0.20)]
           w-full
           flex justify-between
-          px-3"
+          px-3
+          bg-white"
       >
         { /* NOME/LOGO APP */ }
         <h2
           className="
             max-w-max
-            text-2xl font-sans
+            text-[20px] font-sans
             p-3"
           data-testid="page-title"
         >
@@ -84,7 +85,7 @@ function Header() {
                   /> */}
                   <CiSearch
                     data-testid="search-top-btn"
-                    style={ { width: '32px', height: '32px' } }
+                    style={ { width: '32px', height: '32px', color: '#666666' } }
                   />
                 </button>
               ) : null
@@ -102,7 +103,7 @@ function Header() {
               data-testid="profile-top-btn"
             /> */}
             <RxPerson
-              style={ { width: '32', height: '32px' } }
+              style={ { width: '32', height: '32px', color: '#666666' } }
               data-testid="profile-top-btn"
             />
           </Link>
