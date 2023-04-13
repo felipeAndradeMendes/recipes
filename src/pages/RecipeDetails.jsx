@@ -6,6 +6,7 @@ import { AiOutlineShareAlt } from 'react-icons/ai';
 import { MdOutlineFavoriteBorder, MdFavorite } from 'react-icons/md';
 import clipboardCopy from 'clipboard-copy';
 import Carousel from '../components/Carousel';
+import Loading from '../components/Loading';
 
 function RecipeDetails() {
   const [recipe, setRecipe] = useState({});
@@ -17,6 +18,7 @@ function RecipeDetails() {
   const [showCopy, setShowCopy] = useState(false);
   const [intervalID, setIntervalID] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [loading, setLoading] = useState(false);
   const pathName = useHistory().location.pathname;
   const { id } = useParams();
   const sliceMax = 6;
@@ -30,26 +32,34 @@ function RecipeDetails() {
   }, [id]);
   useEffect(() => {
     if (pathName.includes('meals')) {
+      setLoading(true);
       fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
         .then((response) => response.json())
         .then((data) => {
           setDrinks(data.drinks.slice(0, sliceMax));
+          setLoading(false);
         });
+      setLoading(true);
       fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
         .then((response) => response.json())
         .then((data) => {
           setRecipe(data.meals[0]);
+          setLoading(false);
         });
     } else {
+      setLoading(true);
       fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
         .then((response) => response.json())
         .then((data) => {
           setMeals(data.meals.slice(0, sliceMax));
+          setLoading(false);
         });
+      setLoading(true);
       fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
         .then((response) => response.json())
         .then((data) => {
           setRecipe(data.drinks[0]);
+          setLoading(false);
         });
     }
   }, [pathName, id]);
@@ -151,114 +161,121 @@ function RecipeDetails() {
     <section
       className="relative p-0 pb-[4.5rem]"
     >
-      <img
-        src={ recipe.strMealThumb || recipe.strDrinkThumb }
-        alt={ recipe.strMeal || recipe.strDrink }
-        data-testid="recipe-photo"
-        className="absolute"
-      />
-      <div className="relative h-[361px] bg-black opacity-40 " />
-      <div className="absolute w-full top-0">
-        <div className="flex justify-between p-5 w-full">
-          <h2 data-testid="recipe-category" className="text-2xl text-white">
-            {`${recipe.strCategory}
+      {
+        loading ? <Loading /> : (
+          <>
+            <img
+              src={ recipe.strMealThumb || recipe.strDrinkThumb }
+              alt={ recipe.strMeal || recipe.strDrink }
+              data-testid="recipe-photo"
+              className="absolute"
+            />
+            <div className="relative h-[361px] bg-black opacity-40 " />
+            <div className="absolute w-full top-0">
+              <div className="flex justify-between p-5 w-full">
+                <h2 data-testid="recipe-category" className="text-2xl text-white">
+                  {`${recipe.strCategory}
        ${pathName.includes('meals') ? '' : recipe.strAlcoholic}`}
-          </h2>
-          <div className="flex gap-2">
-            <button
-              type="button"
-              data-testid="share-btn"
-              onClick={ () => {
-                clearInterval(intervalID);
-                copy(`http://localhost:3000${pathName}`);
-                setShowCopy(true);
-              } }
-              className="text-white"
-            >
-              <AiOutlineShareAlt
-                size={ 30 }
-              />
-            </button>
-            {
-              showCopy ? <span className="text-white">Link copied!</span> : null
-            }
-            <button
-              type="button"
-              onClick={ () => handleFavorite(recipe) }
-            >
-              {isFavorite ? <MdFavorite color="white" size={ 30 } />
-                : <MdOutlineFavoriteBorder color="white" size={ 30 } />}
-            </button>
-          </div>
-        </div>
-        <h2
-          className="text-white text-4xl text-center pt-10"
-          data-testid="recipe-title"
-        >
-          {recipe.strMeal || recipe.strDrink}
-        </h2>
-      </div>
-      <div className="px-4">
-        <h3 className="text-2xl font-bold pt-10">Ingredients</h3>
-        <ul className="border border-gray-400 rounded-md p-4">
-          {
-            ingredients.map((ingredient, index) => (
-              <li
-                key={ index }
-                data-testid={ `${index}-ingredient-name-and-measure` }
+                </h2>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    data-testid="share-btn"
+                    onClick={ () => {
+                      clearInterval(intervalID);
+                      copy(`http://localhost:3000${pathName}`);
+                      setShowCopy(true);
+                    } }
+                    className="text-white"
+                  >
+                    <AiOutlineShareAlt
+                      size={ 30 }
+                    />
+                  </button>
+                  {
+                    showCopy ? <span className="text-white">Link copied!</span> : null
+                  }
+                  <button
+                    type="button"
+                    onClick={ () => handleFavorite(recipe) }
+                  >
+                    {isFavorite ? <MdFavorite color="white" size={ 30 } />
+                      : <MdOutlineFavoriteBorder color="white" size={ 30 } />}
+                  </button>
+                </div>
+              </div>
+              <h2
+                className="text-white text-4xl text-center pt-10"
+                data-testid="recipe-title"
               >
-                {`${ingredient.strMeasure === undefined ? '' : ingredient.strMeasure} 
+                {recipe.strMeal || recipe.strDrink}
+              </h2>
+            </div>
+            <div className="px-4">
+              <h3 className="text-2xl font-bold pt-10">Ingredients</h3>
+              <ul className="border border-gray-400 rounded-md p-4">
+                {
+                  ingredients.map((ingredient, index) => (
+                    <li
+                      key={ index }
+                      data-testid={ `${index}-ingredient-name-and-measure` }
+                    >
+                      {`${ingredient.strMeasure === undefined
+                        ? '' : ingredient.strMeasure} 
                 ${ingredient.strIngredients}`}
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-      <div className="px-4 pb-10">
-        <h3 className="text-2xl font-bold pt-10">Instructions</h3>
-        <p
-          className="border border-gray-400 rounded-md p-4"
-          data-testid="instructions"
-        >
-          {recipe.strInstructions}
-        </p>
-      </div>
-      {
-        pathName.includes('meals') ? (
-          <iframe
-            data-testid="video"
-            src={ recipe.strYoutube }
-            title="YouTube video player"
-            allow="accelerometer; clipboard-write;
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+            <div className="px-4 pb-10">
+              <h3 className="text-2xl font-bold pt-10">Instructions</h3>
+              <p
+                className="border border-gray-400 rounded-md p-4"
+                data-testid="instructions"
+              >
+                {recipe.strInstructions}
+              </p>
+            </div>
+            {
+              pathName.includes('meals') ? (
+                <iframe
+                  data-testid="video"
+                  src={ recipe.strYoutube }
+                  title="YouTube video player"
+                  allow="accelerometer; clipboard-write;
              encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className="w-full h-[30vh]"
-          />
-        ) : null
-      }
-      {
-        showStartBtn ? (
-          <Link
-            to={ `${pathName}/in-progress` }
-            className="flex justify-center items-center"
-          >
-            <button
-              data-testid="start-recipe-btn"
-              className="start-recipe-btn"
-              type="button"
-            >
-              {doneBtn}
-            </button>
-          </Link>
-        ) : null
-      }
+                  allowFullScreen
+                  className="w-full h-[30vh]"
+                />
+              ) : null
+            }
+            {
+              showStartBtn ? (
+                <Link
+                  to={ `${pathName}/in-progress` }
+                  className="flex justify-center items-center"
+                >
+                  <button
+                    data-testid="start-recipe-btn"
+                    className="start-recipe-btn"
+                    type="button"
+                  >
+                    {doneBtn}
+                  </button>
+                </Link>
+              ) : null
+            }
 
-      <h3 className="text-2xl font-bold pt-10 pl-4 pb-2">Recomendation</h3>
-      <Carousel
-        pathName={ pathName }
-        meals={ meals }
-        drinks={ drinks }
-      />
+            <h3 className="text-2xl font-bold pt-10 pl-4 pb-2">Recomendation</h3>
+            <Carousel
+              pathName={ pathName }
+              meals={ meals }
+              drinks={ drinks }
+            />
+          </>
+        )
+      }
     </section>
   );
 }

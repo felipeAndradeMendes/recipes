@@ -9,11 +9,12 @@ import { GrStatusUnknown } from 'react-icons/gr';
 import Header from '../components/Header';
 import SearchBarContext from '../context/SearchBarContext';
 import Footer from '../components/Footer';
+import Loading from '../components/Loading';
 
 function Recipes() {
   const { dataApi, setDataApi } = useContext(SearchBarContext);
   const [categories, setCategories] = useState([]);
-  const [Loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const history = useHistory();
   const pathName = history.location.pathname;
@@ -71,11 +72,13 @@ function Recipes() {
   useEffect(() => {
     const fetchApi = async () => {
       if (pathName === '/meals') {
+        setLoading(true);
         const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
         const data = await response.json();
         setDataApi({ meals: data.meals });
         setLoading(false);
       } else {
+        setLoading(true);
         const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
         const data = await response.json();
         setDataApi({ drinks: data.drinks });
@@ -115,7 +118,7 @@ function Recipes() {
     <>
       <Header />
       {
-        Loading ? <p>Loading...</p> : (
+        loading ? <Loading /> : (
           <section className="pb-[4.5rem] pt-5">
             <div className="flex justify-around items-center pb-10">
               {
