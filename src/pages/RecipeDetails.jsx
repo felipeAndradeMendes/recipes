@@ -5,10 +5,7 @@ import { useParams, useHistory, Link } from 'react-router-dom';
 import { AiOutlineShareAlt } from 'react-icons/ai';
 import { MdOutlineFavoriteBorder, MdFavorite } from 'react-icons/md';
 import clipboardCopy from 'clipboard-copy';
-// import shareIcon from '../images/shareIcon.svg';
 import Carousel from '../components/Carousel';
-// import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-// import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function RecipeDetails() {
   const [recipe, setRecipe] = useState({});
@@ -178,10 +175,6 @@ function RecipeDetails() {
               } }
               className="text-white"
             >
-              {/* <img
-                src={ shareIcon }
-                alt={ recipe.strMeal || recipe.strDrink }
-              /> */}
               <AiOutlineShareAlt
                 size={ 30 }
               />
@@ -193,13 +186,8 @@ function RecipeDetails() {
               type="button"
               onClick={ () => handleFavorite(recipe) }
             >
-              {/* <img
-                data-testid="favorite-btn"
-                src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-                alt="favorite"
-              /> */}
-              {isFavorite ? <MdOutlineFavoriteBorder color="white" size={ 30 } />
-                : <MdFavorite color="white" size={ 30 } />}
+              {isFavorite ? <MdFavorite color="white" size={ 30 } />
+                : <MdOutlineFavoriteBorder color="white" size={ 30 } />}
             </button>
           </div>
         </div>

@@ -2,62 +2,41 @@
 // import { Router } from 'react-router-dom';
 // import { createMemoryHistory } from 'history';
 // import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+// import { act } from 'react-dom/test-utils';
 // import App from '../pages/Recipes';
 // import SearchBarContext from '../context/SearchBarContext';
 // import HeaderProvider from '../provider/HeaderProvider';
 // import RecipeProvider from '../provider/RecipeProvider';
 // import fetch from '../../cypress/mocks/fetch';
+// import RecipeDetails from '../pages/RecipeDetails';
 
-// const mockContext = {
-//   dataApi: {
-//     meals: [
-//       {
-//         idMeal: '1',
-//         strMeal: 'Meal 1',
-//         strCategory: 'Category 1',
-//       },
-//       {
-//         idMeal: '2',
-//         strMeal: 'Meal 2',
-//         strCategory: 'Category 2',
-//       },
-//     ],
-//     drinks: [
-//       {
-//         idDrink: '1',
-//         strDrink: 'Drink 1',
-//         strAlcoholic: 'Alcoholic 1',
-//       },
-//       {
-//         idDrink: '2',
-//         strDrink: 'Drink 2',
-//         strAlcoholic: 'Alcoholic 2',
-//       },
-//     ],
-//   },
-//   setDataApi: jest.fn(),
-//   setIsLoading: jest.fn(),
-// };
 // const history = createMemoryHistory();
 
-// test('Testa se a receita correta aparece na página', async () => {
-//   jest.spyOn(global, 'fetch');
-//   global.fetch.mockImplementation(fetch);
-//   history.push('/drinks/15997');
+// beforeEach(() => {
+//   const pathname = history.location.pathname.includes('meals') ? '/meals/52977' : '/drinks/52977';
+//   const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${pathname}`;
+//   jest.spyOn(global, 'fetch').mockImplementation(fetch(url));
+// });
+
+// test('Testa se a página de detalhes da receita é renderizada', async () => {
 //   render(
 //     <Router history={ history }>
-//       <RecipeProvider>
-//         <HeaderProvider>
-//           <SearchBarContext.Provider value={ mockContext }>
-//             <App />
-//           </SearchBarContext.Provider>
-//         </HeaderProvider>
-//       </RecipeProvider>
+//       <HeaderProvider>
+//         <SearchBarContext.Provider
+//           value={ { setDataApi: jest.fn(),
+//             setIsLoading: jest.fn() } }
+//         >
+//           <RecipeProvider>
+//             <RecipeDetails />
+//           </RecipeProvider>
+//         </SearchBarContext.Provider>
+//       </HeaderProvider>
 //     </Router>,
 //   );
-//   expect(history.location.pathname).toBe('/drinks/15997');
-//   await waitFor(() => {
-//     const drink = screen.getByTestId('recipe-title');
-//     expect(drink).toHaveTextContent('GG');
+//   act(() => {
+//     history.push('/meals/52977');
+//     screen.logTestingPlaygroundURL();
+//     const title = screen.findByTestId('recipe-title');
+//     expect(title).toBeInTheDocument();
 //   });
 // });

@@ -54,7 +54,7 @@ function DoneRecipes() {
           type="button"
           name="all"
           data-testid="filter-by-all-btn"
-          onClick={ (e) => handleClickFilters(e.target.name) }
+          onClick={ () => handleClickFilters('all') }
           className="w-14 h-14 flex justify-center flex-col
             items-center border-2 border-[#0a9b61] rounded-full
            hover:bg-[#0a9b61] hover:text-white"
@@ -67,7 +67,7 @@ function DoneRecipes() {
           type="button"
           name="meal"
           data-testid="filter-by-meal-btn"
-          onClick={ (e) => handleClickFilters(e.target.name) }
+          onClick={ () => handleClickFilters('meal') }
           className="w-14 h-14 flex justify-center flex-col
             items-center border-2 border-[#0a9b61] rounded-full
            hover:bg-[#0a9b61] hover:text-white"
@@ -80,7 +80,7 @@ function DoneRecipes() {
           type="button"
           name="drink"
           data-testid="filter-by-drink-btn"
-          onClick={ (e) => handleClickFilters(e.target.name) }
+          onClick={ () => handleClickFilters('drink') }
           className="w-14 h-14 flex justify-center flex-col
             items-center border-2 border-[#0a9b61] rounded-full
            hover:bg-[#0a9b61] hover:text-white"

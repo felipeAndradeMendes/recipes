@@ -7,9 +7,6 @@ import { AiOutlineShareAlt } from 'react-icons/ai';
 import { MdOutlineFavoriteBorder, MdFavorite } from 'react-icons/md';
 import RecipeContext from '../context/RecipeContext';
 import useFetchRecipes from '../hooks/useFetchRecipes';
-// import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-// import blackHeartIcon from '../images/blackHeartIcon.svg';
-// import shareIcon from '../images/shareIcon.svg';
 import '../App.css';
 
 function RecipeInProgress() {
@@ -144,21 +141,23 @@ function RecipeInProgress() {
 
   return (
     <section className="recipe-in-progress relative p-0 pb-[4.5rem] w-[360px]">
-      { showRecipeInProgress && (
+      { getRecipe[pathNameSlice] && (
         <div>
           <img
             className="absolute"
-            src={ showRecipeInProgress.img }
+            src={ getRecipe[pathNameSlice][0].strDrinkThumb
+              || getRecipe[pathNameSlice][0].strMealThumb }
             alt="recipe"
             data-testid="recipe-photo"
           />
-          <div className="relative h-[56vh] bg-black opacity-40 ">
+          <div className="relative h-[361px] bg-black opacity-40 ">
             <div className="flex justify-between p-5">
               <h4
                 className="text-2xl text-white"
                 data-testid="recipe-category"
               >
-                { showRecipeInProgress.category }
+                { getRecipe[pathNameSlice][0].strCategory
+                || getRecipe[pathNameSlice][0].strAlcoholic }
               </h4>
               <div className="flex gap-2">
                 <button
@@ -169,11 +168,6 @@ function RecipeInProgress() {
                     setShowCopy(true);
                   } }
                 >
-                  {/* <img
-                    className="h-5 w-5"
-                    src={ shareIcon }
-                    alt={ showRecipeInProgress.name }
-                  /> */}
                   <AiOutlineShareAlt
                     size={ 30 }
                   />
@@ -182,19 +176,12 @@ function RecipeInProgress() {
                   showCopy ? <span className="text-white">Link copied!</span> : null
                 }
                 <button
-                  // data-testid="favorite-btn"
                   type="button"
                   onClick={ () => handleFavorite(getRecipe) }
                 >
-                  {/* <img
-                    className="h-5 w-5"
-                    data-testid="favorite-btn"
-                    src={ !favoriteProgress ? whiteHeartIcon : blackHeartIcon }
-                    alt="favorite"
-                  /> */}
                   {favoriteProgress
-                    ? <MdOutlineFavoriteBorder color="white" size={ 30 } />
-                    : <MdFavorite color="white" size={ 30 } />}
+                    ? <MdFavorite color="white" size={ 30 } />
+                    : <MdOutlineFavoriteBorder color="white" size={ 30 } />}
                 </button>
               </div>
             </div>
@@ -202,7 +189,8 @@ function RecipeInProgress() {
               data-testid="recipe-title"
               className="text-white text-4xl text-center"
             >
-              { showRecipeInProgress.name }
+              { getRecipe[pathNameSlice][0].strDrink
+              || getRecipe[pathNameSlice][0].strMeal }
             </h1>
           </div>
           <div className="px-4">
@@ -255,7 +243,7 @@ function RecipeInProgress() {
                 className="instructions"
                 data-testid="instructions"
               >
-                { showRecipeInProgress.instructions }
+                { getRecipe[pathNameSlice][0].strInstructions }
               </div>
             </div>
           </div>
