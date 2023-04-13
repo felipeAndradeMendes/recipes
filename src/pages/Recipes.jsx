@@ -170,7 +170,8 @@ function Recipes() {
                         src={ recipe.strMealThumb || recipe.strDrinkThumb }
                         alt={ recipe.strMeal || recipe.strDrink }
                         data-testid={ `${index}-card-img` }
-                        className="rounded-[20px] w-40 h-40 object-cover object-center border-[#CCCCCC] border-2"
+                        className="rounded-[20px] w-40 h-40
+                        object-cover object-center border-[#CCCCCC] border-2"
                       />
                       <div className="p-1">
                         <p
