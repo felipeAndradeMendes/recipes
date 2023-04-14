@@ -8,6 +8,7 @@ import { MdOutlineFavoriteBorder, MdFavorite } from 'react-icons/md';
 import RecipeContext from '../context/RecipeContext';
 import useFetchRecipes from '../hooks/useFetchRecipes';
 import '../App.css';
+import { BsCheckLg } from 'react-icons/bs';
 
 function RecipeInProgress() {
   const { showRecipeInProgress, makeRecipeInProgress,
@@ -140,7 +141,7 @@ function RecipeInProgress() {
   }, [id]);
 
   return (
-    <section className="recipe-in-progress relative p-0 pb-[4.5rem] w-[360px]">
+    <section className="recipe-in-progress relative p-0 w-[360px]">
       { getRecipe[pathNameSlice] && (
         <div>
           <img
@@ -230,9 +231,9 @@ function RecipeInProgress() {
               </div>
             </fieldset>
           </div>
-          <div className="px-4 pb-10">
+          <div className="px-4 pb-4">
             <h3
-              className="text-2xl font-bold pt-10"
+              className="text-2xl font-bold pt-4"
             >
               Instruções
             </h3>
@@ -247,19 +248,22 @@ function RecipeInProgress() {
               </div>
             </div>
           </div>
-          <div
-            className="flex items-center justify-center bg-gray-200
-            hover:bg-gray-300 p-2 rounded"
-          >
+          <div className="flex justify-center pb-3">
             <button
-              className="finish-recipe-btn"
               type="button"
               data-testid="finish-recipe-btn"
               value="finalizar"
               onClick={ () => handleFinishButton(getRecipe, pathName) }
               disabled={ !isAllChecked() }
             >
-              Finalizar
+              <div
+                className="flex items-center justify-center
+            bg-green-500 rounded-full w-14 h-14 m-auto"
+              >
+                <BsCheckLg
+                  style={ { width: '24px', height: '24px', color: 'white' } }
+                />
+              </div>
             </button>
           </div>
         </div>
