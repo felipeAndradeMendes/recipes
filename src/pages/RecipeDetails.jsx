@@ -5,6 +5,7 @@ import { useParams, useHistory, Link } from 'react-router-dom';
 import { AiOutlineShareAlt } from 'react-icons/ai';
 import { MdOutlineFavoriteBorder, MdFavorite } from 'react-icons/md';
 import clipboardCopy from 'clipboard-copy';
+import { IoMdAdd } from 'react-icons/io';
 import Carousel from '../components/Carousel';
 import Loading from '../components/Loading';
 
@@ -159,7 +160,7 @@ function RecipeDetails() {
   };
   return (
     <section
-      className="relative p-0 pb-[4.5rem]"
+      className="relative p-0"
     >
       {
         loading ? <Loading /> : (
@@ -212,7 +213,7 @@ function RecipeDetails() {
               </h2>
             </div>
             <div className="px-4">
-              <h3 className="text-2xl font-bold pt-10">Ingredients</h3>
+              <h3 className="text-2xl font-bold pt-10 pb-2">Ingredients</h3>
               <ul className="border border-gray-400 rounded-md p-4">
                 {
                   ingredients.map((ingredient, index) => (
@@ -228,8 +229,8 @@ function RecipeDetails() {
                 }
               </ul>
             </div>
-            <div className="px-4 pb-10">
-              <h3 className="text-2xl font-bold pt-10">Instructions</h3>
+            <div className="px-4 pb-4">
+              <h3 className="text-2xl font-bold pt-4 pb-2">Instructions</h3>
               <p
                 className="border border-gray-400 rounded-md p-4"
                 data-testid="instructions"
@@ -250,29 +251,34 @@ function RecipeDetails() {
                 />
               ) : null
             }
-            {
-              showStartBtn ? (
-                <Link
-                  to={ `${pathName}/in-progress` }
-                  className="flex justify-center items-center"
-                >
-                  <button
-                    data-testid="start-recipe-btn"
-                    className="start-recipe-btn"
-                    type="button"
-                  >
-                    {doneBtn}
-                  </button>
-                </Link>
-              ) : null
-            }
-
-            <h3 className="text-2xl font-bold pt-10 pl-4 pb-2">Recomendation</h3>
+            <h3 className="text-2xl font-bold pt-2 pl-4 pb-2">Recomendation</h3>
             <Carousel
               pathName={ pathName }
               meals={ meals }
               drinks={ drinks }
             />
+            {
+              showStartBtn ? (
+                <Link
+                  to={ `${pathName}/in-progress` }
+                  className="flex justify-center items-center mt-2 pb-2"
+                >
+                  <button
+                    data-testid="start-recipe-btn"
+                    type="button"
+                  >
+                    <div
+                      className="border-2 bg-green-500 rounded-full
+                    w-14 h-14 items-center flex justify-center"
+                    >
+                      <IoMdAdd
+                        style={ { width: '24px', height: '24px', color: 'white' } }
+                      />
+                    </div>
+                  </button>
+                </Link>
+              ) : null
+            }
           </>
         )
       }
