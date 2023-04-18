@@ -5,6 +5,7 @@ import { useParams, useHistory, Link } from 'react-router-dom';
 import { AiOutlineShareAlt } from 'react-icons/ai';
 import { MdOutlineFavoriteBorder, MdFavorite } from 'react-icons/md';
 import clipboardCopy from 'clipboard-copy';
+import { IoMdAdd } from 'react-icons/io';
 import Carousel from '../components/Carousel';
 import Loading from '../components/Loading';
 
@@ -261,7 +262,14 @@ function RecipeDetails() {
                     className="start-recipe-btn"
                     type="button"
                   >
-                    {doneBtn}
+                    <div
+                      className="flex items-center justify-center
+                     bg-green-500 rounded-full w-14 h-14 m-auto"
+                    >
+                      <IoMdAdd
+                        style={ { width: '24px', height: '24px', color: 'white' } }
+                      />
+                    </div>
                   </button>
                 </Link>
               ) : null
