@@ -3,7 +3,6 @@ import { useHistory, Link } from 'react-router-dom';
 import { TbMeat, TbIceCream } from 'react-icons/tb';
 import { GiToaster, GiChickenOven, GiGoat, GiDrinkMe,
   GiChocolateBar } from 'react-icons/gi';
-import { BiBorderAll } from 'react-icons/bi';
 import { FaCocktail } from 'react-icons/fa';
 import { GrStatusUnknown } from 'react-icons/gr';
 import Header from '../components/Header';
@@ -119,7 +118,7 @@ function Recipes() {
       <Header />
       {
         loading ? <Loading /> : (
-          <section className="pb-[4.5rem] pt-5">
+          <section className="pb-[4.5rem] pt-5 max-w-[320px] m-auto">
             <div className="flex justify-around items-center pb-10">
               {
                 categories.map((category, index) => (
@@ -141,21 +140,20 @@ function Recipes() {
                   </div>
                 ))
               }
-              <div className="flex flex-col items-center">
-                <button
-                  type="button"
-                  data-testid="All-category-filter"
-                  onClick={ () => handleChangeCategory('all') }
-                  className="w-14 h-14 flex justify-center flex-col
-                     items-center border-2 border-[#0a9b61] rounded-full
-                      hover:bg-[#0a9b61] hover:text-white"
-                >
-                  <BiBorderAll
+            </div>
+            <div className="flex flex-col items-center">
+              <button
+                type="button"
+                data-testid="All-category-filter"
+                onClick={ () => handleChangeCategory('all') }
+                className="flex justify-center flex-col items-center
+                hover:bg-[#0a9b61] hover:text-white"
+              >
+                {/* <BiBorderAll
                     style={ { width: '24px', height: '24px' } }
-                  />
-                </button>
-                <p className="text-xs">All</p>
-              </div>
+                  /> */}
+              </button>
+              <p className="text-xs">See all</p>
             </div>
             <div className="flex flex-wrap justify-around gap-2">
               {
@@ -173,8 +171,8 @@ function Recipes() {
                         src={ recipe.strMealThumb || recipe.strDrinkThumb }
                         alt={ recipe.strMeal || recipe.strDrink }
                         data-testid={ `${index}-card-img` }
-                        className="rounded-[20px] w-40 h-40
-                        object-cover object-center border-[#CCCCCC] border-2"
+                        className="rounded-[24px] w-40 h-28
+                        object-cover object-center"
                       />
                       <div className="p-1">
                         <p
