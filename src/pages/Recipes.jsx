@@ -119,7 +119,19 @@ function Recipes() {
       {
         loading ? <Loading /> : (
           <section className="pb-[4.5rem] pt-5 max-w-[320px] m-auto">
-            <div className="flex justify-around items-center pb-10">
+            <div className="flex justify-between items-center pb-2">
+              <h3 className="text-[20px]">Categories</h3>
+              <button
+                type="button"
+                data-testid="All-category-filter"
+                onClick={ () => handleChangeCategory('all') }
+                className="flex justify-center flex-col items-center
+                 text-[#0a9b61] text-[12px] font-bold"
+              >
+                See all
+              </button>
+            </div>
+            <div className="flex justify-between pb-6">
               {
                 categories.map((category, index) => (
                   <div
@@ -128,7 +140,7 @@ function Recipes() {
                   >
                     <button
                       className="w-14 h-14 flex justify-center flex-col
-                     items-center border-2 border-[#0a9b61] rounded-full
+                     items-center rounded-full bg-[#E6E6E6]
                       hover:bg-[#0a9b61] hover:text-white"
                       type="button"
                       data-testid={ `${category.name}-category-filter` }
@@ -136,24 +148,10 @@ function Recipes() {
                     >
                       {category.icon}
                     </button>
-                    <p className="text-xs">{category.name}</p>
+                    <p className="font-bold text-[12px] mt-1">{category.name}</p>
                   </div>
                 ))
               }
-            </div>
-            <div className="flex flex-col items-center">
-              <button
-                type="button"
-                data-testid="All-category-filter"
-                onClick={ () => handleChangeCategory('all') }
-                className="flex justify-center flex-col items-center
-                hover:bg-[#0a9b61] hover:text-white"
-              >
-                {/* <BiBorderAll
-                    style={ { width: '24px', height: '24px' } }
-                  /> */}
-              </button>
-              <p className="text-xs">See all</p>
             </div>
             <div className="flex flex-wrap justify-around gap-2">
               {
@@ -177,17 +175,17 @@ function Recipes() {
                       <div className="p-1">
                         <p
                           data-testid={ `${index}-horizontal-top-text` }
-                          className="pl-2 text-xs"
+                          className="text-xs"
                         >
-                          <span className="italic text-xs">Category: </span>
+                          <span>Category: </span>
                           { selectedCategory || recipe.strCategory
                           || recipe.strAlcoholic }
                         </p>
                         <p
                           data-testid={ `${index}-card-name` }
-                          className="pl-2 text-xs"
+                          className="text-xs"
                         >
-                          <span className="italic text-xs">Name: </span>
+                          <span>Name: </span>
                           { recipe.strMeal || recipe.strDrink }
                         </p>
                       </div>
