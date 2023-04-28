@@ -38,51 +38,51 @@ function Profile() {
     <div className="h-[640px] bg-[#FAFAFA]">
       <Header />
       <div className="max-w-[320px] m-auto">
-        <div className="mb-10">
-          <p
-            className="text-xl my-5"
-            data-testid="profile-email"
-          >
-            {user.email}
+        <p
+          className="text-xl mt-4 mb-4"
+          data-testid="profile-email"
+        >
+          {user.email}
 
-          </p>
-        </div>
+        </p>
         <div className="flex flex-col">
           <button
             className="
             flex justify-between items-center
             w-full
-            h-16 border-b-[1px] border-t-[1px]"
+            h-16 border-b-[1px]"
             data-testid="profile-done-btn"
             name={ done }
-            onClick={ ({ target: { name } }) => handleClick(name) }
+            onClick={ () => handleClick('done-recipes') }
           >
             <div className="flex items-center">
               <HiCheck
                 className="ml-[4px] mr-[14px]"
                 style={ { width: '20px', height: '20px' } }
               />
-              <h2>Done Recipes</h2>
+              Done Recipes
             </div>
             <IoIosArrowForward className="mr-2" />
           </button>
 
           <button
+            type="button"
             className="
             flex justify-between items-center
             w-full
             h-16 border-b-[1px]"
             data-testid="profile-favorite-btn"
             name={ favorite }
-            onClick={ ({ target: { name } }) => handleClick(name) }
+            onClick={ () => handleClick('favorite-recipes') }
           >
             <div className="flex items-center">
               <GrFavorite
                 className="ml-[4px] mr-[14px]"
                 style={ { width: '20px', height: '20px' } }
               />
-              <h2>Favorite Recipes</h2>
+              Favorite Recipes
             </div>
+            <IoIosArrowForward className="mr-2" />
           </button>
           <button
             className="
@@ -91,14 +91,14 @@ function Profile() {
             h-16 border-b-[1px]"
             data-testid="profile-logout-btn"
             name={ logout }
-            onClick={ ({ target: { name } }) => handleClick(name) }
+            onClick={ () => handleClick('/') }
           >
             <div className="flex items-center">
               <SlLogout
                 className="ml-[4px] mr-[14px]"
                 style={ { width: '20px', height: '20px' } }
               />
-              <h2>Done Recipes</h2>
+              Logout
             </div>
             <IoIosArrowForward className="mr-2" />
           </button>
