@@ -1,8 +1,10 @@
+/* eslint-disable react/jsx-max-depth */
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { MdDoneOutline } from 'react-icons/md';
+import { HiCheck } from 'react-icons/hi';
 import { GrFavorite } from 'react-icons/gr';
 import { SlLogout } from 'react-icons/sl';
+import { IoIosArrowForward } from 'react-icons/io';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -33,76 +35,72 @@ function Profile() {
   };
 
   return (
-    <div className="h-[640px] bg-[#efefef]">
+    <div className="h-[640px] bg-[#FAFAFA]">
       <Header />
-      <div>
+      <div className="max-w-[320px] m-auto">
         <div className="mb-10">
           <p
-            className="text-xl font-mono text-center my-5"
+            className="text-xl my-5"
             data-testid="profile-email"
           >
             {user.email}
 
           </p>
         </div>
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col">
           <button
             className="
-            flex justify-start items-center
-            shadow-[0px_1px_2px_0px_rgba(0,0,0,0.1)]
-            hover:shadow-lg
-            transition-shadow
+            flex justify-between items-center
             w-full
-            h-16
-            text-2xl
-            rounded-xl
-            "
-            style={ { color: '#444444', backgroundColor: '#d5f7e9' } }
+            h-16 border-b-[1px] border-t-[1px]"
             data-testid="profile-done-btn"
             name={ done }
             onClick={ ({ target: { name } }) => handleClick(name) }
           >
-            <MdDoneOutline className="mx-7" />
-            Done Recipes
+            <div className="flex items-center">
+              <HiCheck
+                className="ml-[4px] mr-[14px]"
+                style={ { width: '20px', height: '20px' } }
+              />
+              <h2>Done Recipes</h2>
+            </div>
+            <IoIosArrowForward className="mr-2" />
           </button>
 
           <button
             className="
-            flex justify-start items-center
-            shadow-[0px_1px_2px_0px_rgba(0,0,0,0.1)]
-            hover:shadow-lg
-            transition-shadow
+            flex justify-between items-center
             w-full
-            h-16
-            text-2xl
-            rounded-xl
-            "
-            style={ { color: '#444444', backgroundColor: '#d5f7e9' } }
+            h-16 border-b-[1px]"
             data-testid="profile-favorite-btn"
             name={ favorite }
             onClick={ ({ target: { name } }) => handleClick(name) }
           >
-            <GrFavorite className="mx-7" />
-            Favorite Recipes
+            <div className="flex items-center">
+              <GrFavorite
+                className="ml-[4px] mr-[14px]"
+                style={ { width: '20px', height: '20px' } }
+              />
+              <h2>Favorite Recipes</h2>
+            </div>
           </button>
           <button
             className="
-              flex justify-start items-center
-              shadow-[0px_1px_2px_0px_rgba(0,0,0,0.1)]
-              hover:shadow-lg
-              transition-shadow
-              w-full
-              h-16
-              text-2xl
-              rounded-xl
-              "
-            style={ { color: '#444444', backgroundColor: '#d5f7e9' } }
+            flex justify-between items-center
+            w-full
+            h-16 border-b-[1px]"
             data-testid="profile-logout-btn"
             name={ logout }
             onClick={ ({ target: { name } }) => handleClick(name) }
           >
-            <SlLogout className="mx-7" />
-            Logout
+            <div className="flex items-center">
+              <SlLogout
+                className="ml-[4px] mr-[14px]"
+                style={ { width: '20px', height: '20px' } }
+              />
+              <h2>Done Recipes</h2>
+            </div>
+            <IoIosArrowForward className="mr-2" />
           </button>
         </div>
       </div>

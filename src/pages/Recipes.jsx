@@ -159,7 +159,7 @@ function Recipes() {
                   <Link
                     key={ recipe.idMeal || recipe.idDrink }
                     to={ `${pathName}/${recipe.idMeal || recipe.idDrink}` }
-                    className="flex flex-col justify-center items-center w-[47%]"
+                    className="flex justify-center w-[47%]"
                   >
                     <div
                       data-testid={ `${index}-recipe-card` }
