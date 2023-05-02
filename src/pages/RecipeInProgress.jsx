@@ -5,10 +5,10 @@ import { useParams, useHistory } from 'react-router-dom';
 import clipboardCopy from 'clipboard-copy';
 import { AiOutlineShareAlt } from 'react-icons/ai';
 import { MdOutlineFavoriteBorder, MdFavorite } from 'react-icons/md';
+import { BsCheckLg } from 'react-icons/bs';
 import RecipeContext from '../context/RecipeContext';
 import useFetchRecipes from '../hooks/useFetchRecipes';
 import '../App.css';
-import { BsCheckLg } from 'react-icons/bs';
 
 function RecipeInProgress() {
   const { showRecipeInProgress, makeRecipeInProgress,

@@ -28,3 +28,17 @@ body {
 p {
   font-size: 1rem;
 }
+
+.recipe-list::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  background-color: rgb(103, 196, 91);
+  margin-right: 6px;
+}
+
+.recipe-list {
+  display: flex;
+  align-items: center
+}

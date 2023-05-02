@@ -158,13 +158,14 @@ function RecipeDetails() {
     }
     localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteRecipes));
   };
+
   return (
     <section
       className="relative p-0 pb-[4.5rem]"
     >
       {
         loading ? <Loading /> : (
-          <>
+          <div>
             <img
               src={ recipe.strMealThumb || recipe.strDrinkThumb }
               alt={ recipe.strMeal || recipe.strDrink }
@@ -212,76 +213,76 @@ function RecipeDetails() {
                 {recipe.strMeal || recipe.strDrink}
               </h2>
             </div>
-            <div className="px-4">
-              <h3 className="text-2xl font-bold pt-10">Ingredients</h3>
-              <ul className="border border-gray-400 rounded-md p-4">
-                {
-                  ingredients.map((ingredient, index) => (
-                    <li
-                      key={ index }
-                      data-testid={ `${index}-ingredient-name-and-measure` }
-                    >
-                      {`${ingredient.strMeasure === undefined
-                        ? '' : ingredient.strMeasure} 
-                ${ingredient.strIngredients}`}
-                    </li>
-                  ))
-                }
-              </ul>
-            </div>
-            <div className="px-4 pb-10">
-              <h3 className="text-2xl font-bold pt-10">Instructions</h3>
-              <p
-                className="border border-gray-400 rounded-md p-4"
-                data-testid="instructions"
-              >
-                {recipe.strInstructions}
-              </p>
-            </div>
-            {
-              pathName.includes('meals') ? (
-                <iframe
-                  data-testid="video"
-                  src={ recipe.strYoutube }
-                  title="YouTube video player"
-                  allow="accelerometer; clipboard-write;
-             encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="w-full h-[30vh]"
-                />
-              ) : null
-            }
-            {
-              showStartBtn ? (
-                <Link
-                  to={ `${pathName}/in-progress` }
-                  className="flex justify-center items-center"
+            <div className="max-w-[320px] m-auto">
+              <div>
+                <h3 className="text-2xl font-bold pt-10">Ingredients</h3>
+                <ul>
+                  {
+                    ingredients.filter((elements) => elements.strIngredients !== '')
+                      .map((ingredient, index) => (
+                        <li
+                          className="recipe-list"
+                          key={ index }
+                          data-testid={ `${index}-ingredient-name-and-measure` }
+                        >
+                          {`${ingredient.strIngredients} - ${ingredient.strMeasure}`}
+                        </li>
+                      ))
+                  }
+                </ul>
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold pt-10">Instructions</h3>
+                <p
+                  data-testid="instructions"
                 >
-                  <button
-                    data-testid="start-recipe-btn"
-                    className="start-recipe-btn"
-                    type="button"
+                  {recipe.strInstructions}
+                </p>
+              </div>
+              {
+                pathName.includes('meals') ? (
+                  <iframe
+                    data-testid="video"
+                    src={ recipe.strYoutube }
+                    title="YouTube video player"
+                    allow="accelerometer; clipboard-write;
+             encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="w-full h-[30vh]"
+                  />
+                ) : null
+              }
+              {
+                showStartBtn ? (
+                  <Link
+                    to={ `${pathName}/in-progress` }
+                    className="flex justify-center items-center"
                   >
-                    <div
-                      className="flex items-center justify-center
-                     bg-green-500 rounded-full w-14 h-14 m-auto"
+                    <button
+                      data-testid="start-recipe-btn"
+                      className="start-recipe-btn"
+                      type="button"
                     >
-                      <IoMdAdd
-                        style={ { width: '24px', height: '24px', color: 'white' } }
-                      />
-                    </div>
-                  </button>
-                </Link>
-              ) : null
-            }
-
-            <h3 className="text-2xl font-bold pt-10 pl-4 pb-2">Recomendation</h3>
+                      <div
+                        className="flex items-center justify-center
+                     bg-green-500 rounded-full w-14 h-14 m-auto"
+                      >
+                        <IoMdAdd
+                          style={ { width: '24px', height: '24px', color: 'white' } }
+                        />
+                      </div>
+                    </button>
+                  </Link>
+                ) : null
+              }
+              <h3 className="font-bold text-[1.5rem]">Recomendation</h3>
+            </div>
             <Carousel
               pathName={ pathName }
               meals={ meals }
               drinks={ drinks }
             />
-          </>
+          </div>
         )
       }
     </section>

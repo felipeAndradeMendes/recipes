@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 function Carousel({ pathName, meals, drinks }) {
   return (
     <Swiper
-      slidesPerView={ 2 }
-      spaceBetween={ 30 }
+      slidesPerView={ 2.2 }
+      spaceBetween={ 10 }
     >
       {
         pathName.includes('meals') ? (
@@ -15,16 +15,15 @@ function Carousel({ pathName, meals, drinks }) {
             <SwiperSlide key={ drink.idDrink }>
               <div
                 data-testid={ `${index}-recommendation-card` }
-                className="flex flex-col justify-center
-                 items-center border border-gray-300 rounded-md"
+                className=" flex flex-wrap rounded-md justify-center"
               >
                 <img
-                  style={ { width: '300px' } }
                   src={ drink.strDrinkThumb }
                   alt={ drink.strDrink }
-                  className="rounded-md"
+                  className="rounded-[24px] w-30 h-40
+                  object-cover object-center ml-10"
                 />
-                <p data-testid={ `${index}-recommendation-title` }>
+                <p className="ml-10" data-testid={ `${index}-recommendation-title` }>
                   {drink.strDrink}
                 </p>
               </div>
