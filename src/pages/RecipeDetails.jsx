@@ -172,7 +172,7 @@ function RecipeDetails() {
               data-testid="recipe-photo"
               className="absolute"
             />
-            <div className="relative h-[361px] bg-black opacity-40 " />
+            <div className="relative h-[360px] bg-black opacity-40 " />
             <div className="absolute w-full top-0">
               <div className="flex justify-between p-5 w-full">
                 <h2 data-testid="recipe-category" className="text-2xl text-white">
@@ -215,7 +215,7 @@ function RecipeDetails() {
             </div>
             <div className="max-w-[320px] m-auto">
               <div>
-                <h3 className="text-2xl font-bold pt-10">Ingredients</h3>
+                <h3 className="text-2xl font-bold mt-6 mb-2">Ingredients</h3>
                 <ul>
                   {
                     ingredients.filter((elements) => elements.strIngredients !== '')
@@ -232,7 +232,7 @@ function RecipeDetails() {
                 </ul>
               </div>
               <div>
-                <h3 className="text-2xl font-bold pt-10">Instructions</h3>
+                <h3 className="text-2xl font-bold mt-6 mb-2">Instructions</h3>
                 <p
                   data-testid="instructions"
                 >
@@ -275,7 +275,7 @@ function RecipeDetails() {
                   </Link>
                 ) : null
               }
-              <h3 className="font-bold text-[1.5rem]">Recomendation</h3>
+              <h3 className="font-bold text-[1.5rem] mt-6 mb-2">Recomendation</h3>
             </div>
             <Carousel
               pathName={ pathName }
