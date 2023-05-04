@@ -7,7 +7,7 @@ function Carousel({ pathName, meals, drinks }) {
   return (
     <Swiper
       slidesPerView={ 2.2 }
-      spaceBetween={ 10 }
+      spaceBetween={ 0 }
     >
       {
         pathName.includes('meals') ? (
@@ -35,13 +35,14 @@ function Carousel({ pathName, meals, drinks }) {
               <div
                 data-testid={ `${index}-recommendation-card` }
                 className="flex flex-col justify-center
-                 items-center border border-gray-300 rounded-md"
+                 items-center rounded-md ml-5"
               >
                 <img
                   style={ { width: '300px' } }
                   src={ meal.strMealThumb }
                   alt={ meal.strMeal }
-                  className="rounded-md"
+                  className="rounded-[24px] w-40 h-28
+                  object-cover object-center"
                 />
                 <p
                   className="text-center"
