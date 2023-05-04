@@ -196,50 +196,44 @@ function RecipeInProgress() {
           </div>
           <div className="px-4">
             <h3
-              className="text-2xl font-bold pt-10"
+              className="text-2xl font-bold mt-6 mb-2"
             >
               Ingredientes
             </h3>
-            <fieldset
-              className="border border-gray-400 rounded-md p-4"
-            >
-              <div>
-                { showRecipeInProgress.ingredients
-                  .map((ingredient, index) => (
-                    <div
+            <div>
+              { showRecipeInProgress.ingredients
+                .map((ingredient, index) => (
+                  <div
+                    key={ index }
+                    className="flex items-center"
+                  >
+                    <label
+                      htmlFor="ingredient"
+                      data-testid={ `${index}-ingredient-step` }
                       key={ index }
-                      className=" ml-2 flex items-center"
+                      className={ checkedIngredients[ingredient]
+                        ? 'checked' : undefined }
                     >
-                      <label
-                        htmlFor="ingredient"
-                        data-testid={ `${index}-ingredient-step` }
-                        key={ index }
-                        className={ checkedIngredients[ingredient]
-                          ? 'checked' : undefined }
-                      >
-                        { ingredient }
-                        <input
-                          className="ml-1"
-                          type="checkbox"
-                          name={ ingredient }
-                          checked={ checkedIngredients[ingredient] || false }
-                          onChange={ handleIngredientChange }
-                        />
-                      </label>
-                    </div>
-                  ))}
-              </div>
-            </fieldset>
+                      { ingredient }
+                      <input
+                        className="ml-1"
+                        type="checkbox"
+                        name={ ingredient }
+                        checked={ checkedIngredients[ingredient] || false }
+                        onChange={ handleIngredientChange }
+                      />
+                    </label>
+                  </div>
+                ))}
+            </div>
           </div>
           <div className="px-4 pb-4">
             <h3
-              className="text-2xl font-bold pt-4"
+              className="text-2xl font-bold mt-6 mb-2"
             >
               Instruções
             </h3>
-            <div
-              className="border border-gray-400 rounded-md p-4"
-            >
+            <div>
               <div
                 className="instructions"
                 data-testid="instructions"
