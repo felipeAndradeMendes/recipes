@@ -141,7 +141,7 @@ function Recipes() {
                     <button
                       className="w-14 h-14 flex justify-center flex-col
                      items-center rounded-full bg-[#E6E6E6]
-                      hover:bg-[#0a9b61] hover:text-white"
+                      hover:bg-[#19C27E] hover:text-white"
                       type="button"
                       data-testid={ `${category.name}-category-filter` }
                       onClick={ () => handleChangeCategory(category.name) }
