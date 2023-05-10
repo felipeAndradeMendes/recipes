@@ -1,7 +1,7 @@
 import { Link, useHistory } from 'react-router-dom';
 import { useContext, useState, useEffect } from 'react';
-import { CiSearch } from 'react-icons/ci';
 import { RxPerson } from 'react-icons/rx';
+import { BiSearch } from 'react-icons/bi';
 // import profileIcon from '../images/profileIcon.svg';
 // import searchIcon from '../images/searchIcon.svg';
 import headerContext from '../context/headerContext';
@@ -83,9 +83,9 @@ function Header() {
                     alt="Search Icon"
                     data-testid="search-top-btn"
                   /> */}
-                  <CiSearch
+                  <BiSearch
                     data-testid="search-top-btn"
-                    style={ { width: '32px', height: '32px', color: '#666666' } }
+                    style={ { width: '24px', height: '24px', color: '#666666' } }
                   />
                 </button>
               ) : null
@@ -103,7 +103,7 @@ function Header() {
               data-testid="profile-top-btn"
             /> */}
             <RxPerson
-              style={ { width: '32', height: '32px', color: '#666666' } }
+              style={ { width: '24', height: '24px', color: '#666666' } }
               data-testid="profile-top-btn"
             />
           </Link>
