@@ -169,24 +169,22 @@ function Recipes() {
                         src={ recipe.strMealThumb || recipe.strDrinkThumb }
                         alt={ recipe.strMeal || recipe.strDrink }
                         data-testid={ `${index}-card-img` }
-                        className="rounded-[24px] w-40 h-28
-                        object-cover object-center"
+                        className="rounded-[24px] w-38 h-40
+                        object-cover object-center "
                       />
-                      <div className="p-1">
-                        <p
-                          data-testid={ `${index}-horizontal-top-text` }
-                          className="text-xs"
-                        >
-                          <span>Category: </span>
-                          { selectedCategory || recipe.strCategory
-                          || recipe.strAlcoholic }
-                        </p>
+                      <div className="mt-2 ml-2">
                         <p
                           data-testid={ `${index}-card-name` }
-                          className="text-xs"
+                          className="text-[1rem] font-bold"
                         >
-                          <span>Name: </span>
                           { recipe.strMeal || recipe.strDrink }
+                        </p>
+                        <p
+                          data-testid={ `${index}-horizontal-top-text` }
+                          className="text-[0.8rem]"
+                        >
+                          { selectedCategory || recipe.strCategory
+                          || recipe.strAlcoholic }
                         </p>
                       </div>
                     </div>
