@@ -35,7 +35,7 @@ function Profile() {
   };
 
   return (
-    <div className="h-[640px] bg-[#FAFAFA]">
+    <div className="h-[640px] bg-[#FFFFFF]">
       <Header />
       <div className="max-w-[320px] m-auto">
         <p

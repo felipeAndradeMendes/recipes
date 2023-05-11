@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import { TbMeat, TbIceCream } from 'react-icons/tb';
-import { GiToaster, GiChickenOven, GiGoat, GiDrinkMe,
+import { TbMeat, TbIceCream, TbMilkshake } from 'react-icons/tb';
+import { GiToaster, GiChickenOven, GiGoat,
   GiChocolateBar } from 'react-icons/gi';
 import { FaCocktail } from 'react-icons/fa';
 import { GrStatusUnknown } from 'react-icons/gr';
@@ -60,7 +60,7 @@ function Recipes() {
             style={ { width: '24px', height: '24px' } }
           /> },
         { name: 'Shake',
-          icon: <GiDrinkMe
+          icon: <TbMilkshake
             style={ { width: '24px', height: '24px' } }
           /> },
       ];
@@ -118,9 +118,9 @@ function Recipes() {
       <Header />
       {
         loading ? <Loading /> : (
-          <section className="pb-[4.5rem] pt-5 max-w-[320px] m-auto">
-            <div className="flex justify-between items-center pb-2">
-              <h3 className="text-[20px]">Categories</h3>
+          <section className="pb-[4.5rem] mt-4 max-w-[320px] m-auto">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-[20px] font-bold">Categories</h3>
               <button
                 type="button"
                 data-testid="All-category-filter"

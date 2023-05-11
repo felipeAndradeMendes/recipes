@@ -31,15 +31,15 @@ function SearchBar() {
 
   return (
     <div
-      className="bg-white p-3 flex flex-col
-      items-center justify-center w-[360px]"
+      className="bg-[#FFFFFF] flex flex-col
+      items-start justify-center mb-4 mt-2 max-w-[320px]"
     >
       <p className="w-[300px] text-[#0DC41F] font-bold ">Hello,</p>
       <p className="w-[300px] mb-1 text-[#888888]">What you want to cook today?</p>
       <div className=" flex justify-center">
         <input
           placeholder="Search Recipes"
-          className="rounded-l-[6px] bg-[#F2F2F2] p-2 pl-2 pr-12
+          className="rounded-l-[6px] bg-[#F2F2F2] p-2 pl-2 pr-[72px]
            placeholder-[#bdbdbd] mb-1 mt-2"
           type="text"
           data-testid="search-input"
