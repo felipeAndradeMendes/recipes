@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-max-depth */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { HiCheck } from 'react-icons/hi';
 import { GrFavorite } from 'react-icons/gr';
@@ -7,6 +7,7 @@ import { SlLogout } from 'react-icons/sl';
 import { IoIosArrowForward } from 'react-icons/io';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import headerContext from '../context/headerContext';
 
 // push
 
@@ -16,10 +17,12 @@ const logout = '/';
 
 function Profile() {
   const [user] = useState(JSON.parse(localStorage.getItem('user')) || 'User');
+  const { setPageName } = useContext(headerContext);
 
   const history = useHistory();
 
   const handleClick = (name) => {
+    setPageName(history.location.pathname);
     switch (name) {
     case done:
       history.push(done);
