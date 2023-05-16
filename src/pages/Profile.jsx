@@ -22,7 +22,7 @@ function Profile() {
   const history = useHistory();
 
   const handleClick = (name) => {
-    setPageName(history.location.pathname);
+    setPageName('profile');
     switch (name) {
     case done:
       history.push(done);
