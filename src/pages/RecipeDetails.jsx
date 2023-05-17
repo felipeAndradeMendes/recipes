@@ -174,14 +174,28 @@ function RecipeDetails() {
             />
             <div className="relative h-[360px] bg-black opacity-20 rounded-b-[40px]" />
             <div className="absolute w-full top-0">
-              <div className="max-w-[320px] m-auto mt-6 flex justify-between">
+              <div className="max-w-[320px] m-auto mt-6 flex justify-between h-[30px]">
                 <Link to="/drinks">
                   <IoIosArrowBack
                     style={ { width: '24', height: '24px', color: 'white' } }
                     data-testid="profile-top-btn"
                   />
                 </Link>
-                <div className="flex gap-2">
+                <div className="flex gap-4">
+                  {
+                    showCopy
+                      ? (
+                        <span
+                          className="text-white
+                          pt-1 pb-1 pr-2 pl-2
+                          rounded-[10px] bg-black/50
+                          font-bold"
+                        >
+                          Link copied
+                        </span>
+                      )
+                      : null
+                  }
                   <button
                     type="button"
                     data-testid="share-btn"
@@ -196,9 +210,6 @@ function RecipeDetails() {
                       size={ 24 }
                     />
                   </button>
-                  {
-                    showCopy ? <span className="text-white">Link copied!</span> : null
-                  }
                   <button
                     type="button"
                     onClick={ () => handleFavorite(recipe) }
