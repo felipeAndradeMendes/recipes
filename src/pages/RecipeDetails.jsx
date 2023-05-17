@@ -5,7 +5,7 @@ import { useParams, useHistory, Link } from 'react-router-dom';
 import { AiOutlineShareAlt } from 'react-icons/ai';
 import { MdOutlineFavoriteBorder, MdFavorite } from 'react-icons/md';
 import clipboardCopy from 'clipboard-copy';
-import { IoMdAdd } from 'react-icons/io';
+import { IoMdAdd, IoIosArrowBack } from 'react-icons/io';
 import Carousel from '../components/Carousel';
 import Loading from '../components/Loading';
 
@@ -174,11 +174,13 @@ function RecipeDetails() {
             />
             <div className="relative h-[360px] bg-black opacity-20 rounded-b-[40px]" />
             <div className="absolute w-full top-0">
-              <div className="flex justify-between p-5 w-full">
-                <h2 data-testid="recipe-category" className="text-2xl text-white">
-                  {`${recipe.strCategory}
-       ${pathName.includes('meals') ? '' : recipe.strAlcoholic}`}
-                </h2>
+              <div className="max-w-[320px] m-auto mt-6 flex justify-between">
+                <Link to="/drinks">
+                  <IoIosArrowBack
+                    style={ { width: '24', height: '24px', color: 'white' } }
+                    data-testid="profile-top-btn"
+                  />
+                </Link>
                 <div className="flex gap-2">
                   <button
                     type="button"
@@ -191,7 +193,7 @@ function RecipeDetails() {
                     className="text-white"
                   >
                     <AiOutlineShareAlt
-                      size={ 30 }
+                      size={ 24 }
                     />
                   </button>
                   {
@@ -201,10 +203,16 @@ function RecipeDetails() {
                     type="button"
                     onClick={ () => handleFavorite(recipe) }
                   >
-                    {isFavorite ? <MdFavorite color="white" size={ 30 } />
-                      : <MdOutlineFavoriteBorder color="white" size={ 30 } />}
+                    {isFavorite ? <MdFavorite color="white" size={ 24 } />
+                      : <MdOutlineFavoriteBorder color="white" size={ 24 } />}
                   </button>
                 </div>
+              </div>
+              <div className="flex justify-between p-5 w-full">
+                <h2 data-testid="recipe-category" className="text-2xl text-white">
+                  {`${recipe.strCategory}
+       ${pathName.includes('meals') ? '' : recipe.strAlcoholic}`}
+                </h2>
               </div>
               <h2
                 className="text-white text-4xl text-center pt-10"
@@ -231,15 +239,18 @@ function RecipeDetails() {
                   }
                 </ul>
               </div>
-              <div>
+              <blockquote className="instructions">
                 <h3 className="text-2xl font-bold mt-6 mb-2">Instructions</h3>
-                <p
-                  data-testid="instructions"
-                >
-                  {recipe.strInstructions}
-                </p>
-              </div>
-              {
+                <div className="border-l-4 border-[#80E78B] pt-2 pb-2 mb-2">
+                  <p
+                    data-testid="instructions"
+                    className="ml-4"
+                  >
+                    {recipe.strInstructions}
+                  </p>
+                </div>
+              </blockquote>
+              {/* {
                 pathName.includes('meals') ? (
                   <iframe
                     data-testid="video"
@@ -251,7 +262,7 @@ function RecipeDetails() {
                     className="w-full h-[30vh]"
                   />
                 ) : null
-              }
+              } */}
               {
                 showStartBtn ? (
                   <Link
@@ -265,7 +276,7 @@ function RecipeDetails() {
                     >
                       <div
                         className="flex items-center justify-center
-                     bg-green-500 rounded-full w-14 h-14 m-auto"
+                     bg-[#4AC356] rounded-full w-14 h-14 m-auto"
                       >
                         <IoMdAdd
                           style={ { width: '24px', height: '24px', color: 'white' } }
