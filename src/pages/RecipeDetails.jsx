@@ -170,9 +170,9 @@ function RecipeDetails() {
               src={ recipe.strMealThumb || recipe.strDrinkThumb }
               alt={ recipe.strMeal || recipe.strDrink }
               data-testid="recipe-photo"
-              className="absolute rounded-b-[40px]"
+              className="absolute"
             />
-            <div className="relative h-[360px] bg-black opacity-20 rounded-b-[40px]" />
+            <div className="absolute h-[360px] bg-black opacity-20" />
             <div className="absolute w-full top-0">
               <div className="max-w-[320px] m-auto mt-6 flex justify-between h-[30px]">
                 <Link to="/drinks">
@@ -232,36 +232,37 @@ function RecipeDetails() {
                 {recipe.strMeal || recipe.strDrink}
               </h2>
             </div>
-            <div className="max-w-[320px] m-auto">
-              <div>
-                <h3 className="text-2xl font-bold mt-6 mb-2">Ingredients</h3>
-                <ul>
-                  {
-                    ingredients.filter((elements) => elements.strIngredients !== '')
-                      .map((ingredient, index) => (
-                        <li
-                          className="recipe-list"
-                          key={ index }
-                          data-testid={ `${index}-ingredient-name-and-measure` }
-                        >
-                          {`${ingredient.strIngredients} - ${ingredient.strMeasure}`}
-                        </li>
-                      ))
-                  }
-                </ul>
-              </div>
-              <blockquote className="instructions">
-                <h3 className="text-2xl font-bold mt-6 mb-2">Instructions</h3>
-                <div className="border-l-4 border-[#80E78B] pt-2 pb-2 mb-2">
-                  <p
-                    data-testid="instructions"
-                    className="ml-4"
-                  >
-                    {recipe.strInstructions}
-                  </p>
+            <div className="relative top-[320px] pt-10 pb-20 bg-white rounded-[40px]">
+              <div className="max-w-[320px] m-auto">
+                <div>
+                  <h3 className="text-2xl font-bold mb-2">Ingredients</h3>
+                  <ul>
+                    {
+                      ingredients.filter((elements) => elements.strIngredients !== '')
+                        .map((ingredient, index) => (
+                          <li
+                            className="recipe-list"
+                            key={ index }
+                            data-testid={ `${index}-ingredient-name-and-measure` }
+                          >
+                            {`${ingredient.strIngredients} - ${ingredient.strMeasure}`}
+                          </li>
+                        ))
+                    }
+                  </ul>
                 </div>
-              </blockquote>
-              {/* {
+                <blockquote className="instructions">
+                  <h3 className="text-2xl font-bold mt-6 mb-2">Instructions</h3>
+                  <div className="border-l-4 border-[#80E78B] pt-2 pb-2 mb-2">
+                    <p
+                      data-testid="instructions"
+                      className="ml-4"
+                    >
+                      {recipe.strInstructions}
+                    </p>
+                  </div>
+                </blockquote>
+                {/* {
                 pathName.includes('meals') ? (
                   <iframe
                     data-testid="video"
@@ -274,36 +275,37 @@ function RecipeDetails() {
                   />
                 ) : null
               } */}
-              {
-                showStartBtn ? (
-                  <Link
-                    to={ `${pathName}/in-progress` }
-                    className="flex justify-center items-center"
-                  >
-                    <button
-                      data-testid="start-recipe-btn"
-                      className="start-recipe-btn"
-                      type="button"
+                {
+                  showStartBtn ? (
+                    <Link
+                      to={ `${pathName}/in-progress` }
+                      className="flex justify-center items-center"
                     >
-                      <div
-                        className="flex items-center justify-center
-                     bg-[#4AC356] rounded-full w-14 h-14 m-auto"
+                      <button
+                        data-testid="start-recipe-btn"
+                        className="start-recipe-btn"
+                        type="button"
                       >
-                        <IoMdAdd
-                          style={ { width: '24px', height: '24px', color: 'white' } }
-                        />
-                      </div>
-                    </button>
-                  </Link>
-                ) : null
-              }
-              <h3 className="font-bold text-[1.5rem] mt-6 mb-2">Recomendation</h3>
+                        <div
+                          className="flex items-center justify-center
+                     bg-[#4AC356] rounded-full w-14 h-14 m-auto"
+                        >
+                          <IoMdAdd
+                            style={ { width: '24px', height: '24px', color: 'white' } }
+                          />
+                        </div>
+                      </button>
+                    </Link>
+                  ) : null
+                }
+                <h3 className="font-bold text-[1.5rem] mt-6 mb-2">Recomendation</h3>
+              </div>
+              <Carousel
+                pathName={ pathName }
+                meals={ meals }
+                drinks={ drinks }
+              />
             </div>
-            <Carousel
-              pathName={ pathName }
-              meals={ meals }
-              drinks={ drinks }
-            />
           </div>
         )
       }
