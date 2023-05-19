@@ -1,11 +1,12 @@
 /* eslint-disable react/jsx-max-depth */
 /* eslint-disable max-lines */
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import clipboardCopy from 'clipboard-copy';
 import { AiOutlineShareAlt } from 'react-icons/ai';
 import { MdOutlineFavoriteBorder, MdFavorite } from 'react-icons/md';
 import { BsCheckLg } from 'react-icons/bs';
+import { IoIosArrowBack } from 'react-icons/io';
 import RecipeContext from '../context/RecipeContext';
 import useFetchRecipes from '../hooks/useFetchRecipes';
 import '../App.css';
@@ -145,13 +146,58 @@ function RecipeInProgress() {
       { getRecipe[pathNameSlice] && (
         <div>
           <img
-            className="absolute"
+            className="absolute z-0"
             src={ getRecipe[pathNameSlice][0].strDrinkThumb
               || getRecipe[pathNameSlice][0].strMealThumb }
             alt="recipe"
             data-testid="recipe-photo"
           />
-          <div className="relative h-[361px] bg-black opacity-40 ">
+          <div className="absolute top-0 h-[360px] w-full bg-black opacity-20">
+            <div className="max-w-[320px] m-auto mt-6 flex justify-between h-[30px]">
+              <Link to="/drinks">
+                <IoIosArrowBack
+                  style={ { width: '24', height: '24px', color: 'white' } }
+                  data-testid="profile-top-btn"
+                />
+              </Link>
+              <div className="flex gap-4">
+                {
+                  showCopy
+                    ? (
+                      <span
+                        className="text-white
+                          pt-1 pb-1 pr-2 pl-2
+                          rounded-[10px] bg-black/50
+                          font-bold"
+                      >
+                        Link copied
+                      </span>
+                    )
+                    : null
+                }
+                <button
+                  type="button"
+                  data-testid="share-btn"
+                  onClick={ () => {
+                    clearInterval(intervalID);
+                    copy(`http://localhost:3000${pathName}`);
+                    setShowCopy(true);
+                  } }
+                  className="text-white"
+                >
+                  <AiOutlineShareAlt
+                    size={ 24 }
+                  />
+                </button>
+                <button
+                  type="button"
+                  onClick={ () => handleFavorite(getRecipe) }
+                >
+                  {favoriteProgress ? <MdFavorite color="white" size={ 24 } />
+                    : <MdOutlineFavoriteBorder color="white" size={ 24 } />}
+                </button>
+              </div>
+            </div>
             <div className="flex justify-between p-5">
               <h4
                 className="text-2xl text-white"
@@ -160,31 +206,6 @@ function RecipeInProgress() {
                 { getRecipe[pathNameSlice][0].strCategory
                 || getRecipe[pathNameSlice][0].strAlcoholic }
               </h4>
-              <div className="flex gap-2">
-                <button
-                  className="text-white"
-                  data-testid="share-btn"
-                  onClick={ () => {
-                    copy(`http://localhost:3000/${pathNameSlice}/${id}`);
-                    setShowCopy(true);
-                  } }
-                >
-                  <AiOutlineShareAlt
-                    size={ 30 }
-                  />
-                </button>
-                {
-                  showCopy ? <span className="text-white">Link copied!</span> : null
-                }
-                <button
-                  type="button"
-                  onClick={ () => handleFavorite(getRecipe) }
-                >
-                  {favoriteProgress
-                    ? <MdFavorite color="white" size={ 30 } />
-                    : <MdOutlineFavoriteBorder color="white" size={ 30 } />}
-                </button>
-              </div>
             </div>
             <h1
               data-testid="recipe-title"
@@ -194,71 +215,73 @@ function RecipeInProgress() {
               || getRecipe[pathNameSlice][0].strMeal }
             </h1>
           </div>
-          <div className="px-4">
-            <h3
-              className="text-2xl font-bold mt-6 mb-2"
-            >
-              Ingredientes
-            </h3>
-            <div>
-              { showRecipeInProgress.ingredients
-                .map((ingredient, index) => (
-                  <div
-                    key={ index }
-                    className="flex items-center"
-                  >
-                    <label
-                      htmlFor="ingredient"
-                      data-testid={ `${index}-ingredient-step` }
+          <div className="relative top-[320px] pt-10 pb-20 bg-white rounded-[40px]">
+            <div className="max-w-[320px] m-auto">
+              <h3
+                className="text-2xl font-bold mt-6 mb-2"
+              >
+                Ingredientes
+              </h3>
+              <div>
+                { showRecipeInProgress.ingredients
+                  .map((ingredient, index) => (
+                    <div
                       key={ index }
-                      className={ checkedIngredients[ingredient]
-                        ? 'checked' : undefined }
+                      className="flex items-center"
                     >
-                      { ingredient }
-                      <input
-                        className="ml-1"
-                        type="checkbox"
-                        name={ ingredient }
-                        checked={ checkedIngredients[ingredient] || false }
-                        onChange={ handleIngredientChange }
-                      />
-                    </label>
-                  </div>
-                ))}
-            </div>
-          </div>
-          <div className="px-4 pb-4">
-            <h3
-              className="text-2xl font-bold mt-6 mb-2"
-            >
-              Instruções
-            </h3>
-            <div>
-              <div
-                className="instructions"
-                data-testid="instructions"
-              >
-                { getRecipe[pathNameSlice][0].strInstructions }
+                      <label
+                        htmlFor="ingredient"
+                        data-testid={ `${index}-ingredient-step` }
+                        key={ index }
+                        className={ checkedIngredients[ingredient]
+                          ? 'checked' : undefined }
+                      >
+                        { ingredient }
+                        <input
+                          className="ml-1"
+                          type="checkbox"
+                          name={ ingredient }
+                          checked={ checkedIngredients[ingredient] || false }
+                          onChange={ handleIngredientChange }
+                        />
+                      </label>
+                    </div>
+                  ))}
               </div>
             </div>
-          </div>
-          <div className="flex justify-center pb-3">
-            <button
-              type="button"
-              data-testid="finish-recipe-btn"
-              value="finalizar"
-              onClick={ () => handleFinishButton(getRecipe, pathName) }
-              disabled={ !isAllChecked() }
-            >
-              <div
-                className="flex items-center justify-center
+            <div className="px-4 pb-4">
+              <h3
+                className="text-2xl font-bold mt-6 mb-2"
+              >
+                Instruções
+              </h3>
+              <div>
+                <div
+                  className="instructions"
+                  data-testid="instructions"
+                >
+                  { getRecipe[pathNameSlice][0].strInstructions }
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-center pb-3">
+              <button
+                type="button"
+                data-testid="finish-recipe-btn"
+                value="finalizar"
+                onClick={ () => handleFinishButton(getRecipe, pathName) }
+                disabled={ !isAllChecked() }
+              >
+                <div
+                  className="flex items-center justify-center
             bg-green-500 rounded-full w-14 h-14 m-auto"
-              >
-                <BsCheckLg
-                  style={ { width: '24px', height: '24px', color: 'white' } }
-                />
-              </div>
-            </button>
+                >
+                  <BsCheckLg
+                    style={ { width: '24px', height: '24px', color: 'white' } }
+                  />
+                </div>
+              </button>
+            </div>
           </div>
         </div>
       )}
