@@ -170,9 +170,9 @@ function RecipeDetails() {
               src={ recipe.strMealThumb || recipe.strDrinkThumb }
               alt={ recipe.strMeal || recipe.strDrink }
               data-testid="recipe-photo"
-              className="absolute"
+              className="absolute z-0"
             />
-            <div className="absolute h-[360px] bg-black opacity-20" />
+            <div className="absolute top-0 h-[360px] w-full bg-black opacity-20" />
             <div className="absolute w-full top-0">
               <div className="max-w-[320px] m-auto mt-6 flex justify-between h-[30px]">
                 <Link to="/drinks">
