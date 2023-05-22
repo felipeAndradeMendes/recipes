@@ -49,46 +49,48 @@ function DoneRecipes() {
   return (
     <>
       <Header />
-      <form className="flex max-w-[200px] m-auto justify-between pt-4 pb-4">
-        <button
-          type="button"
-          name="all"
-          data-testid="filter-by-all-btn"
-          onClick={ () => handleClickFilters('all') }
-          className="w-14 h-14 flex justify-center flex-col
-            items-center border-2 border-[#0a9b61] rounded-full
+      <form className="pb-[2rem] mt-4 max-w-[320px] m-auto">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-[20px] font-bold">Categories</h3>
+          <button
+            type="button"
+            name="all"
+            data-testid="filter-by-all-btn"
+            onClick={ () => handleClickFilters('all') }
+            className="flex justify-center flex-col items-center
+          text-[#0a9b61] text-[12px] font-bold"
+          >
+            See all
+          </button>
+        </div>
+        <div className="flex justify-start gap-2">
+          <button
+            type="button"
+            name="meal"
+            data-testid="filter-by-meal-btn"
+            onClick={ () => handleClickFilters('meal') }
+            className="w-14 h-14 flex justify-center flex-col
+            items-center rounded-full bg-[#E6E6E6]
            hover:bg-[#0a9b61] hover:text-white"
-        >
-          <BiBorderAll
-            style={ { width: '24px', height: '24px' } }
-          />
-        </button>
-        <button
-          type="button"
-          name="meal"
-          data-testid="filter-by-meal-btn"
-          onClick={ () => handleClickFilters('meal') }
-          className="w-14 h-14 flex justify-center flex-col
-            items-center border-2 border-[#0a9b61] rounded-full
+          >
+            <IoRestaurantOutline
+              style={ { width: '24px', height: '24px' } }
+            />
+          </button>
+          <button
+            type="button"
+            name="drink"
+            data-testid="filter-by-drink-btn"
+            onClick={ () => handleClickFilters('drink') }
+            className="w-14 h-14 flex justify-center flex-col
+            items-center rounded-full bg-[#E6E6E6]
            hover:bg-[#0a9b61] hover:text-white"
-        >
-          <IoRestaurantOutline
-            style={ { width: '24px', height: '24px' } }
-          />
-        </button>
-        <button
-          type="button"
-          name="drink"
-          data-testid="filter-by-drink-btn"
-          onClick={ () => handleClickFilters('drink') }
-          className="w-14 h-14 flex justify-center flex-col
-            items-center border-2 border-[#0a9b61] rounded-full
-           hover:bg-[#0a9b61] hover:text-white"
-        >
-          <BiDrink
-            style={ { width: '24px', height: '24px' } }
-          />
-        </button>
+          >
+            <BiDrink
+              style={ { width: '24px', height: '24px' } }
+            />
+          </button>
+        </div>
       </form>
       {/* DONE RECIPES MAP */}
       <section className="flex justify-center flex-wrap">
