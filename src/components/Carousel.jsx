@@ -15,16 +15,20 @@ function Carousel({ pathName, meals, drinks }) {
             <SwiperSlide key={ drink.idDrink }>
               <div
                 data-testid={ `${index}-recommendation-card` }
-                className=" flex flex-wrap rounded-md justify-center"
+                className="flex flex-col justify-center
+                 items-center rounded-md ml-5"
               >
                 <img
                   src={ drink.strDrinkThumb }
                   alt={ drink.strDrink }
-                  className="rounded-[24px] w-30 h-40
-                  object-cover object-center ml-10"
+                  className="rounded-[24px] w-40 h-28
+                  object-cover object-center"
                 />
-                <p className="ml-10" data-testid={ `${index}-recommendation-title` }>
-                  {drink.strDrink}
+                <p
+                  className="text-center"
+                  data-testid={ `${index}-recommendation-title` }
+                >
+                  {drink.strMeal}
                 </p>
               </div>
             </SwiperSlide>

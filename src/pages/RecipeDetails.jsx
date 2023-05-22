@@ -15,7 +15,7 @@ function RecipeDetails() {
   const [drinks, setDrinks] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [showStartBtn, setShowStartBtn] = useState(true);
-  // const [doneBtn, setDoneBtn] = useState('Start Recipe');
+  const [doneBtn, setDoneBtn] = useState('Start Recipe');
   const [showCopy, setShowCopy] = useState(false);
   const [intervalID, setIntervalID] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -30,7 +30,7 @@ function RecipeDetails() {
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     const isFavorites = favorites.some((favorite) => favorite.id === id);
     if (isFavorites) setIsFavorite(true);
-  }, [id]);
+  }, [id, doneBtn]);
   useEffect(() => {
     if (pathName.includes('meals')) {
       setLoading(true);
