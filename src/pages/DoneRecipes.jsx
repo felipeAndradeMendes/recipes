@@ -91,37 +91,71 @@ function DoneRecipes() {
         </button>
       </form>
       {/* DONE RECIPES MAP */}
-      {recipes.map((recipe, index) => (
-        <div
-          className="flex shadow-[0_2px_4px_1.5px_rgb(0,0,0,0.1)]
-        max-w-[320px] m-auto items-center rounded-[10px] mb-4 gap-2"
-          key={ recipe.id }
-        >
-          <Link
-            to={ `/${recipe.type}s/${recipe.id}` }
-            type="button"
-
-          >
-            <img
-              data-testid={ `${index}-horizontal-image` }
-              style={ { width: '140px' } }
-              className="rounded-l-[10px]"
-              src={ recipe.image }
-              alt={ recipe.name }
-            />
-          </Link>
+      <section className="flex justify-center flex-wrap">
+        {recipes.map((recipe, index) => (
           <div
-            className="flex flex-col pr-3"
+            className="flex shadow-[0_2px_4px_1.5px_rgb(0,0,0,0.1)]
+        max-w-[320px] m-auto items-center pr-2 rounded-[10px] mb-4"
+            key={ recipe.id }
           >
-            <div className="flex justify-between items-center">
+            <Link
+              to={ `/${recipe.type}s/${recipe.id}` }
+              type="button"
+
+            >
+              <img
+                data-testid={ `${index}-horizontal-image` }
+                style={ { width: '140px' } }
+                className="rounded-l-[10px]"
+                src={ recipe.image }
+                alt={ recipe.name }
+              />
+            </Link>
+            <div
+              className="w-[140px] ml-4 h-[100px]"
+            >
               <Link to={ `/${recipe.type}s/${recipe.id}` }>
                 <p
-                  className="text-md "
+                  className="font-bold"
                   data-testid={ `${index}-horizontal-name` }
                 >
                   { recipe.name }
                 </p>
               </Link>
+              <p
+                className="text-[#797D86] text-[0.75rem]"
+                data-testid={ `${index}-horizontal-top-text` }
+              >
+                { recipe.type === 'meal'
+                  ? (`${recipe.nationality} - ${recipe.category}`)
+                  : (`${recipe.alcoholicOrNot} - ${recipe.category}`) }
+              </p>
+              <p
+                className="text-[#797D86] text-[0.75rem]"
+                data-testid={ `${index}-horizontal-done-date` }
+              >
+                Done when:
+                {
+                  new Date(recipe.doneDate).toLocaleDateString('pt-BR', {
+                    day: 'numeric',
+                    month: 'numeric',
+                    year: 'numeric',
+                  })
+                }
+              </p>
+
+              {recipe.tags?.map((tag, indexTag) => (
+                <p
+                  key={ indexTag }
+                  data-testid={ `${index}-${tag}-horizontal-tag` }
+                  className="text-[#797D86] text-[0.75rem]"
+                >
+                  { tag }
+                </p>
+              ))}
+              <hr />
+            </div>
+            <div className="flex flex-col justify-start h-[100px]">
               <button
                 type="button"
                 onClick={ () => handleShareClick(recipe.type, recipe.id) }
@@ -134,46 +168,19 @@ function DoneRecipes() {
                 <div
                   className="mb-2 border-2 bg-white rounded-full
                   w-10 h-10 items-center flex justify-center
-                  hover:border-[#0a9b61] delay-75"
+                  text-[#80E78B]
+                  hover:bg-[#13b473] hover:text-white delay-75"
                 >
                   <RxShare2
-                    style={ { width: '24px', height: '24px', color: '#80E78B' } }
+                    style={ { width: '24px', height: '24px' } }
                   />
                 </div>
               </button>
-              {showLinkCopied[recipe.id] && <span className="text-xs">Link copied!</span>}
+              {/* {showLinkCopied[recipe.id] && <span className="text-xs">Link copied!</span>} */}
             </div>
-            <p
-              className="text-md "
-              data-testid={ `${index}-horizontal-top-text` }
-            >
-              { recipe.type === 'meal'
-                ? (`${recipe.nationality} - ${recipe.category}`)
-                : (`${recipe.alcoholicOrNot} - ${recipe.category}`) }
-            </p>
-            <p
-              className="text-md "
-              data-testid={ `${index}-horizontal-done-date` }
-            >
-              Done when:
-              {
-                new Date(recipe.doneDate).toLocaleDateString('pt-BR', {
-                  day: 'numeric',
-                  month: 'numeric',
-                  year: 'numeric',
-                })
-              }
-            </p>
-
-            {recipe.tags?.map((tag, indexTag) => (
-              <p key={ indexTag } data-testid={ `${index}-${tag}-horizontal-tag` }>
-                { tag }
-              </p>
-            ))}
-            <hr />
           </div>
-        </div>
-      ))}
+        ))}
+      </section>
     </>
   );
 }

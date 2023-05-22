@@ -234,7 +234,7 @@ function RecipeInProgress() {
                         data-testid={ `${index}-ingredient-step` }
                         key={ index }
                         className={ checkedIngredients[ingredient]
-                          ? 'checked' : undefined }
+                          ? 'text-[#50a158] flex items-center' : 'flex items-center' }
                       >
                         { ingredient }
                         <input
@@ -250,15 +250,11 @@ function RecipeInProgress() {
               </div>
             </div>
             <div className="px-4 pb-4">
-              <h3
-                className="text-2xl font-bold mt-6 mb-2"
-              >
-                Instruções
-              </h3>
-              <div>
+              <h3 className="text-2xl font-bold mt-6 mb-2">Instructions</h3>
+              <div className="border-l-4 border-[#80E78B] pt-2 pb-2 mb-2">
                 <div
-                  className="instructions"
                   data-testid="instructions"
+                  className="ml-4"
                 >
                   { getRecipe[pathNameSlice][0].strInstructions }
                 </div>
