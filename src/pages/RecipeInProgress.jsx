@@ -152,7 +152,8 @@ function RecipeInProgress() {
             alt="recipe"
             data-testid="recipe-photo"
           />
-          <div className="absolute top-0 h-[360px] w-full bg-black opacity-20">
+          <div className="absolute top-0 h-[360px] w-full bg-black opacity-20" />
+          <div className="absolute w-full top-0">
             <div className="max-w-[320px] m-auto mt-6 flex justify-between h-[30px]">
               <Link to="/drinks">
                 <IoIosArrowBack
@@ -215,7 +216,7 @@ function RecipeInProgress() {
               || getRecipe[pathNameSlice][0].strMeal }
             </h1>
           </div>
-          <div className="relative top-[320px] pt-10 pb-20 bg-white rounded-[40px]">
+          <div className="relative top-[320px] pt-10 bg-white rounded-[40px]">
             <div className="max-w-[320px] m-auto">
               <h3
                 className="text-2xl font-bold mt-6 mb-2"

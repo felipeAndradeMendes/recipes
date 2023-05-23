@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import clipboardCopy from 'clipboard-copy';
-import { BiBorderAll, BiDrink } from 'react-icons/bi';
+import { BiDrink } from 'react-icons/bi';
 import { IoRestaurantOutline } from 'react-icons/io5';
 import { IoMdHeart } from 'react-icons/io';
 import { RxShare2 } from 'react-icons/rx';

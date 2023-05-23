@@ -92,12 +92,11 @@ function DoneRecipes() {
           </button>
         </div>
       </form>
-      {/* DONE RECIPES MAP */}
       <section className="flex justify-center flex-wrap">
         {recipes.map((recipe, index) => (
           <div
             className="flex shadow-[0_2px_4px_1.5px_rgb(0,0,0,0.1)]
-        max-w-[320px] m-auto items-center pr-2 rounded-[10px] mb-4"
+          max-w-[320px] m-auto items-start pr-2 rounded-[10px] mb-4"
             key={ recipe.id }
           >
             <Link
@@ -114,7 +113,7 @@ function DoneRecipes() {
               />
             </Link>
             <div
-              className="w-[140px] ml-4 h-[100px]"
+              className="w-[140px] ml-4 mt-4 h-[100px]"
             >
               <Link to={ `/${recipe.type}s/${recipe.id}` }>
                 <p
@@ -168,10 +167,8 @@ function DoneRecipes() {
                   alt="share icon"
                 /> */}
                 <div
-                  className="mb-2 border-2 bg-white rounded-full
-                  w-10 h-10 items-center flex justify-center
-                  text-[#80E78B]
-                  hover:bg-[#13b473] hover:text-white delay-75"
+                  className="items-end flex justify-center
+                  text-[#80E78B] mb-1 hover:text-[#409148] mt-4"
                 >
                   <RxShare2
                     style={ { width: '24px', height: '24px' } }
