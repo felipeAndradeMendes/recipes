@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-max-depth */
 import React, { useEffect, useState } from 'react';
 import clipboardCopy from 'clipboard-copy';
-import { BiBorderAll, BiDrink } from 'react-icons/bi';
+import { BiDrink } from 'react-icons/bi';
 import { IoRestaurantOutline } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { RxShare2 } from 'react-icons/rx';
@@ -135,7 +135,7 @@ function DoneRecipes() {
                 className="text-[#797D86] text-[0.75rem]"
                 data-testid={ `${index}-horizontal-done-date` }
               >
-                Done when:
+                {'Done when: '}
                 {
                   new Date(recipe.doneDate).toLocaleDateString('pt-BR', {
                     day: 'numeric',
@@ -154,7 +154,6 @@ function DoneRecipes() {
                   { tag }
                 </p>
               ))}
-              <hr />
             </div>
             <div className="flex flex-col justify-start h-[100px]">
               <button

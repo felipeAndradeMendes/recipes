@@ -13,6 +13,7 @@ function Footer() {
     history.push(page);
   };
 
+  const menuName = history.location.pathname;
   return (
     <div
       data-testid="footer"
@@ -28,24 +29,6 @@ function Footer() {
     >
       <div className="w-[160px] flex justify-center">
         <button
-          onClick={ () => handleClick('/drinks') }
-        >
-          {/* <img
-            src={ BiDrink }
-            alt="Icone de Bebida"
-            data-testid="drinks-bottom-btn"
-          /> */}
-          <div
-            className="hover:bg-white hover:bg-opacity-40
-          pr-5 pl-5 pt-3 pb-3 rounded-[22px]"
-          >
-            <BiDrink
-              style={ { width: '24px', height: '24px', color: 'white' } }
-              data-testid="drinks-bottom-btn"
-            />
-          </div>
-        </button>
-        <button
           onClick={ () => handleClick('/meals') }
         >
           {/* <img
@@ -54,12 +37,32 @@ function Footer() {
             data-testid="meals-bottom-btn"
           /> */}
           <div
-            className="hover:bg-white hover:bg-opacity-40
-          pr-5 pl-5 pt-3 pb-3 rounded-[22px]"
+            className={ menuName === '/meals'
+              ? 'bg-white bg-opacity-40 pr-5 pl-5 pt-3 pb-3 rounded-[22px]'
+              : 'pr-5 pl-5 pt-3 pb-3 rounded-[22px]' }
           >
             <IoRestaurantOutline
               style={ { width: '24px', height: '24px', color: 'white' } }
               data-testid="meals-bottom-btn"
+            />
+          </div>
+        </button>
+        <button
+          onClick={ () => handleClick('/drinks') }
+        >
+          {/* <img
+            src={ BiDrink }
+            alt="Icone de Bebida"
+            data-testid="drinks-bottom-btn"
+          /> */}
+          <div
+            className={ menuName === '/drinks'
+              ? 'bg-white bg-opacity-40 pr-5 pl-5 pt-3 pb-3 rounded-[22px]'
+              : 'pr-5 pl-5 pt-3 pb-3 rounded-[22px]' }
+          >
+            <BiDrink
+              style={ { width: '24px', height: '24px', color: 'white' } }
+              data-testid="drinks-bottom-btn"
             />
           </div>
         </button>
