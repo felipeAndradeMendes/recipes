@@ -38,7 +38,7 @@ function Header() {
             )
             : (
               <Link
-                to={ history.location.pathname === '/profile' ? '/drinks' : pageName }
+                to={ history.location.pathname === '/profile' ? '/meals' : pageName }
                 onClick={ () => setPageName(history.location.pathname) }
               >
                 <IoIosArrowBack
